@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simple wellbeing tools for boarding-school students.">
+  <title>Shayne’s Wellbeing Toolkit</title>
+  <style>
+    :root { --paper:#f6f6f4; --ink:#111; --quiet:#656565; --rule:#bdbdb9; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff; color:var(--ink); font-family:"Courier New", Courier, monospace; }
+    main { position:relative; width:min(920px, calc(100% - 32px)); min-height:calc(100vh - 32px); margin:16px auto; padding:48px; overflow:hidden; background:var(--paper); }
+    .topline { display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:bold; letter-spacing:.08em; text-transform:uppercase; }
+    .brand { font-size:17px; letter-spacing:.13em; }
+    nav { display:flex; gap:30px; }
+    nav span { white-space:nowrap; }
+    .intro { width:min(290px, 100%); margin:56px 0 0; font-size:11px; font-weight:bold; letter-spacing:.045em; line-height:1.25; text-transform:uppercase; }
+    .marks { position:absolute; top:205px; right:49px; left:49px; display:flex; justify-content:space-between; color:#777; font:26px/1 Georgia,serif; }
+    h1 { margin:178px 0 105px; font-family:Arial, Helvetica, sans-serif; font-size:clamp(4.6rem, 16.5vw, 10rem); font-weight:500; letter-spacing:.08em; line-height:.72; text-align:center; }
+    .tools { display:grid; grid-template-columns:repeat(3, 1fr); gap:34px; padding:0 52px; }
+    .tool { display:flex; flex-direction:column; min-height:150px; color:inherit; text-decoration:none; }
+    .icon { display:none; }
+    .tool h2 { margin:0; font-size:11px; font-weight:bold; letter-spacing:.045em; line-height:1.3; text-transform:uppercase; }
+    .tool p { margin:12px 0 17px; color:var(--quiet); font-size:10px; line-height:1.35; }
+    .button { display:inline-flex; align-items:center; justify-content:center; align-self:flex-start; min-width:100px; min-height:29px; padding:0 11px; border:1px solid var(--rule); background:#fff; font-size:9px; font-weight:bold; letter-spacing:.05em; text-transform:uppercase; transition:background .15s,color .15s; }
+    a.tool:hover .button { background:var(--ink); border-color:var(--ink); color:#fff; }
+    .soon { opacity:.52; cursor:default; }
+    .soon .button::before { content:'Coming soon'; }
+    .soon .button { font-size:0; }
+    footer { display:flex; justify-content:space-between; gap:20px; margin-top:36px; padding:24px 52px 0; border-top:1px solid var(--rule); color:var(--quiet); font-size:9px; line-height:1.4; text-transform:uppercase; }
+    .corner { position:absolute; color:#777; font:23px/1 Georgia,serif; }.corner.a{top:205px;left:49px}.corner.b{top:205px;right:49px}.corner.c{bottom:45px;left:49px}.corner.d{bottom:45px;right:49px}
+    @media (max-width:720px) { main { min-height:0; padding:28px 24px; } .topline { align-items:flex-start; }.brand { font-size:14px; } nav { display:none; }.intro { margin-top:42px; }.marks,.corner { display:none; } h1 { margin:120px 0 72px; font-size:clamp(3.8rem, 19vw, 7rem); }.tools { grid-template-columns:1fr; gap:30px; padding:0; }.tool { min-height:0; } footer { display:block; padding:22px 0 0; } footer span + span { display:block; margin-top:8px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topline"><div class="brand">Shayne’s toolkit</div><nav aria-label="Site sections"><span>Tools</span><span>For boarders</span><span>LS</span></nav></div>
+    <p class="intro">A small collection of practical tools for boarding-school life. Choose one thing that might help today.</p>
+    <div class="marks" aria-hidden="true"><span>⌖</span><span>—</span><span>⌖</span></div><span class="corner a" aria-hidden="true">⌖</span><span class="corner b" aria-hidden="true">⌖</span><span class="corner c" aria-hidden="true">⌖</span><span class="corner d" aria-hidden="true">⌖</span>
+    <h1>WELL</h1>
+    <section class="tools" id="tools" aria-label="Wellbeing tools"></section>
+    <footer><span>Open to read. School sign-in only where a tool records information for counselling.</span><span>Shayne’s Wellbeing Toolkit</span></footer>
+  </main>
+  <script src="tools.js"></script>
+</body>
+</html>
