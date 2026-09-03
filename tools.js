@@ -1,6 +1,7 @@
 /* Add a tool by creating tools/<slug>/index.html and one object below. */
+/* Sleep Lab deliberately uses the canonical HTML already published on main. */
 const tools = [
-  { id: 'sleep-lab', name: 'Sleep Lab', cat: 'Experiment', blurb: 'A two-week experiment to notice what helps you rest.', href: 'tools/sleep-lab/', access: 'open', icon: 'moon' },
+  { id: 'sleep-lab', name: 'Sleep Lab', cat: 'Experiment', blurb: 'A two-week experiment to notice what helps you rest.', href: 'https://swermers.github.io/ls-wellbeing/sleeplab.html', access: 'open', icon: 'moon' },
   { id: 'first-weeks-away', name: 'First weeks away', cat: 'Settling in', blurb: 'A gentle guide for the first stretch of term.', href: '#', access: 'soon', icon: 'compass' },
   { id: 'exam-nerves', name: 'Exam nerves', cat: 'Study', blurb: 'Practical ways to make room for nerves and keep moving.', href: '#', access: 'soon', icon: 'spark' },
   { id: 'roommate-treaty', name: 'Roommate treaty', cat: 'Living together', blurb: 'A simple conversation starter for shared rooms.', href: '#', access: 'soon', icon: 'home' }
