@@ -248,6 +248,32 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 .log-table td { padding:.45rem .5rem; border-bottom:1px solid var(--hairline-soft); color:var(--ink-soft); }
 .log-table td.del { text-align:right; }
 
+/* ═══ ACCOUNT STRIP ═══ */
+.acct { display:flex; align-items:center; gap:.85rem; flex-wrap:wrap;
+  border:1px solid var(--hairline); background:var(--card-bg); padding:.8rem 1rem; margin:0 0 1.5rem; }
+.acct-dot { width:8px; height:8px; flex:none; background:var(--ink-mute); box-shadow:0 0 0 3px var(--hairline-soft); }
+.acct.on  .acct-dot { background:var(--teal); }
+.acct.off .acct-dot { background:var(--amber); }
+.acct-txt { flex:1; min-width:12rem; font-size:.86rem; color:var(--ink-soft); }
+.acct-txt strong { color:var(--ink); font-weight:600; }
+.acct-txt .who { font-family:var(--mono); font-size:.72rem; letter-spacing:.04em; color:var(--teal); word-break:break-all; }
+.acct .btn { padding:.55rem .9rem; margin:0; }
+.acct-sync { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-mute); }
+
+/* ═══ SCHOOL DASHBOARD ═══ */
+.class-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+@media (min-width:900px){ .class-grid { grid-template-columns:1fr 1fr; } }
+.class-grid .viz { margin:0; }
+.bars { display:flex; flex-direction:column; gap:.55rem; margin-top:.4rem; }
+.bar-row { display:grid; grid-template-columns:6.5rem 1fr 4.5rem; align-items:center; gap:.7rem; font-size:.8rem; color:var(--ink-soft); }
+.bar-row > span:first-child { line-height:1.25; }
+.bar-track { display:block; height:14px; background:var(--track); border:1px solid var(--hairline-soft); }
+.bar-fill { display:block; height:100%; min-width:1px; background:var(--amber); transition:width .4s ease; }
+.bar-fill.teal { background:var(--teal); }
+.bar-fill.coral { background:var(--coral); }
+.bar-row .bv { font-family:var(--mono); font-size:.66rem; color:var(--ink-mute); text-align:right; white-space:nowrap; }
+.class-empty { border:1px dashed var(--hairline); padding:2rem 1.2rem; text-align:center; color:var(--ink-mute); font-size:.9rem; }
+
 /* ═══ HELP ═══ */
 .help-list { list-style:none; max-width:var(--max-prose); }
 .help-list li { padding:.75rem 0 .75rem 1.3rem; border-bottom:1px solid var(--hairline-soft); position:relative; color:var(--ink-soft); font-size:.93rem; }
@@ -312,9 +338,10 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <button class="tab" role="tab" id="t-check" aria-controls="p-check" aria-selected="false"><span class="n">02</span>Sleep check</button>
       <button class="tab" role="tab" id="t-tools" aria-controls="p-tools" aria-selected="false"><span class="n">03</span>Toolkit</button>
       <button class="tab" role="tab" id="t-plan"  aria-controls="p-plan"  aria-selected="false"><span class="n">04</span>My plan<span class="badge" id="planBadge">0</span></button>
-      <button class="tab" role="tab" id="t-log"   aria-controls="p-log"   aria-selected="false"><span class="n">05</span>Tracker</button>
-      <button class="tab" role="tab" id="t-sheet" aria-controls="p-sheet" aria-selected="false"><span class="n">06</span>Print &amp; sign</button>
-      <button class="tab" role="tab" id="t-help"  aria-controls="p-help"  aria-selected="false"><span class="n">07</span>More help</button>
+      <button class="tab" role="tab" id="t-log"   aria-controls="p-log"   aria-selected="false"><span class="n">05</span>My tracker</button>
+      <button class="tab" role="tab" id="t-class" aria-controls="p-class" aria-selected="false"><span class="n">06</span>The whole school</button>
+      <button class="tab" role="tab" id="t-sheet" aria-controls="p-sheet" aria-selected="false"><span class="n">07</span>Print &amp; sign</button>
+      <button class="tab" role="tab" id="t-help"  aria-controls="p-help"  aria-selected="false"><span class="n">08</span>More help</button>
     </div>
   </div>
 </header>
@@ -510,9 +537,16 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 <section class="panel" id="p-log" role="tabpanel" aria-labelledby="t-log" tabindex="0">
   <div class="inner wide">
     <div class="head">
-      <span class="label">05 · Tracker</span>
+      <span class="label">05 · My tracker</span>
       <h2>One bad night is <em>data</em>, not failure.</h2>
       <p class="prose">Thirty seconds each morning. What you are looking for is the shape of two weeks, not what happened on Tuesday.</p>
+    </div>
+    <div class="acct off" id="acct">
+      <span class="acct-dot" aria-hidden="true"></span>
+      <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
+      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with school Google</button>
+      <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
+      <span class="acct-sync" id="acctSync"></span>
     </div>
     <div class="notice" id="storeNote" style="display:none;"></div>
     <div class="notice" id="phaseBanner" style="display:none;"></div>
@@ -556,6 +590,54 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 </section>
 
 <!-- ══════ 06 ══════ -->
+<section class="panel" id="p-class" role="tabpanel" aria-labelledby="t-class" tabindex="0">
+  <div class="inner wide">
+    <div class="head">
+      <span class="label">06 · The whole school</span>
+      <h2>Everyone is tired. <em>Here is the proof.</em></h2>
+      <p class="prose">Every night logged in the Lab lands here with the name stripped off. No account needed to read this page — it is the same picture whether you are a student, a tutor or a parent. Nobody can be picked out of it, including you.</p>
+    </div>
+
+    <div class="notice" id="classNote" style="display:none;"></div>
+    <div class="stat-row" id="classStats"></div>
+
+    <div class="class-grid">
+      <div class="viz">
+        <div class="viz-head"><h3>How long we actually sleep</h3><span class="label">Nights, by length</span></div>
+        <div class="bars" id="classHours"></div>
+        <p class="viz-note">Teenagers need <strong>8&ndash;10 hours</strong>. The bar that should be biggest usually is not.</p>
+      </div>
+
+      <div class="viz">
+        <div class="viz-head"><h3>How the day felt after</h3><span class="label">Rated 1&ndash;5 the next morning</span></div>
+        <div class="bars" id="classEnergy"></div>
+        <p class="viz-note">Day rating tracks sleep length more tightly than almost anything else we measure.</p>
+      </div>
+
+      <div class="viz">
+        <div class="viz-head"><h3>Nights by weekday</h3><span class="label">Average hours asleep</span></div>
+        <div class="bars" id="classWeek"></div>
+        <p class="viz-note">Most schools find a sharp weekend catch-up. A big gap between weekday and weekend is <strong>social jet lag</strong> &mdash; the thing that makes Monday feel like a flight.</p>
+      </div>
+
+      <div class="viz">
+        <div class="viz-head"><h3>What people are trying</h3><span class="label">Tools chosen, most picked first</span></div>
+        <div class="bars" id="classTools"></div>
+        <p class="viz-note">Popular is not the same as effective. Pick what fits your week, not what tops this list.</p>
+      </div>
+    </div>
+
+    <div class="viz">
+      <div class="viz-head"><h3>Does the experiment move anything?</h3><span class="label">Baseline week vs intervention week</span></div>
+      <div id="classPhase"></div>
+      <p class="viz-note">These are whole-school averages with no control group and no blinding. Treat them as a starting point for an argument, not the end of one.</p>
+    </div>
+
+    <p class="hint" id="classFoot" style="margin-top:1.2rem;"></p>
+  </div>
+</section>
+
+<!-- ══════ 07 ══════ -->
 <section class="panel" id="p-sheet" role="tabpanel" aria-labelledby="t-sheet" tabindex="0">
   <div class="inner">
     <div class="btn-row no-print" style="margin:0 0 1.5rem;">
@@ -603,7 +685,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 <section class="panel" id="p-help" role="tabpanel" aria-labelledby="t-help" tabindex="0">
   <div class="inner">
     <div class="head">
-      <span class="label">07 · More help</span>
+      <span class="label">08 · More help</span>
       <h2>When this is <em>not the right tool</em>.</h2>
       <p class="prose">Self-help works for the ordinary version of bad sleep, which is most of it. Some things need a person, and getting there early is much easier than getting there late.</p>
     </div>
@@ -640,11 +722,24 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 'use strict';
 
 /* ═════════ CONFIG ═════════
-   Leave LOG_ENDPOINT empty and nothing ever leaves the student's device.
-   To send logs to a Google Sheet, deploy the Apps Script in the setup notes
-   and paste its web-app URL here. Read the privacy section first. */
+   Every endpoint below is optional. With all of them blank the Lab still
+   works end to end — it just saves to the student's own browser and the
+   school dashboard says so honestly. Fill them in to switch the Lab on:
+   see apps-script/SETUP.md for the ten-minute version.
+
+   The two URLs below come from ONE Apps Script project deployed TWICE.
+     STUDENT_ENDPOINT — "Anyone in <your school>". Google does the login and
+       hands the script a verified school email, so the page never touches a
+       password and students never get the Sheet.
+     PUBLIC_ENDPOINT  — "Anyone". Serves aggregate counts only: no emails,
+       no rows, nothing that identifies a person. This is what the open
+       "whole school" tab reads. */
 var CONFIG = {
-  /* ── Route A · Google Form (recommended) ──
+  STUDENT_ENDPOINT: '',   // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
+  PUBLIC_ENDPOINT:  '',   // 'https://script.google.com/macros/s/AKfy.../exec'
+  SCHOOL_NAME:      'school',   // shown on the sign-in strip
+
+  /* ── Route A · Google Form (legacy fallback) ──
      Verified school emails, no OAuth, no backend. Create the Form, get a
      prefilled link, and read the entry.NNN numbers out of that URL. */
   FORM_ACTION: '',   // 'https://docs.google.com/forms/d/e/1FAIpQL.../viewform'
@@ -691,6 +786,61 @@ var Store = (function () {
     del: function (k) { try { if (ok) window.localStorage.removeItem(k); else delete mem[k]; } catch (e) { delete mem[k]; } }
   };
 })();
+
+/* ═════════ NETWORK ═════════
+   Apps Script web apps redirect through googleusercontent.com, which makes a
+   plain cross-origin fetch() unreliable and, for the signed-in routes, drops
+   the Google session. A JSONP <script> tag has neither problem: it carries the
+   student's existing Google cookie, needs no CORS headers, and cannot be used
+   to read anything the endpoint does not deliberately hand back.
+
+   Every call is best-effort. A dead endpoint must never cost a student the
+   record they just typed, so the local copy is always written first. */
+var Net = (function () {
+  var n = 0;
+  function call(url, params, ok, fail) {
+    if (!url) { if (fail) fail(new Error('no-endpoint')); return; }
+    var cb = 'slcb' + (++n) + '_' + Date.now().toString(36);
+    var done = false, timer;
+    var q = [];
+    Object.keys(params || {}).forEach(function (k) {
+      if (params[k] !== undefined && params[k] !== null)
+        q.push(encodeURIComponent(k) + '=' + encodeURIComponent(params[k]));
+    });
+    q.push('callback=' + cb);
+    var el = document.createElement('script');
+    function cleanup() {
+      clearTimeout(timer);
+      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }
+    window[cb] = function (data) {
+      if (done) return; done = true; cleanup();
+      if (data && data.error) { if (fail) fail(new Error(data.error)); }
+      else if (ok) ok(data);
+    };
+    /* Not signed in, wrong domain, or the deployment moved: Google answers
+       with an HTML login page, the callback never fires, and we land here. */
+    el.onerror = function () { if (done) return; done = true; cleanup(); if (fail) fail(new Error('unreachable')); };
+    timer = setTimeout(function () { if (done) return; done = true; cleanup(); if (fail) fail(new Error('timeout')); }, 12000);
+    el.src = url + (url.indexOf('?') < 0 ? '?' : '&') + q.join('&');
+    document.head.appendChild(el);
+  }
+  return { call: call };
+})();
+
+/* ═════════ ACCOUNT ═════════
+   Identity is entirely Google's job. The page asks the script "who am I?" and
+   either gets a verified school address back or it does not. There is no
+   password here, no token in localStorage, and nothing to leak. */
+var Account = {
+  on: false,        // signed in and on the consented roster
+  email: '',
+  name: '',
+  house: '',
+  pushing: 0,
+  lastError: ''
+};
 
 /* ═════════ DATA ═════════ */
 var CATS = [
@@ -868,7 +1018,7 @@ var MYTHS = [
 ];
 
 /* ═════════ STATE ═════════ */
-var state = { picked:[], filter:'all', answers:{}, profile:null, caffMg:95, caffHour:16, scenario:'normal', hypH:9, log:[] };
+var state = { picked:[], filter:'all', answers:{}, profile:null, caffMg:95, caffHour:16, scenario:'normal', hypH:9, log:[], synced:{} };
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -883,7 +1033,7 @@ function svgEl(t,a){ var e=document.createElementNS('http://www.w3.org/2000/svg'
 var FIELDS = ['fName','fHouse','fWake','fTarget','fLength','fStart','fPerson','fWhy','fObstacle'];
 function saveAll(){
   var f={}; FIELDS.forEach(function(id){ var el=$(id); if(el) f[id]=el.value; });
-  Store.set('sleeplab', JSON.stringify({ picked:state.picked, fields:f, answers:state.answers, profile:state.profile, log:state.log }));
+  Store.set('sleeplab', JSON.stringify({ picked:state.picked, fields:f, answers:state.answers, profile:state.profile, log:state.log, synced:state.synced }));
 }
 function loadAll(){
   var raw=Store.get('sleeplab'); if(!raw) return;
@@ -893,6 +1043,7 @@ function loadAll(){
     if(d.answers) state.answers=d.answers;
     if(d.profile && PROFILES[d.profile]) state.profile=d.profile;
     if(d.log) state.log=d.log;
+    if(d.synced) state.synced=d.synced;
     if(d.fields) FIELDS.forEach(function(id){ var el=$(id); if(el && d.fields[id]!=null && d.fields[id]!=='') el.value=d.fields[id]; });
   } catch(e){}
 }
@@ -907,7 +1058,8 @@ function showTab(id){
     if(p) p.classList.toggle('active', on);
   });
   if(id==='t-plan') drawClock();
-  if(id==='t-log') { renderLogChart(); }
+  if(id==='t-log') { renderLogChart(); renderAcct(); }
+  if(id==='t-class') loadClass();
   if(id==='t-sheet') buildSheet();
   window.scrollTo({ top:0, behavior:'auto' });
 }
@@ -1390,8 +1542,10 @@ $('saveLog').addEventListener('click', function(){
   state.log=state.log.filter(function(e){ return e.date!==date; });
   state.log.push(entry);
   state.log.sort(function(a,b){ return a.date<b.date?-1:1; });
-  checkState={}; renderChecks(); renderLog(); saveAll(); flash('Saved.');
-  postEntry(entry);
+  delete state.synced[date];
+  checkState={}; renderChecks(); renderLog(); saveAll();
+  flash(Account.on ? 'Saved to your record.' : 'Saved on this device.');
+  if(CONFIG.STUDENT_ENDPOINT) pushPending(); else postEntry(entry);
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
   $('lDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 });
@@ -1500,8 +1654,11 @@ function renderLog(){
     : '<tr><td style="color:var(--ink-mute);padding:1rem 0;">Nothing logged yet.</td></tr>';
   Array.prototype.forEach.call($('logTable').querySelectorAll('[data-del]'), function(b){
     b.addEventListener('click', function(){
-      state.log=state.log.filter(function(e){ return e.date!==b.dataset.del; });
-      renderLog(); saveAll();
+      var gone=b.dataset.del;
+      if(Account.on) Net.call(CONFIG.STUDENT_ENDPOINT, { route:'delete', date:gone });
+      state.log=state.log.filter(function(e){ return e.date!==gone; });
+      delete state.synced[gone];
+      renderLog(); saveAll(); renderAcct();
     });
   });
   renderLogChart();
@@ -1565,7 +1722,9 @@ $('copySummary').addEventListener('click', function(){
 });
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
-  state.log=[]; renderLog(); saveAll(); flash('Log deleted.');
+  if(Account.on && window.confirm('Also delete these nights from your record in the school Sheet?'))
+    state.log.forEach(function(e){ Net.call(CONFIG.STUDENT_ENDPOINT, { route:'delete', date:e.date }); });
+  state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); flash('Log deleted.');
 });
 
 /* ═════════ SHEET ═════════ */
@@ -1636,6 +1795,209 @@ $('caffTime').addEventListener('input', function(e){ state.caffHour=parseInt(e.t
 $('hypSlider').addEventListener('input', function(e){ state.hypH=parseFloat(e.target.value); drawHypnogram(); });
 window.addEventListener('resize', function(){ drawClock(); });
 
+/* ═════════ SYNC ═════════
+   Local first, always. state.synced remembers the shape of each night as the
+   Sheet last confirmed it, which is what lets two devices disagree sensibly:
+   a night the student has edited since the last confirmation wins, anything
+   else defers to the Sheet. */
+function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of].join('|'); }
+
+function acctSay(msg){ var el=$('acctSync'); if(el) el.textContent=msg||''; }
+
+function renderAcct(){
+  var box=$('acct'), txt=$('acctTxt'), inBtn=$('signInBtn'), syBtn=$('syncBtn');
+  if(!box) return;
+  var unsent = state.log.filter(function(e){ return state.synced[e.date]!==sigOf(e); }).length;
+
+  if(!CONFIG.STUDENT_ENDPOINT){
+    box.className='acct';
+    txt.innerHTML='<strong>Saving to this device only.</strong> Nothing you type here leaves this browser. Counselling has not switched on the school account yet — the CSV download at the bottom is how you keep a copy.';
+    inBtn.style.display='none'; syBtn.style.display='none'; acctSay('');
+    return;
+  }
+  if(Account.on){
+    box.className='acct on';
+    txt.innerHTML='<strong>Signed in.</strong> Your nights are saved to your own record in the counselling Sheet, and to this device.<br><span class="who">'+esc(Account.email)+'</span>';
+    inBtn.style.display='none'; syBtn.style.display='';
+    acctSay(Account.pushing ? 'Saving ' + Account.pushing + '…' : (unsent ? unsent+' night'+(unsent>1?'s':'')+' waiting' : 'Up to date'));
+  } else {
+    box.className='acct off';
+    txt.innerHTML='<strong>Not signed in.</strong> Everything still works and still saves to this device — signing in with your '+esc(CONFIG.SCHOOL_NAME)+' Google account just means your log follows you to any computer, and counts toward the whole-school picture.'
+      + (Account.lastError ? '<br><span class="hint">'+esc(Account.lastError)+'</span>' : '');
+    inBtn.style.display=''; syBtn.style.display='none';
+    acctSay(unsent ? unsent+' night'+(unsent>1?'s':'')+' on this device' : '');
+  }
+}
+
+/* Ask the script who Google thinks we are. Failure is normal and quiet: not
+   signed in, signed into a personal account, or the endpoint is not live yet. */
+function syncPull(opts){
+  if(!CONFIG.STUDENT_ENDPOINT) { renderAcct(); return; }
+  if(opts && opts.loud) acctSay('Checking…');
+  Net.call(CONFIG.STUDENT_ENDPOINT, { route:'me' }, function(d){
+    Account.on=true; Account.lastError='';
+    Account.email=d.email||''; Account.name=d.name||''; Account.house=d.house||'';
+    mergeNights(d.nights||[]);
+    renderLog(); saveAll(); renderAcct(); pushPending();
+  }, function(err){
+    Account.on=false;
+    Account.lastError = err.message==='forbidden'
+      ? 'That account is not on the Sleep Lab roster yet. Speak to counselling and they will add you.'
+      : (opts && opts.loud ? 'Could not reach the school Sleep Lab just now. Your log is safe on this device.' : '');
+    renderAcct();
+  });
+}
+
+function mergeNights(rows){
+  var byDate={}; state.log.forEach(function(e){ byDate[e.date]=e; });
+  rows.forEach(function(r){
+    var e={ date:r.date, out:r.out||'', up:r.up||'', lat:+r.lat||0, wk:+r.wk||0,
+            inBed:+r.inBed||0, asleep:+r.asleep||0, eff:+r.eff||0, energy:+r.energy||3,
+            done:+r.done||0, of:+r.of||0, phase:r.phase||'' };
+    var local=byDate[e.date];
+    /* Local edits the Sheet has not confirmed are the one thing we never overwrite. */
+    if(local && state.synced[e.date]!==sigOf(local)) return;
+    byDate[e.date]=e; state.synced[e.date]=sigOf(e);
+  });
+  state.log=Object.keys(byDate).map(function(k){ return byDate[k]; })
+    .sort(function(a,b){ return a.date<b.date?-1:1; });
+}
+
+function pushPending(){
+  if(!Account.on) return;
+  var queue=state.log.filter(function(e){ return state.synced[e.date]!==sigOf(e); });
+  if(!queue.length){ renderAcct(); return; }
+  Account.pushing=queue.length; renderAcct();
+  var left=queue.length;
+  queue.forEach(function(e){
+    Net.call(CONFIG.STUDENT_ENDPOINT, nightParams(e), function(){
+      state.synced[e.date]=sigOf(e); saveAll();
+      if(!--left){ Account.pushing=0; renderAcct(); loadClass(true); }
+    }, function(){
+      if(!--left){ Account.pushing=0; renderAcct(); }
+    });
+  });
+}
+
+function nightParams(e){
+  return { route:'save', date:e.date, out:e.out, up:e.up, lat:e.lat, wk:e.wk,
+           inBed:e.inBed, asleep:e.asleep, eff:e.eff, energy:e.energy,
+           done:e.done, of:e.of, phase:e.phase||'',
+           tools: state.picked.map(function(i){ var t=byId(i); return t?t.name:''; }).join('; '),
+           house: ($('fHouse')&&$('fHouse').value)||'' };
+}
+
+/* Google will only show its account chooser in a real window, so sign-in is a
+   popup to the script's own URL. The script answers with a page that closes
+   itself; we re-ask "who am I?" a few times until the cookie lands. */
+function openSignIn(){
+  if(!CONFIG.STUDENT_ENDPOINT) return;
+  var w=window.open(CONFIG.STUDENT_ENDPOINT+'?route=signin','sleeplab-signin','width=520,height=650');
+  if(!w){ Account.lastError='Your browser blocked the sign-in window. Allow pop-ups for this page and try again.'; renderAcct(); return; }
+  acctSay('Waiting for Google…');
+  var tries=0;
+  var poll=setInterval(function(){
+    tries++;
+    Net.call(CONFIG.STUDENT_ENDPOINT, { route:'me' }, function(d){
+      clearInterval(poll); try{ w.close(); }catch(e){}
+      Account.on=true; Account.lastError=''; Account.email=d.email||'';
+      Account.name=d.name||''; Account.house=d.house||'';
+      mergeNights(d.nights||[]); renderLog(); saveAll(); renderAcct(); pushPending();
+    }, function(){
+      if(tries>=40){ clearInterval(poll); acctSay(''); }
+    });
+  }, 3000);
+}
+if($('signInBtn')) $('signInBtn').addEventListener('click', openSignIn);
+if($('syncBtn'))   $('syncBtn').addEventListener('click', function(){ syncPull({loud:true}); });
+
+/* ═════════ WHOLE-SCHOOL DASHBOARD ═════════
+   Reads the public deployment, which only ever returns counts. If it is not
+   configured, or too few people have logged anything for the numbers to be
+   anonymous, the panel says exactly that rather than inventing a picture. */
+var classLoaded=false;
+function bars(el, rows, klass){
+  if(!el) return;
+  var max=rows.reduce(function(m,r){ return Math.max(m, r[1]||0); }, 0) || 1;
+  el.innerHTML = rows.map(function(r){
+    var pct=Math.round((r[1]||0)/max*100);
+    return '<div class="bar-row"><span>'+esc(r[0])+'</span>'+
+           '<span class="bar-track"><span class="bar-fill'+(klass?' '+klass:'')+'" style="width:'+pct+'%"></span></span>'+
+           '<span class="bv">'+esc(r[2]!=null?r[2]:r[1])+'</span></div>';
+  }).join('') || '<p class="hint">Nothing here yet.</p>';
+}
+
+function classOffline(msg){
+  $('classStats').innerHTML='';
+  ['classHours','classEnergy','classWeek','classTools'].forEach(function(id){
+    var el=$(id); if(el) el.innerHTML='<div class="class-empty">'+esc(msg)+'</div>';
+  });
+  $('classPhase').innerHTML='';
+  $('classFoot').textContent='';
+}
+
+function renderClass(d){
+  if(!d || !d.ready){
+    classOffline(d && d.message ? d.message
+      : 'Not enough nights logged yet for these numbers to be anonymous. Come back once more of the school has joined in.');
+    $('classNote').style.display='block';
+    $('classNote').textContent = d && d.message ? d.message
+      : 'The dashboard stays blank until enough people have logged nights that no individual could be worked out from the totals.';
+    return;
+  }
+  $('classNote').style.display='none';
+  $('classStats').innerHTML =
+    '<div class="stat"><span class="label">Students taking part</span><span class="sv">'+d.students+'</span></div>'+
+    '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+d.nights+'</span></div>'+
+    '<div class="stat"><span class="label">Average sleep</span><span class="sv">'+d.avgHours.toFixed(1)+'h</span></div>'+
+    '<div class="stat"><span class="label">Getting 8h or more</span><span class="sv">'+d.pctEnough+'%</span></div>'+
+    '<div class="stat"><span class="label">Day felt, avg</span><span class="sv">'+d.avgEnergy.toFixed(1)+'</span></div>';
+
+  var pct=function(n){ return d.nights? Math.round(n/d.nights*100)+'%' : '0%'; };
+  bars($('classHours'),  (d.hours||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }));
+  bars($('classEnergy'), (d.energy||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }), 'teal');
+  bars($('classWeek'),   (d.weekday||[]).map(function(r){ return [r.day, r.hours, r.hours.toFixed(1)+'h']; }));
+  bars($('classTools'),  (d.tools||[]).map(function(r){ return [r.name, r.n, r.n+'\u00d7']; }), 'teal');
+
+  var ph=d.phases;
+  if(ph && ph.baseline && ph.intervention){
+    var rows=[
+      ['Hours asleep', ph.baseline.hours, ph.intervention.hours, 'h', 1, true],
+      ['Minutes to fall asleep', ph.baseline.lat, ph.intervention.lat, ' min', 0, false],
+      ['Asleep while in bed', ph.baseline.eff, ph.intervention.eff, '%', 0, true],
+      ['Day rating', ph.baseline.energy, ph.intervention.energy, '/5', 1, true]
+    ];
+    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Baseline week</th><th>Intervention week</th><th>Change</th></tr>'+
+      rows.map(function(r){
+        var diff=r[2]-r[1], good=r[5]?diff>0:diff<0;
+        var col=Math.abs(diff)<0.05?'var(--ink-mute)':(good?'var(--teal)':'var(--coral)');
+        return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
+               '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
+      }).join('')+'</table>';
+  } else {
+    $('classPhase').innerHTML='<p class="hint">The comparison appears once enough people have finished a baseline week and an intervention week.</p>';
+  }
+  $('classFoot').textContent='Last updated '+(d.updated||'just now')+'. Aggregate counts only — no names, no email addresses, and no single night is ever shown on its own.';
+}
+
+function loadClass(force){
+  if(classLoaded && !force) return;
+  if(!CONFIG.PUBLIC_ENDPOINT){
+    classLoaded=true;
+    $('classNote').style.display='block';
+    $('classNote').textContent='The whole-school dashboard is not switched on yet. Once counselling connects the Lab to its Sheet, every night logged across the school appears here with the names stripped off.';
+    classOffline('Waiting on the school connection.');
+    return;
+  }
+  classLoaded=true;
+  Net.call(CONFIG.PUBLIC_ENDPOINT, { route:'class' }, renderClass, function(){
+    $('classNote').style.display='block';
+    $('classNote').textContent='Could not reach the school dashboard just now. Nothing is wrong with your own log.';
+    classOffline('Dashboard unavailable.');
+    classLoaded=false;
+  });
+}
+
 /* ═════════ INIT ═════════ */
 (function(){
   var t=new Date(), iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
@@ -1650,6 +2012,7 @@ renderQuiz();
 if(CONFIG.FORM_ACTION) $('saveLog').textContent='Save & submit to the study';
 if(Object.keys(state.answers).length===QUESTIONS.length) score();
 renderFilters(); renderCards(); renderPlan(); renderBadge(); renderChecks(); renderPhase(); renderLog();
+renderAcct(); syncPull();
 drawPressure(); drawHypnogram(); drawCaffeine(); drawClock(); buildSheet();
 })();
 </script>
