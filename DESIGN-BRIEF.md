@@ -84,11 +84,21 @@ In order:
 5. **The six SVG visualisations.** They work well. Sharpen the marks, tighten the
    type, unify the axis treatment. Do not change what they plot.
 
-## What to leave alone
+## The copy
 
-The words. The copy is deliberately blunt and warm — "One bad night is data, not
-failure", "Everyone is tired. Here is the proof." Do not soften it, do not make it
-more corporate, do not add headings that sound like a policy document.
+The text has been through an editing pass to cut length and strip the "X, not Y"
+slogan construction that had crept into every heading. Hold that line:
+
+- **Do not add words.** If a layout needs a subtitle, a strapline or filler body
+  copy to look right, the layout is wrong. Design around the text that is there.
+- **No slogans.** Nothing in the shape of "It is not X, it is Y", "not a promise,
+  an experiment", or a heading that pivots on a comma into a reassurance.
+- **Headings say what the section is.** "How the school is sleeping", not a line
+  of encouragement.
+- Plain and direct is the register. Not corporate, not therapeutic, not chirpy.
+
+If a piece of copy genuinely does not work in the new layout, cut it or flag it —
+do not rewrite it longer.
 
 ## Deliverable
 
