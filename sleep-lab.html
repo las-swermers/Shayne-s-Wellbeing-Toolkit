@@ -352,14 +352,14 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 <section class="panel active" id="p-why" role="tabpanel" aria-labelledby="t-why" tabindex="0">
   <div class="inner">
     <span class="label">01 · How sleep works</span>
-    <h1>Your clock moved. <em>Nobody asked you.</em></h1>
-    <p class="lede" style="margin-top:1rem;">Around puberty the body clock shifts one to two hours later. You are not bad at sleeping. You are running a body that wants to fall asleep late, inside a building that starts at seven.</p>
+    <h1>Your body clock <em>moved later.</em></h1>
+    <p class="lede" style="margin-top:1rem;">Around puberty the body clock shifts one to two hours later. You are running a body that wants to fall asleep late, inside a building that starts at seven.</p>
 
     <div class="facts">
-      <div class="fact"><span class="fact-n">8–10</span><div class="fact-b">Hours a 13–18 year old needs on a regular night. Not seven. Not "I'm fine on six."</div></div>
-      <div class="fact"><span class="fact-n">1–2</span><div class="fact-b">Hours later your melatonin releases now compared to age eleven. Biology, not laziness.</div></div>
-      <div class="fact"><span class="fact-n">5–6</span><div class="fact-b">Hours to clear half a dose of caffeine. The 4pm energy drink is still working at 10pm.</div></div>
-      <div class="fact"><span class="fact-n">+40</span><div class="fact-b">Minutes more sleep boarders get than day students, in one Australian study. Structure is an advantage.</div></div>
+      <div class="fact"><span class="fact-n">8–10</span><div class="fact-b">Hours a 13–18 year old needs on a regular night.</div></div>
+      <div class="fact"><span class="fact-n">1–2</span><div class="fact-b">Hours later your melatonin releases now, compared to age eleven.</div></div>
+      <div class="fact"><span class="fact-n">5–6</span><div class="fact-b">Hours to clear half a dose of caffeine. A 4pm energy drink is still working at 10pm.</div></div>
+      <div class="fact"><span class="fact-n">+40</span><div class="fact-b">Minutes more sleep boarders get than day students, in one Australian study.</div></div>
     </div>
 
     <!-- VIZ 1 — two-process -->
@@ -368,7 +368,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <h3>Sleep pressure, across one day</h3>
         <span class="label">Tap a scenario</span>
       </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:.9rem;max-width:none;">Every hour you are awake, a chemical called adenosine builds up. That is the rising line. When it crosses your body's sleep window, you fall asleep. Anything that drains the line early moves the crossing later.</p>
+      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:.9rem;max-width:none;">Adenosine builds up every hour you are awake — the rising line. You fall asleep when it crosses your body’s sleep window. Draining the line early moves that crossing later.</p>
       <div class="seg" role="group" aria-label="Scenario" id="pressureSeg">
         <button type="button" data-sc="normal" aria-pressed="true">A normal day</button>
         <button type="button" data-sc="nap" aria-pressed="false">Nap after dinner</button>
@@ -392,7 +392,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <h3>What a short night actually costs</h3>
         <span class="label">Drag the slider</span>
       </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">A night is four or five cycles. Deep sleep — the physical repair, the immune work — loads into the early cycles. Dream sleep, which does most of the memory and emotional processing, loads into the last ones. Cutting the night short does not shave a little off everything. It removes the end.</p>
+      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">A night is four or five cycles. Deep sleep, which does the physical repair, loads into the early ones. Dream sleep, which does most of the memory and emotional work, loads into the last ones. A short night removes the end; it does not trim the whole evenly.</p>
       <div class="slider-row">
         <label for="hypSlider"><span class="label">Hours of sleep</span><span class="slider-val" id="hypVal">9h 00m</span></label>
         <input type="range" id="hypSlider" min="4" max="9.5" step="0.5" value="9">
@@ -415,7 +415,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <h3>Where your last coffee actually goes</h3>
         <span class="label">Set the time</span>
       </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">Caffeine blocks the receptors that let you feel sleep pressure. The pressure keeps building. You just stop noticing it, which is why you can be exhausted and wired at the same time.</p>
+      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">Caffeine blocks the receptors that let you feel sleep pressure. The pressure keeps building; you stop noticing it. That is why you can be exhausted and wired at once.</p>
       <div class="slider-row" style="margin-bottom:.9rem;">
         <label for="caffTime"><span class="label">Last caffeine at</span><span class="slider-val" id="caffTimeVal">16:00</span></label>
         <input type="range" id="caffTime" min="7" max="23" step="1" value="16">
@@ -443,8 +443,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner">
     <div class="head">
       <span class="label">02 · Sleep check</span>
-      <h2>Bad sleep is not <em>one problem</em>.</h2>
-      <p class="prose">Eight questions about your patterns, borrowed from how sleep therapists actually assess this. It is not a score and not a diagnosis. It works out which kind of stuck you are in, and hands you the five tools that match — instead of twenty that do not.</p>
+      <h2>Which kind of <em>bad sleep</em>?</h2>
+      <p class="prose">Eight questions about your patterns. Not a score or a diagnosis — it works out which kind of bad night you are having, and hands you the five tools that match.</p>
     </div>
     <div id="quiz"></div>
     <div class="progress-wrap">
@@ -463,8 +463,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 
       <div style="margin-top:2rem;">
         <span class="label">Your five</span>
-        <h3 style="margin:.5rem 0 .3rem;">These are the ones worth your effort.</h3>
-        <p style="font-size:.9rem;color:var(--ink-mute);">Add all five, or drop the ones you know you will not do. You can browse the other twenty-four any time.</p>
+        <h3 style="margin:.5rem 0 .3rem;">Start with these five.</h3>
+        <p style="font-size:.9rem;color:var(--ink-mute);">Add all five, or drop the ones you know you will not do. The other twenty-four are in the toolkit.</p>
         <div class="mini" id="rTools"></div>
         <div class="btn-row">
           <button class="btn" id="addFive">Add all five to my plan</button>
@@ -481,7 +481,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner wide">
     <div class="head">
       <span class="label">03 · Toolkit</span>
-      <h2>Twenty-nine tools. Take <em>three</em>.</h2>
+      <h2>Twenty-nine tools. Pick <em>three</em>.</h2>
       <p class="prose">Everything here comes from sleep research that has held up, translated into a building with a roommate, a prep schedule and a bell in the morning. People who pick three finish the fortnight. People who pick seven quit on day four.</p>
     </div>
     <div class="filters" id="filters"></div>
@@ -494,8 +494,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner">
     <div class="head">
       <span class="label">04 · My plan</span>
-      <h2>An experiment, not a <em>promise</em>.</h2>
-      <p class="prose">You run something for a set number of nights, then look at what happened. If it does not work, that is information rather than failure.</p>
+      <h2>Set up your <em>fortnight</em>.</h2>
+      <p class="prose">Run your three tools for a set number of nights, then look at what happened.</p>
     </div>
 
     <div class="viz">
@@ -516,7 +516,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <span class="label" style="display:block;margin-bottom:.9rem;">The details</span>
         <div class="field"><label class="label" for="fName">Name</label><input type="text" id="fName" placeholder="Your name"></div>
         <div class="field"><label class="label" for="fHouse">House / year</label><input type="text" id="fHouse" placeholder="e.g. Belle Époque, Year 11"></div>
-        <div class="field"><label class="label" for="fWake">Wake time, every day</label><input type="time" id="fWake" value="07:00"><div class="hint">Weekends within about an hour. Wake time anchors the clock; bedtime follows it.</div></div>
+        <div class="field"><label class="label" for="fWake">Wake time, every day</label><input type="time" id="fWake" value="07:00"><div class="hint">Weekends within about an hour. Wake time anchors the clock.</div></div>
         <div class="field"><label class="label" for="fTarget">Sleep I'm aiming for</label><select id="fTarget"><option value="8">8 hours</option><option value="8.5" selected>8 hours 30</option><option value="9">9 hours</option><option value="9.5">9 hours 30</option></select></div>
         <div class="field"><label class="label" for="fLength">How long I run it</label><select id="fLength"><option value="7">7 nights — a test</option><option value="14" selected>14 nights — recommended</option><option value="21">21 nights — clock reset</option></select></div>
         <div class="field"><label class="label" for="fStart">Starting on</label><input type="date" id="fStart"></div>
@@ -538,8 +538,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner wide">
     <div class="head">
       <span class="label">05 · My tracker</span>
-      <h2>One bad night is <em>data</em>, not failure.</h2>
-      <p class="prose">Thirty seconds each morning. What you are looking for is the shape of two weeks, not what happened on Tuesday.</p>
+      <h2>Thirty seconds <em>each morning.</em></h2>
+      <p class="prose">You are looking for the shape of two weeks, not what happened on Tuesday.</p>
     </div>
     <div class="acct off" id="acct">
       <span class="acct-dot" aria-hidden="true"></span>
@@ -554,7 +554,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
     <div class="log-grid">
       <div>
         <span class="label">Log last night</span>
-        <div class="field" style="margin-top:.7rem;"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Always the morning, never the evening. Monday night’s sleep is logged as Tuesday. Everyone doing this the same way is what makes the class data usable.</div></div>
+        <div class="field" style="margin-top:.7rem;"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Always the morning. Monday night’s sleep is logged as Tuesday.</div></div>
         <div class="field"><label class="label" for="lOut">Lights out</label><input type="time" id="lOut" value="22:30"></div>
         <div class="field"><label class="label" for="lLatency">Minutes to fall asleep <span class="slider-val" id="lLatencyVal">20 min</span></label><input type="range" id="lLatency" min="0" max="120" step="5" value="20"></div>
         <div class="field"><label class="label" for="lWakings">Times I woke up</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div>
@@ -594,8 +594,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner wide">
     <div class="head">
       <span class="label">06 · The whole school</span>
-      <h2>Everyone is tired. <em>Here is the proof.</em></h2>
-      <p class="prose">Every night logged in the Lab lands here with the name stripped off. No account needed to read this page — it is the same picture whether you are a student, a tutor or a parent. Nobody can be picked out of it, including you.</p>
+      <h2>How the school <em>is sleeping.</em></h2>
+      <p class="prose">Every night logged in the Lab lands here with the name stripped off. No account needed, and nobody can be picked out of the totals — including you.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
@@ -605,32 +605,32 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <div class="viz">
         <div class="viz-head"><h3>How long we actually sleep</h3><span class="label">Nights, by length</span></div>
         <div class="bars" id="classHours"></div>
-        <p class="viz-note">Teenagers need <strong>8&ndash;10 hours</strong>. The bar that should be biggest usually is not.</p>
+        <p class="viz-note">Teenagers need <strong>8&ndash;10 hours</strong>.</p>
       </div>
 
       <div class="viz">
         <div class="viz-head"><h3>How the day felt after</h3><span class="label">Rated 1&ndash;5 the next morning</span></div>
         <div class="bars" id="classEnergy"></div>
-        <p class="viz-note">Day rating tracks sleep length more tightly than almost anything else we measure.</p>
+        <p class="viz-note">Day rating tracks sleep length more closely than anything else measured here.</p>
       </div>
 
       <div class="viz">
         <div class="viz-head"><h3>Nights by weekday</h3><span class="label">Average hours asleep</span></div>
         <div class="bars" id="classWeek"></div>
-        <p class="viz-note">Most schools find a sharp weekend catch-up. A big gap between weekday and weekend is <strong>social jet lag</strong> &mdash; the thing that makes Monday feel like a flight.</p>
+        <p class="viz-note">A big gap between weekday and weekend is <strong>social jet lag</strong>, and it is what makes Monday feel like a flight.</p>
       </div>
 
       <div class="viz">
         <div class="viz-head"><h3>What people are trying</h3><span class="label">Tools chosen, most picked first</span></div>
         <div class="bars" id="classTools"></div>
-        <p class="viz-note">Popular is not the same as effective. Pick what fits your week, not what tops this list.</p>
+        <p class="viz-note">Pick what fits your week rather than what tops this list.</p>
       </div>
     </div>
 
     <div class="viz">
       <div class="viz-head"><h3>Does the experiment move anything?</h3><span class="label">Baseline week vs intervention week</span></div>
       <div id="classPhase"></div>
-      <p class="viz-note">These are whole-school averages with no control group and no blinding. Treat them as a starting point for an argument, not the end of one.</p>
+      <p class="viz-note">Whole-school averages. No control group, no blinding.</p>
     </div>
 
     <p class="hint" id="classFoot" style="margin-top:1.2rem;"></p>
@@ -648,7 +648,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <div class="sheet-head">
         <span class="label">Sleep experiment · Signed plan</span>
         <h2 id="sTitle">My sleep experiment</h2>
-        <p style="font-size:.86rem;color:var(--ink-mute);max-width:none;">Kept by the student. A copy can go to a tutor or houseparent if you want someone checking in. This is a plan, not a punishment.</p>
+        <p style="font-size:.86rem;color:var(--ink-mute);max-width:none;">Kept by the student. A copy can go to a tutor or houseparent if you want someone checking in.</p>
       </div>
       <div class="smeta">
         <div><span class="label">Name</span><div class="v" id="sName"></div></div>
@@ -676,7 +676,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <div class="sig"><span class="label">Counsellor / houseparent</span></div>
         <div class="sig"><span class="label">Review date</span></div>
       </div>
-      <div class="sheet-foot">One bad night is data, not failure — judge this on the fortnight. If it is not working by the review date, that is the moment to talk to someone rather than try harder alone. Nothing here replaces the counselling team or the health centre.</div>
+      <div class="sheet-foot">Judge this on the fortnight, not one night. If it is not working by the review date, talk to someone. Nothing here replaces the counselling team or the health centre.</div>
     </div>
   </div>
 </section>
@@ -686,8 +686,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   <div class="inner">
     <div class="head">
       <span class="label">08 · More help</span>
-      <h2>When this is <em>not the right tool</em>.</h2>
-      <p class="prose">Self-help works for the ordinary version of bad sleep, which is most of it. Some things need a person, and getting there early is much easier than getting there late.</p>
+      <h2>When to <em>talk to someone.</em></h2>
+      <p class="prose">Self-help covers the ordinary version of bad sleep, which is most of it. Some things need a person, and going early is easier than going late.</p>
     </div>
     <h3 style="margin-bottom:.7rem;">Come and talk if any of these are true</h3>
     <ul class="help-list">
@@ -703,12 +703,12 @@ input[type=range] { width:100%; accent-color:var(--amber); }
     </ul>
     <hr class="rule">
     <div class="prose">
-      <h3 style="margin-bottom:.55rem;">What we would actually do</h3>
-      <p>The treatment with the best evidence for teenagers is <em>CBT for insomnia</em> — the structured version of what this toolkit borrows from. It is a few sessions, it involves no medication, and it works better than sleep education alone. You can ask for it by name.</p>
+      <h3 style="margin-bottom:.55rem;">What happens if you come in</h3>
+      <p>The treatment with the best evidence for teenagers is <em>CBT for insomnia</em>  — the structured version of what this toolkit borrows from. A few sessions, no medication, and it works better than sleep education alone. You can ask for it by name.</p>
       <h3 style="margin:1.6rem 0 .55rem;">On melatonin and supplements</h3>
-      <p>Melatonin is a timing signal, not a sedative. It only helps when the hour and the dose suit your particular clock, and the large supermarket doses are usually the wrong tool. That is a health centre conversation, not a website order. If you are already taking something, say so — it is useful information, not a confession.</p>
+      <p>Melatonin shifts your body clock; it does not sedate you. It only helps at the right hour and dose for your clock, and the large supermarket doses are usually wrong. Talk to the health centre before ordering anything. If you are already taking something, say so — we need to know, and you are not in trouble.</p>
       <h3 style="margin:1.6rem 0 .55rem;">If it is not really about sleep</h3>
-      <p>Sleep is often the first thing to go when something else is wrong — homesickness, a relationship, results, something at home you are carrying alone at eleven at night. If the thing keeping you awake is a <em>thing</em> rather than a habit, these tools will only get you so far. Come and talk about the thing.</p>
+      <p>Sleep is often the first thing to go when something else is wrong: homesickness, a relationship, results, something at home you are carrying alone at eleven at night. When the problem is a <em>thing</em> and not a habit, these tools will only get you so far. Come and talk about the thing.</p>
     </div>
     <div class="btn-row"><button class="btn ghost" id="backStart">Back to the start</button></div>
   </div>
@@ -716,7 +716,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 
 </main>
 
-<footer class="footer no-print">The Sleep Lab · Counselling · <span style="font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ink-soft);font-style:italic;">Built to be argued with</span></footer>
+<footer class="footer no-print">The Sleep Lab · Counselling · <span style="font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ink-soft);font-style:italic;">Leysin American School</span></footer>
 <script>
 (function () {
 'use strict';
@@ -856,109 +856,109 @@ var CATS = [
 
 var STRATS = [
   { id:'light-am', cat:'light', name:'Ten minutes of morning light', effort:'Tiny',
-    why:'Nothing moves your body clock earlier as powerfully as light in the first hour awake.',
-    how:['Get outside within an hour of waking. Overcast counts — outdoor light is many times brighter than any room.','Walk the long way to breakfast, or stand outside with your drink.','A window is weaker than a doorway. Actually go out.'] },
-  { id:'light-pm', cat:'light', name:'Kill the overheads an hour before', effort:'Tiny',
+    why:'Light in the first hour awake is the strongest way to shift your body clock earlier.',
+    how:['Get outside within an hour of waking. Overcast still counts — outdoor light beats any room.','A window is much weaker than a doorway. Actually go out.'] },
+  { id:'light-pm', cat:'light', name:'Dim the lights an hour before', effort:'Tiny',
     why:'Bright evening light tells your clock the day is not over, and pushes sleep later.',
-    how:['One lamp instead of the ceiling light for the last hour.','Phone and laptop on their dimmest setting after that point.','A clip-on reading light keeps the peace in a shared room.'] },
-  { id:'light-winter', cat:'light', name:'Chase the light in winter', effort:'Medium',
-    why:'Dark mornings make an already-late clock later, and flatten mood alongside it.',
-    how:['Take breaks outside during daylight. Especially in the cold.','Sit near a window in the first lesson if you get the choice.','If winter wrecks your sleep and mood every year, raise it with the counselling team.'] },
-  { id:'wake-anchor', cat:'time', name:'One wake time. Every day.', effort:'Hard',
-    why:'A fixed wake time anchors the whole clock. A fixed bedtime does almost nothing on its own.',
-    how:['Pick a time you can hold seven days a week, weekends within about an hour.','Get up at it even after a bad night. Especially after a bad night.','Your bedtime follows within a week or two. Do not chase it directly.'] },
-  { id:'sleepy-not-tired', cat:'time', name:'Go to bed sleepy, not tired', effort:'Medium',
-    why:'Tired is a body state. Sleepy is eyes closing. Going to bed on tired alone trains you to lie awake.',
-    how:['Wait for heavy eyelids, head nodding, losing the thread of what you are reading.','If it is lights out and you are wired, lie quietly instead of fighting for sleep.','Twenty minutes awake occasionally is fine. Every night is a pattern.'] },
-  { id:'nap', cat:'time', name:'Nap like an athlete', effort:'Tiny',
-    why:'A short early nap restores alertness. A long evening one spends the sleep pressure you need at night.',
-    how:['Twenty minutes, alarm set. Make it twenty-five to allow for drifting off.','Before about four in the afternoon.','Never after dinner. That is the one that ruins the night.'] },
+    how:['One lamp instead of the ceiling light for the last hour.','Screens on their dimmest setting. A clip-on reading light keeps the peace in a shared room.'] },
+  { id:'light-winter', cat:'light', name:'Chase daylight in winter', effort:'Medium',
+    why:'Dark mornings push an already-late clock later, and flatten mood with it.',
+    how:['Take breaks outside during daylight, especially in the cold.','If winter wrecks your sleep and mood every year, tell the counselling team.'] },
+  { id:'wake-anchor', cat:'time', name:'Same wake time every day', effort:'Hard',
+    why:'Wake time anchors the whole clock. Your bedtime follows it on its own within a week or two.',
+    how:['Pick a time you can hold seven days a week, weekends within about an hour.','Get up at it even after a bad night.'] },
+  { id:'sleepy-not-tired', cat:'time', name:'Wait until you are sleepy', effort:'Medium',
+    why:'Tired is a body state. Sleepy is your eyes closing. Getting into bed on tired alone trains you to lie awake.',
+    how:['Look for heavy eyelids and losing the thread of what you are reading.','If it is lights out and you are wired, lie quietly rather than fighting for sleep.'] },
+  { id:'nap', cat:'time', name:'Short naps, early', effort:'Tiny',
+    why:'Twenty minutes restores alertness. A long evening nap spends the sleep pressure you need at night.',
+    how:['Twenty minutes with an alarm, before about four in the afternoon.','Never after dinner.'] },
   { id:'weekend', cat:'time', name:'Hold the weekend within an hour', effort:'Hard',
     why:'Sleeping until noon on Saturday drags your clock two hours later and makes Sunday night the worst of the week.',
-    how:['Get up within an hour of your weekday time, Sunday included.','Take the extra sleep as an afternoon nap rather than a lie-in.','Sunday evening: dim, low-stimulation, nothing you have been dreading.'] },
+    how:['Get up within an hour of your weekday time, Sunday included.','Take the extra sleep as an afternoon nap instead of a lie-in.'] },
   { id:'runway', cat:'wind', name:'Build a thirty-minute runway', effort:'Medium',
-    why:'The brain needs a landing sequence. The same actions in the same order become a cue that sleep is next.',
-    how:['Choose three things. Shower, teeth, ten pages. Same order, every night.','Boring is the point. It is a signal, not entertainment.','Start it at the same time even when the work is not finished.'] },
+    why:'The same actions in the same order become a cue that sleep is next.',
+    how:['Pick three things — shower, teeth, ten pages — and keep the order every night.','Start at the same time even when the work is not finished.'] },
   { id:'shower', cat:'wind', name:'Warm shower, ninety minutes out', effort:'Tiny',
-    why:'Warming your skin sends blood to the surface, and the rebound drop in core temperature is one of the strongest sleep cues you have.',
-    how:['Warm, not scalding. Ten minutes is plenty.','An hour or so before lights out, not right before.','Works better still if the room afterwards is cool.'] },
+    why:'Warming your skin triggers a drop in core temperature afterwards, one of the strongest sleep cues you have.',
+    how:['Ten minutes, warm rather than scalding, about an hour before lights out.','Works better if the room afterwards is cool.'] },
   { id:'cutoff', cat:'wind', name:'Stop the hard work first', effort:'Medium',
     why:'Demanding work leaves the brain in a high-arousal state that takes time to come down from.',
-    how:['Last difficult task ends forty-five minutes before lights out.','Save the easy jobs — copying notes, packing kit — for the end.','If you are still going at lights out, stop anyway. Twenty extra minutes never earn back the lost hour.'] },
+    how:['Finish the last difficult task forty-five minutes before lights out.','Save copying notes and packing kit for the end.'] },
   { id:'analog', cat:'wind', name:'Finish the day on paper', effort:'Medium',
-    why:'A book ends. A feed does not. Nothing on that screen ever tells you that you are finished.',
-    how:['Fiction beats revision. Paper beats a screen. A dull book beats a gripping one.','An audiobook on a sleep timer works if reading is not your thing.','No news, no messages, nothing that needs a reply.'] },
-  { id:'cool-dark', cat:'room', name:'Cool, dark, boring', effort:'Tiny',
-    why:'Your core temperature has to fall for sleep to start. A warm room physically blocks it.',
-    how:['Around eighteen degrees. Cooler than feels cosy getting in.','Window cracked if the radiator is fixed and roaring.','Eye mask if the room never really goes dark, or the sun arrives at five in summer.'] },
+    why:'A book ends. A feed never tells you that you are finished.',
+    how:['Fiction beats revision, paper beats a screen, and a dull book beats a gripping one.','An audiobook on a sleep timer works if reading is not your thing.'] },
+  { id:'cool-dark', cat:'room', name:'Cool and dark', effort:'Tiny',
+    why:'Your core temperature has to fall for sleep to start, and a warm room blocks it.',
+    how:['Around eighteen degrees — cooler than feels cosy getting in.','Eye mask if the room never really goes dark, or the sun arrives at five in summer.'] },
   { id:'sound', cat:'room', name:'Cover the noise', effort:'Tiny',
-    why:'It is not the volume that wakes you, it is the change in volume. Steady sound hides the doors and the corridor.',
-    how:['A fan, an air purifier, or a white-noise track on repeat.','Foam earplugs work better than people expect. Give them three nights.','Agree it with your roommate rather than surprising them.'] },
-  { id:'bed-for-sleep', cat:'room', name:'The bed is for sleeping', effort:'Hard',
-    why:'Working, scrolling and worrying in bed teach your brain that bed is where those things happen. That association is doing real work.',
-    how:['Study at a desk or in the common room. Not on the mattress.','If there is nowhere else, sit on top of the covers facing the other way. Even that helps.','Bed for sleep. That is the whole rule.'] },
+    why:'Changes in volume wake you, not volume itself. Steady sound hides the doors and the corridor.',
+    how:['A fan, an air purifier, or a white-noise track on repeat.','Foam earplugs work better than people expect. Give them three nights.'] },
+  { id:'bed-for-sleep', cat:'room', name:'Keep the bed for sleep', effort:'Hard',
+    why:'Working, scrolling and worrying in bed teach your brain that bed is where those things happen.',
+    how:['Study at a desk or in the common room.','If there is nowhere else, sit on top of the covers facing the other way.'] },
   { id:'phone-park', cat:'room', name:'Park the phone across the room', effort:'Medium',
-    why:'Distance is a better lock than willpower. Reaching for it at two in the morning should cost you getting out of bed.',
-    how:['Charge it on the far side of the room, in a bag, or in the house box.','A cheap alarm clock solves the "but it is my alarm" problem.','Do it with your roommate so you are not the only one.'] },
+    why:'Distance works better than willpower. Reaching for it at 2am should cost you getting out of bed.',
+    how:['Charge it on the far side of the room, in a bag, or in the house box.','A cheap alarm clock solves the “but it is my alarm” problem.'] },
   { id:'caffeine', cat:'body', name:'Caffeine curfew at lunchtime', effort:'Medium',
     why:'Half of it is still in you five to six hours later, blocking the receptors that let you feel sleepy.',
-    how:['Nothing caffeinated after about two. Earlier if you are sensitive.','Energy drinks are the usual hidden culprit, then cola, then tea.','Nicotine is a stimulant too. Vaping in the evening fragments the night even when you fall asleep fine.'] },
+    how:['Nothing caffeinated after about two, earlier if you are sensitive.','Energy drinks are the usual culprit. Nicotine counts too.'] },
   { id:'move', cat:'body', name:'Move, but earlier', effort:'Medium',
-    why:'Regular exercise reliably improves sleep quality. Hard training close to lights out delays it for some people.',
-    how:['Any movement, most days. Even a walk moves the needle.','Leave an hour to cool down properly after an evening session.','A hot shower straight after a late session helps the temperature drop land in the right place.'] },
-  { id:'fuel', cat:'body', name:'Not starving, not stuffed', effort:'Tiny',
-    why:'Hunger keeps you alert. A heavy late meal keeps digestion working while your body is trying to cool.',
-    how:['If dinner was early and you are hungry, eat something small an hour before bed.','Something with a bit of protein rather than pure sugar.','Big or spicy meals inside two hours of lights out are the ones to avoid.'] },
+    why:'Regular exercise improves sleep quality. Hard training close to lights out delays it for some people.',
+    how:['Any movement, most days. Even a walk helps.','Leave an hour to cool down after an evening session.'] },
+  { id:'fuel', cat:'body', name:'Keep late meals small', effort:'Tiny',
+    why:'Hunger keeps you alert, and a heavy late meal keeps digestion working while your body is trying to cool.',
+    how:['If dinner was early, eat something small with a bit of protein an hour before bed.','Avoid big or spicy meals within two hours of lights out.'] },
   { id:'no-selfmed', cat:'body', name:'Skip the sleep-aid experiments', effort:'Tiny',
-    why:'Melatonin is a timing signal, not a sedative, and the hour and dose matter more than the brand.',
-    how:['Do not order supplements off a video. Ask the health centre first.','Alcohol puts you under and then fragments the second half of the night.','If you are already using something to sleep, say so. It is useful information, not a confession.'] },
+    why:'Melatonin shifts timing; it does not sedate you. The hour and the dose matter more than the brand.',
+    how:['Ask the health centre before ordering supplements off a video.','Alcohol puts you under, then breaks up the second half of the night.'] },
   { id:'brain-dump', cat:'mind', name:'Empty your head onto paper', effort:'Tiny',
     why:'Writing tomorrow down before bed helps people fall asleep faster. The list holds it so you do not have to.',
-    how:['Five minutes, before the runway starts. Not in bed.','Everything: deadlines, the awkward conversation, what you forgot to say.','Add one line for what you will do about the biggest one. Then close the notebook.'] },
+    how:['Five minutes before the runway starts, not in bed.','Deadlines, the awkward conversation, what you forgot to say. Then close the notebook.'] },
   { id:'twenty-min', cat:'mind', name:'The twenty-minute rule', effort:'Hard',
-    why:'The most effective thing here and the one that feels most wrong. Lying awake frustrated teaches your brain that bed means frustration.',
-    how:['Awake and irritated for what feels like twenty minutes? Get up.','Somewhere dim, something dull. No screens, no bright lights, no snacks.','Go back when you feel sleepy. Repeat as often as it takes. It improves within about a week.'] },
+    why:'Lying awake and frustrated teaches your brain that bed means frustration. This is the most effective tool here and the one that feels most wrong.',
+    how:['Awake and irritated for what feels like twenty minutes? Get up.','Somewhere dim, something dull, no screens. Go back when you feel sleepy.'] },
   { id:'stop-trying', cat:'mind', name:'Give up on falling asleep', effort:'Medium',
-    why:'Trying creates performance pressure. Pressure is arousal, and arousal is the opposite of sleep.',
-    how:['Lie still, eyes closed, and give yourself permission to be awake all night.','Do not check the time. Turn the clock away.','This is not a trick. Resting quietly is genuinely enough.'] },
+    why:'Trying creates pressure, pressure creates arousal, and arousal is the opposite of sleep.',
+    how:['Lie still and give yourself permission to be awake all night.','Do not check the time. Turn the clock away.'] },
   { id:'reframe', cat:'mind', name:'Argue back at the 3am thought', effort:'Medium',
-    why:'"If I do not sleep I will fail tomorrow" is the thought that keeps you awake, and it is not true. You have functioned on bad sleep before.',
-    how:['Name the thought instead of arguing with it: "there is the exam one again".','Write the single next step you will take tomorrow, then drop the case.','One bad night is survivable. That is the fact your brain forgets at three.'] },
+    why:'“If I do not sleep I will fail tomorrow” is the thought keeping you awake, and you have functioned on bad sleep before.',
+    how:['Name it instead of arguing with it: “there is the exam one again”.','Write the single next step for tomorrow, then drop it.'] },
   { id:'breathe', cat:'mind', name:'Long exhales, then a body scan', effort:'Tiny',
-    why:'A slow exhale nudges the nervous system out of alert mode. It will not knock you out, but it lowers the floor.',
-    how:['In for four, out for six or eight. Ten rounds.','Then move attention slowly from your feet upward, unclenching as you go.','When your mind wanders, that is not failure. Come back to the feet.'] },
+    why:'A slow exhale nudges the nervous system out of alert mode. It lowers the floor; it will not knock you out.',
+    how:['In for four, out for six or eight. Ten rounds.','Then move attention slowly from your feet upward, unclenching as you go.'] },
   { id:'roommate', cat:'dorm', name:'Write a roommate treaty', effort:'Medium',
-    why:'Most dorm sleep problems are negotiation problems nobody has had the awkward conversation about.',
-    how:['Agree four things: lights out, alarm rules, headphones after a time, guests.','Write it down and stick it inside a wardrobe door. Written beats remembered.','Include what happens when someone breaks it, so the first breach is not a fight.'] },
+    why:'Most dorm sleep problems are negotiations nobody has had yet.',
+    how:['Agree four things: lights out, alarm rules, headphones after a time, guests.','Write it down and stick it inside a wardrobe door.'] },
   { id:'transition', cat:'dorm', name:'Invent your commute home', effort:'Tiny',
-    why:'Day students get a bus ride between work and home. You go from prep to bedroom in ninety seconds and your brain never files the day as finished.',
-    how:['Ten minutes outside after prep, a lap of the building, or a shower.','Same thing every night. It is a boundary, not exercise.','Especially important if you study in your room.'] },
+    why:'Day students get a bus ride between work and home. You go from prep to bedroom in ninety seconds, and your brain never files the day as finished.',
+    how:['Ten minutes outside after prep, a lap of the building, or a shower.','Same thing every night. Especially if you study in your room.'] },
   { id:'calls', cat:'dorm', name:'Call home earlier', effort:'Medium',
-    why:'Home calls carry feelings. A hard one at eleven at night leaves nowhere to put them.',
-    how:['Schedule the regular call for afternoon or early evening where the time difference allows.','If it has to be late, leave twenty minutes and something calm afterwards.','A call that goes badly is worth telling someone about rather than taking to bed.'] },
+    why:'Home calls carry feelings, and a hard one at eleven at night leaves nowhere to put them.',
+    how:['Schedule the regular call for afternoon or early evening where the time difference allows.','If it has to be late, leave twenty minutes and something calm afterwards.'] },
   { id:'jetlag', cat:'dorm', name:'Land the flight properly', effort:'Medium',
-    why:'Coming back across time zones drops a delayed clock even further out. Forcing it in one night does not work.',
-    how:['Morning light on the first day back, however wrecked you feel.','Shift your schedule thirty to sixty minutes a day rather than all at once.','No long naps on day one. Twenty minutes if you must, before four.'] },
+    why:'Coming back across time zones drops a delayed clock further out. You cannot force it back in one night.',
+    how:['Morning light on the first day back, however wrecked you feel.','Shift by thirty to sixty minutes a day. No long naps on day one.'] },
   { id:'sunday', cat:'dorm', name:'Do the Sunday reset in daylight', effort:'Medium',
     why:'Sunday night insomnia is usually the week arriving all at once in the dark.',
-    how:['Plan the week on Sunday afternoon. Bag packed, kit found, deadlines written.','Then Sunday evening is allowed to be genuinely empty.','Hold your normal wake time on Sunday morning and the night gets easier by itself.'] }
+    how:['Plan the week on Sunday afternoon: bag packed, kit found, deadlines written.','Hold your normal wake time on Sunday morning.'] }
 ];
 
 var PROFILES = {
   late:   { name:'Your clock is running late',
-            body:'You are wide awake at midnight and destroyed at seven. This is a timing problem rather than a willpower problem, and it answers to light and to a fixed wake time far more than to going to bed earlier. Start with your mornings, not your evenings.',
+            body:'Wide awake at midnight, destroyed at seven. This is a timing problem, and it answers to morning light and a fixed wake time far more than to an earlier bedtime. Start with your mornings.',
             picks:['light-am','wake-anchor','light-pm','caffeine','weekend'] },
   head:   { name:'Your head will not switch off',
-            body:'The body is ready and the mind is still in prep. The work here is lowering arousal before you get into bed, and giving the thoughts somewhere to go that is not your pillow.',
+            body:'The body is ready and the mind is still in prep. Your work is lowering arousal before you get into bed, and giving the thoughts somewhere to go.',
             picks:['brain-dump','runway','cutoff','breathe','transition'] },
   wait:   { name:'You lie there for hours',
-            body:'You are spending a long time in bed awake, which quietly teaches your brain that bed is a place of frustration. Breaking that association is uncomfortable for about a week and then it works better than anything else here.',
+            body:'Long stretches awake in bed teach your brain that bed is where frustration happens. Breaking that is uncomfortable for a week, then it works better than anything else here.',
             picks:['twenty-min','bed-for-sleep','sleepy-not-tired','stop-trying','phone-park'] },
   broken: { name:'The night keeps getting broken',
-            body:'You get to sleep fine and then the room, the corridor, the heat or your roommate takes it apart. Most of this is environmental, and most of it is fixable this week.',
+            body:'You get to sleep fine, then the room, the corridor, the heat or your roommate takes it apart. Most of this is environmental and fixable this week.',
             picks:['sound','cool-dark','roommate','phone-park','fuel'] },
   drift:  { name:'Your schedule moves every day',
-            body:'No two nights look the same, so your clock never gets a consistent signal about when sleep is meant to happen. Regularity will do more for you than any single technique.',
+            body:'No two nights look the same, so your clock never gets a consistent signal. Regularity will do more for you than any single technique.',
             picks:['wake-anchor','weekend','nap','runway','sunday'] }
 };
 
@@ -1637,10 +1637,10 @@ function renderLog(){
           return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
                  '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
         }).join('')+'</table>'+
-        '<p class="hint" style="margin-top:.6rem;">A change here is not proof the tools caused it. You had no control group, you knew which phase you were in, and people who start measuring anything tend to drift toward the middle. Those are the limitations to write up, not to hide.</p>';
+        '<p class="hint" style="margin-top:.6rem;">A change here does not prove the tools caused it: no control group, you knew which phase you were in, and people who start measuring anything drift toward the middle. Write those limitations up.</p>';
     } else if(CONFIG.STUDY_MODE){
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Baseline vs intervention</span><p class="hint" style="margin-top:.5rem;">Needs at least three nights in each phase before a comparison means anything. '+base.length+' baseline, '+iv.length+' intervention so far.</p>';
+      cmp.innerHTML='<span class="label">Baseline vs intervention</span><p class="hint" style="margin-top:.5rem;">Needs three nights in each phase. '+base.length+' baseline, '+iv.length+' intervention so far.</p>';
     } else { cmp.style.display='none'; }
   }
 
@@ -1811,18 +1811,18 @@ function renderAcct(){
 
   if(!CONFIG.STUDENT_ENDPOINT){
     box.className='acct';
-    txt.innerHTML='<strong>Saving to this device only.</strong> Nothing you type here leaves this browser. Counselling has not switched on the school account yet — the CSV download at the bottom is how you keep a copy.';
+    txt.innerHTML='<strong>Saving to this device only.</strong> Nothing you type here leaves this browser. Use the CSV download to keep a copy.';
     inBtn.style.display='none'; syBtn.style.display='none'; acctSay('');
     return;
   }
   if(Account.on){
     box.className='acct on';
-    txt.innerHTML='<strong>Signed in.</strong> Your nights are saved to your own record in the counselling Sheet, and to this device.<br><span class="who">'+esc(Account.email)+'</span>';
+    txt.innerHTML='<strong>Signed in.</strong> Your nights save to this device and to your own record.<br><span class="who">'+esc(Account.email)+'</span>';
     inBtn.style.display='none'; syBtn.style.display='';
     acctSay(Account.pushing ? 'Saving ' + Account.pushing + '…' : (unsent ? unsent+' night'+(unsent>1?'s':'')+' waiting' : 'Up to date'));
   } else {
     box.className='acct off';
-    txt.innerHTML='<strong>Not signed in.</strong> Everything still works and still saves to this device — signing in with your '+esc(CONFIG.SCHOOL_NAME)+' Google account just means your log follows you to any computer, and counts toward the whole-school picture.'
+    txt.innerHTML='<strong>Not signed in.</strong> Everything still works and saves here. Sign in with your '+esc(CONFIG.SCHOOL_NAME)+' Google account and your log follows you to any computer.'
       + (Account.lastError ? '<br><span class="hint">'+esc(Account.lastError)+'</span>' : '');
     inBtn.style.display=''; syBtn.style.display='none';
     acctSay(unsent ? unsent+' night'+(unsent>1?'s':'')+' on this device' : '');
@@ -1842,8 +1842,8 @@ function syncPull(opts){
   }, function(err){
     Account.on=false;
     Account.lastError = err.message==='forbidden'
-      ? 'That account is not on the Sleep Lab roster yet. Speak to counselling and they will add you.'
-      : (opts && opts.loud ? 'Could not reach the school Sleep Lab just now. Your log is safe on this device.' : '');
+      ? 'That account is not on the Sleep Lab roster yet. Ask counselling to add you.'
+      : (opts && opts.loud ? 'Could not reach the school Sleep Lab. Your log is safe on this device.' : '');
     renderAcct();
   });
 }
@@ -1939,10 +1939,10 @@ function classOffline(msg){
 function renderClass(d){
   if(!d || !d.ready){
     classOffline(d && d.message ? d.message
-      : 'Not enough nights logged yet for these numbers to be anonymous. Come back once more of the school has joined in.');
+      : 'Not enough nights logged yet to show these anonymously.');
     $('classNote').style.display='block';
     $('classNote').textContent = d && d.message ? d.message
-      : 'The dashboard stays blank until enough people have logged nights that no individual could be worked out from the totals.';
+      : 'The dashboard stays blank until enough people have logged nights that nobody can be identified from the totals.';
     return;
   }
   $('classNote').style.display='none';
@@ -1975,9 +1975,9 @@ function renderClass(d){
                '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
       }).join('')+'</table>';
   } else {
-    $('classPhase').innerHTML='<p class="hint">The comparison appears once enough people have finished a baseline week and an intervention week.</p>';
+    $('classPhase').innerHTML='<p class="hint">Appears once enough people have finished both weeks.</p>';
   }
-  $('classFoot').textContent='Last updated '+(d.updated||'just now')+'. Aggregate counts only — no names, no email addresses, and no single night is ever shown on its own.';
+  $('classFoot').textContent='Last updated '+(d.updated||'just now')+'. Counts only — no names, no email addresses, no single night shown on its own.';
 }
 
 function loadClass(force){
@@ -1985,14 +1985,14 @@ function loadClass(force){
   if(!CONFIG.PUBLIC_ENDPOINT){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='The whole-school dashboard is not switched on yet. Once counselling connects the Lab to its Sheet, every night logged across the school appears here with the names stripped off.';
+    $('classNote').textContent='Not switched on yet. Once counselling connects the Lab, every night logged across the school appears here with the names stripped off.';
     classOffline('Waiting on the school connection.');
     return;
   }
   classLoaded=true;
   Net.call(CONFIG.PUBLIC_ENDPOINT, { route:'class' }, renderClass, function(){
     $('classNote').style.display='block';
-    $('classNote').textContent='Could not reach the school dashboard just now. Nothing is wrong with your own log.';
+    $('classNote').textContent='Could not reach the school dashboard. Your own log is unaffected.';
     classOffline('Dashboard unavailable.');
     classLoaded=false;
   });
@@ -2006,7 +2006,7 @@ function loadClass(force){
 loadAll();
 if(!Store.ok){
   $('storeNote').style.display='block';
-  $('storeNote').textContent='This browser is not letting the page save anything, so your log will disappear when you close the tab. Use the CSV download at the bottom to keep it, or open the page in its own tab rather than inside another site.';
+  $('storeNote').textContent='This browser will not let the page save anything, so your log disappears when you close the tab. Download the CSV to keep it, or open this page in its own tab.';
 }
 renderQuiz();
 if(CONFIG.FORM_ACTION) $('saveLog').textContent='Save & submit to the study';

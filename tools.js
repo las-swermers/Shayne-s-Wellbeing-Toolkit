@@ -1,9 +1,9 @@
 /* Add a tool by creating tools/<slug>/index.html and one object below. */
 const tools = [
-  { id: 'sleep-lab', name: 'Sleep Lab', cat: 'Experiment', blurb: 'How sleep works, a fortnight-long experiment, and what the whole school is finding.', href: 'sleep-lab.html', access: 'open', icon: 'moon' },
-  { id: 'first-weeks-away', name: 'First weeks away', cat: 'Settling in', blurb: 'A gentle guide for the first stretch of term.', href: '#', access: 'soon', icon: 'compass' },
-  { id: 'exam-nerves', name: 'Exam nerves', cat: 'Study', blurb: 'Practical ways to make room for nerves and keep moving.', href: '#', access: 'soon', icon: 'spark' },
-  { id: 'roommate-treaty', name: 'Roommate treaty', cat: 'Living together', blurb: 'A simple conversation starter for shared rooms.', href: '#', access: 'soon', icon: 'home' }
+  { id: 'sleep-lab', name: 'Sleep Lab', cat: 'Experiment', blurb: 'How sleep works, a two-week experiment, and how the whole school is sleeping.', href: 'sleep-lab.html', access: 'open', icon: 'moon' },
+  { id: 'first-weeks-away', name: 'First weeks away', cat: 'Settling in', blurb: 'Getting through the first stretch of term.', href: '#', access: 'soon', icon: 'compass' },
+  { id: 'exam-nerves', name: 'Exam nerves', cat: 'Study', blurb: 'What to do with nerves before and during exams.', href: '#', access: 'soon', icon: 'spark' },
+  { id: 'roommate-treaty', name: 'Roommate treaty', cat: 'Living together', blurb: 'Sorting out a shared room before it becomes a problem.', href: '#', access: 'soon', icon: 'home' }
 ];
 const icons = {
   moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 15.2A8.7 8.7 0 0 1 8.8 3.3 9 9 0 1 0 20.7 15.2Z"/></svg>',
