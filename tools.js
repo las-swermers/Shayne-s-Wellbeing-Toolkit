@@ -12,7 +12,7 @@ const icons = {
   home: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2.5 11h2.7v9h5.2v-5.3h3.2V20h5.2v-9h2.7L12 3Z"/></svg>'
 };
 const shelf = document.querySelector('#tools');
-shelf.innerHTML = tools.map(tool => {
+shelf.innerHTML = tools.filter(tool => !shelf.dataset.access || tool.access === shelf.dataset.access).map(tool => {
   const soon = tool.access === 'soon';
   const content = `<span class="tool-icon">${icons[tool.icon]}</span><span><h3>${tool.name}</h3><p>${tool.blurb}</p>${soon ? '<span class="tag">Coming soon</span>' : ''}</span><span class="arrow" aria-hidden="true">${soon ? '·' : '→'}</span>`;
   return soon ? `<div class="tool soon" aria-label="${tool.name}, coming soon">${content}</div>` : `<a class="tool" href="${tool.href}">${content}</a>`;
