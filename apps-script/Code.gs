@@ -1,15 +1,14 @@
 /**
  * The Sleep Lab — backend for the counselling-owned Google Sheet.
  *
- * Paste this into a script BOUND to that Sheet (Extensions → Apps Script), then
- * deploy it twice. Setup, in order, is in SETUP.md.
+ * Paste this into a script BOUND to that Sheet (Extensions → Apps Script) and
+ * deploy it ONCE. Setup, in order, is in SETUP.md.
  *
- *   Student deployment · Execute as: Me · Access: Anyone in <your school>
+ *   Execute as: Me · Access: Anyone in <your school>
  *     Google performs the login and hands this script a verified school email,
  *     so the page never sees a password and students never touch the Sheet.
- *
- *   Public deployment  · Execute as: Me · Access: Anyone
- *     Serves route=class only. Aggregate counts, nothing else.
+ *     Everyone at the school can read the anonymous class numbers; nobody
+ *     outside it reaches this script at all.
  *
  * Everything answers JSONP, because the static site is on another origin and an
  * Apps Script web app redirects in a way that breaks a plain cross-origin fetch.
@@ -28,15 +27,16 @@ var CONFIG = {
      with consent = yes. False means any signed-in school account may take part. */
   REQUIRE_ROSTER: false,
 
-  /* The public dashboard stays blank until this many different students have
+  /* The class dashboard stays blank until this many different students have
      logged a night. It is the whole anonymity guarantee — do not lower it
      without deciding, on purpose, that you are happy for a small group to be
      identifiable from the totals. */
   MIN_STUDENTS: 5,
   MIN_BUCKET: 3,                // a bar with fewer nights than this is folded away
 
-  /* Baseline-then-intervention study. Leave STUDY_START blank to run the Lab
-     as an open tracker with no phases. Do not change the dates mid-study. */
+  /* The class fortnight. Set STUDY_START and everyone runs the same two weeks.
+     Leave it blank and each student's own first logged night becomes their day
+     one, which is what the page sends up. Do not change it mid-study. */
   STUDY_START: '',              // 'YYYY-MM-DD', first baseline morning
   BASELINE_DAYS: 7,
   INTERVENTION_DAYS: 7,
@@ -47,9 +47,10 @@ var CONFIG = {
 var HEADERS = {
   Roster:   ['school_email', 'house', 'year_group', 'consent', 'added_at'],
   Students: ['school_email', 'house', 'first_seen', 'last_seen', 'nights_logged'],
-  Nights:   ['school_email', 'date', 'lights_out', 'out_of_bed', 'mins_to_sleep',
+  Nights:   ['school_email', 'date', 'cycle', 'lights_out', 'out_of_bed', 'mins_to_sleep',
              'wakings', 'mins_in_bed', 'mins_asleep', 'efficiency', 'day_rating',
-             'tools_done', 'tools_total', 'tools', 'phase', 'updated_at']
+             'tools_done', 'tools_total', 'tools', 'phase', 'updated_at'],
+  Cycles:   ['school_email', 'cycle', 'start_date', 'committed_at', 'tools', 'answers', 'updated_at']
 };
 
 /* ═════════ ROUTING ═════════ */
@@ -65,6 +66,7 @@ function doGet(e) {
     if (route === 'class')       body = classSummary_();
     else if (route === 'me')     body = me_();
     else if (route === 'save')   body = saveNight_(p);
+    else if (route === 'cycle')  body = saveCycle_(p);
     else if (route === 'delete') body = deleteNight_(p);
     else                         body = { error: 'unknown-route' };
   } catch (err) {
@@ -140,7 +142,8 @@ function me_() {
         lat: num_(r.mins_to_sleep), wk: num_(r.wakings),
         inBed: num_(r.mins_in_bed), asleep: num_(r.mins_asleep),
         eff: num_(r.efficiency), energy: num_(r.day_rating),
-        done: num_(r.tools_done), of: num_(r.tools_total), phase: r.phase || ''
+        done: num_(r.tools_done), of: num_(r.tools_total), phase: r.phase || '',
+        cycle: num_(r.cycle) || 1
       };
     })
   };
@@ -157,6 +160,7 @@ function saveNight_(p) {
     upsertNight_(email, date, {
       school_email: email,
       date: date,
+      cycle: num_(p.cycle) || 1,
       lights_out: clean_(p.out),
       out_of_bed: clean_(p.up),
       mins_to_sleep: num_(p.lat),
@@ -179,6 +183,30 @@ function saveNight_(p) {
   return { ok: true, date: date, phase: phaseFor_(date) };
 }
 
+/** Records what a student chose for a round, and when. One row per round. */
+function saveCycle_(p) {
+  var email = requireStudent_();
+  var n = num_(p.cycle) || 1;
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var sheet = sheet_('Cycles');
+    if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS.Cycles);
+    var row = [email, n, clean_(p.start), clean_(p.committed), clean_(p.tools), clean_(p.answers), stamp_()];
+    var data = sheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      if (sameEmail_(data[i][0], email) && num_(data[i][1]) === n) {
+        sheet.getRange(i + 1, 1, 1, row.length).setValues([row]);
+        return { ok: true };
+      }
+    }
+    sheet.appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  return { ok: true };
+}
+
 function deleteNight_(p) {
   var email = requireStudent_();
   var date = clean_(p.date);
@@ -191,14 +219,15 @@ function deleteNight_(p) {
   return { ok: true };
 }
 
-/* ═════════ PUBLIC ROUTE ═════════ */
+/* ═════════ CLASS ROUTE ═════════ */
 
 /**
- * Every number the open dashboard is allowed to know. Reads Nights, returns
+ * Every number the class dashboard is allowed to know. Reads Nights, returns
  * counts. No email address, no per-student row and no single night ever leaves
  * this function — if you add a field here, check it cannot be traced to a person.
  */
 function classSummary_() {
+  requireStudent_();   // school login required; the numbers themselves are anonymous
   var cache = CacheService.getScriptCache();
   var hit = cache.get('class-summary');
   if (hit) return JSON.parse(hit);
@@ -213,7 +242,7 @@ function classSummary_() {
     out = {
       ready: false,
       message: 'The dashboard opens once at least ' + CONFIG.MIN_STUDENTS +
-               ' students have logged a night, so that no one can be picked out of the totals.'
+               ' students have logged a night, so nobody can be picked out of the totals.'
     };
   } else {
     var hours = all.map(function (r) { return num_(r.mins_asleep) / 60; });
@@ -227,7 +256,6 @@ function classSummary_() {
       pctEnough: Math.round(enough / all.length * 100),
       avgEnergy: mean_(all.map(function (r) { return num_(r.day_rating); })),
       hours: bucketHours_(all),
-      energy: bucketEnergy_(all),
       weekday: byWeekday_(all),
       tools: topTools_(all),
       phases: phaseAverages_(all),
@@ -252,13 +280,6 @@ function bucketHours_(rows) {
   });
 }
 
-function bucketEnergy_(rows) {
-  var labels = ['1 · rough', '2', '3 · okay', '4', '5 · rested'];
-  return labels.map(function (label, i) {
-    var n = rows.filter(function (r) { return num_(r.day_rating) === i + 1; }).length;
-    return { band: label, n: n < CONFIG.MIN_BUCKET ? 0 : n };
-  });
-}
 
 function byWeekday_(rows) {
   var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -285,8 +306,9 @@ function topTools_(rows) {
     .slice(0, 8);
 }
 
+/* Rows carry a phase whether it came from CONFIG.STUDY_START or from the
+   student's own first night, so this works either way. */
 function phaseAverages_(rows) {
-  if (!CONFIG.STUDY_START) return null;
   var out = {};
   ['baseline', 'intervention'].forEach(function (phase) {
     var set = rows.filter(function (r) { return r.phase === phase; });
@@ -323,7 +345,7 @@ function selfTest() {
     'Domain lock: ' + (CONFIG.ALLOWED_DOMAIN || 'off'),
     'Roster required: ' + CONFIG.REQUIRE_ROSTER,
     'Nights on file: ' + rows_('Nights').length,
-    'Public dashboard: ' + (classSummary_().ready ? 'live' : 'held back for anonymity')
+    'Class dashboard: ' + (classSummary_().ready ? 'live' : 'held back for anonymity')
   ].join('\n');
   Logger.log(report);
   return report;
