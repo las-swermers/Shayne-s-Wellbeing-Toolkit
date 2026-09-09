@@ -11,7 +11,7 @@ Restyle two existing pages. Do not redesign what they do — the structure,
 copy and behaviour are settled and working. This is a skin.
 
 - `index.html` — the shelf. A heading and four tool cards, rendered from `tools.js`.
-- `sleep-lab.html` — the Sleep Lab. One file, four tabs, plus a printed sheet.
+- `sleep-lab.html` — the Sleep Lab. One file, five tabs, plus a printed sheet.
 
 ## Hard constraints
 
@@ -22,8 +22,10 @@ These are not preferences. Breaking any of them breaks the site.
    file's own `<style>` block.
 2. **Everything already in the page keeps working.** The tab bar and its arrow-key
    navigation, the night/day theme toggle, the sleep-pressure chart, the hours
-   chart, the tracker form, the tool picker, the printed tracking sheet, and the
-   sign-in strip with its four states. Restyle them; do not rewrite their logic.
+   chart, the tracker form, the printed tracking sheet, the sign-in strip with
+   its four states, and the staged flow — the stage card, the progress pips, the
+   five-question review and its recommendation cards. Restyle them; do not
+   rewrite their logic.
 3. **The CSS custom properties are the theming system.** `--paper`, `--ink`,
    `--amber`, `--teal`, `--coral`, `--indigo`, `--hairline` and the rest are
    redefined under `:root[data-theme="day"]`, and the SVG charts read them at
@@ -71,18 +73,23 @@ What that means concretely:
 
 In order:
 
-1. **The printed tracking sheet.** A student fills this in by hand for fourteen
+1. **The stage card and the review.** This is the app now: a student opens My log
+   and is told exactly where they are and what to do today. The progress pips,
+   the "your review is ready" moment, the readout of their own numbers, and the
+   recommendation cards are the emotional core of the tool. They currently look
+   like ordinary form furniture.
+2. **The printed tracking sheet.** A student fills this in by hand for fourteen
    nights and pins it up. It prints from the same file, so it has to work in black
    on white with no colour to lean on. Currently the weakest piece.
-2. **The week-one/week-two comparison tables.** This is the whole point of the
+3. **The week-one/week-two comparison tables.** This is the whole point of the
    tool and it currently renders as a plain table. It should be the moment the
    page pays off.
-3. **The school dashboard (tab 03).** Five stat tiles, two bar charts, one
+4. **The school dashboard (tab 04).** Five stat tiles, two bar charts, one
    comparison. Make it read like an instrument panel, and remember a teacher may
    project it.
-4. **The sign-in strip.** Four states — not connected, not signed in, signed in,
+5. **The sign-in strip.** Four states — not connected, not signed in, signed in,
    syncing. It must say "your data is safe either way" at a glance.
-5. **The shelf (`index.html`).** A different visual language from the Lab. Bring
+6. **The shelf (`index.html`).** A different visual language from the Lab. Bring
    them into one system; the Lab is the reference.
 
 ## The copy

@@ -25,7 +25,7 @@ One Sheet, one script, one deployment. About fifteen minutes.
    - `REQUIRE_ROSTER` — leave `false` to let any signed-in school account take
      part. Set `true` to approve each student first, using the `Roster` tab.
 5. Run **`setupSheets`** once from the editor toolbar and approve the permissions.
-   It creates the `Roster`, `Students` and `Nights` tabs.
+   It creates the `Roster`, `Students`, `Nights` and `Cycles` tabs.
 
 ---
 
@@ -81,12 +81,19 @@ as a deliberate decision.
 ## Running the fortnight with a class
 
 - Set `STUDY_START` in **both** `Code.gs` and `sleep-lab.html` to the first Monday.
-- Hand out the printed tracking sheet (the **Print the tracking sheet** button)
-  so students have something physical for week one.
-- Week one the page tells them to change nothing. Week two it shows the three
-  changes they picked and asks which they managed.
-- The comparison appears on their own page once they have three nights in each
-  week, and on the school tab once enough of the class has.
+- Hand out the printed tracking sheet so students have something physical for
+  week one.
+- **Week one** the page tells them to change nothing and shows how many nights
+  remain before their review unlocks (5 by default).
+- **The review** reads their own baseline back to them, asks five questions, and
+  recommends changes with their numbers as the reason. They pick three and commit.
+- **Week two** their choices appear as daily tick-boxes.
+- **Results** puts the two weeks side by side, and offers another round.
+
+Each round is numbered. The `Nights` tab carries a `cycle` column and the
+`Cycles` tab records what each student chose and when — one row per student per
+round, which is the table to look at if you want to know which changes were
+popular and which actually moved anything.
 
 ---
 

@@ -47,9 +47,10 @@ var CONFIG = {
 var HEADERS = {
   Roster:   ['school_email', 'house', 'year_group', 'consent', 'added_at'],
   Students: ['school_email', 'house', 'first_seen', 'last_seen', 'nights_logged'],
-  Nights:   ['school_email', 'date', 'lights_out', 'out_of_bed', 'mins_to_sleep',
+  Nights:   ['school_email', 'date', 'cycle', 'lights_out', 'out_of_bed', 'mins_to_sleep',
              'wakings', 'mins_in_bed', 'mins_asleep', 'efficiency', 'day_rating',
-             'tools_done', 'tools_total', 'tools', 'phase', 'updated_at']
+             'tools_done', 'tools_total', 'tools', 'phase', 'updated_at'],
+  Cycles:   ['school_email', 'cycle', 'start_date', 'committed_at', 'tools', 'answers', 'updated_at']
 };
 
 /* ═════════ ROUTING ═════════ */
@@ -65,6 +66,7 @@ function doGet(e) {
     if (route === 'class')       body = classSummary_();
     else if (route === 'me')     body = me_();
     else if (route === 'save')   body = saveNight_(p);
+    else if (route === 'cycle')  body = saveCycle_(p);
     else if (route === 'delete') body = deleteNight_(p);
     else                         body = { error: 'unknown-route' };
   } catch (err) {
@@ -140,7 +142,8 @@ function me_() {
         lat: num_(r.mins_to_sleep), wk: num_(r.wakings),
         inBed: num_(r.mins_in_bed), asleep: num_(r.mins_asleep),
         eff: num_(r.efficiency), energy: num_(r.day_rating),
-        done: num_(r.tools_done), of: num_(r.tools_total), phase: r.phase || ''
+        done: num_(r.tools_done), of: num_(r.tools_total), phase: r.phase || '',
+        cycle: num_(r.cycle) || 1
       };
     })
   };
@@ -157,6 +160,7 @@ function saveNight_(p) {
     upsertNight_(email, date, {
       school_email: email,
       date: date,
+      cycle: num_(p.cycle) || 1,
       lights_out: clean_(p.out),
       out_of_bed: clean_(p.up),
       mins_to_sleep: num_(p.lat),
@@ -177,6 +181,30 @@ function saveNight_(p) {
   }
   CacheService.getScriptCache().remove('class-summary');
   return { ok: true, date: date, phase: phaseFor_(date) };
+}
+
+/** Records what a student chose for a round, and when. One row per round. */
+function saveCycle_(p) {
+  var email = requireStudent_();
+  var n = num_(p.cycle) || 1;
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var sheet = sheet_('Cycles');
+    if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS.Cycles);
+    var row = [email, n, clean_(p.start), clean_(p.committed), clean_(p.tools), clean_(p.answers), stamp_()];
+    var data = sheet.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      if (sameEmail_(data[i][0], email) && num_(data[i][1]) === n) {
+        sheet.getRange(i + 1, 1, 1, row.length).setValues([row]);
+        return { ok: true };
+      }
+    }
+    sheet.appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  return { ok: true };
 }
 
 function deleteNight_(p) {
