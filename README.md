@@ -35,29 +35,35 @@ is renamed or the site moves to a custom domain.
 
 ## The Sleep Lab
 
-`sleep-lab.html` is the whole thing in one file — eight tabs, from how sleep works
-through to where to get help.
+`sleep-lab.html` is the whole thing in one file. It runs a two-week experiment:
+measure a week of ordinary sleep, change two or three things, measure a second
+week, compare.
 
 | Tab | Access |
 |---|---|
-| 01–04 · How sleep works, Sleep check, Toolkit, My plan | Open to anyone |
-| 05 · My tracker | Works offline; signs in for a record that follows the student |
-| 06 · The whole school | Open to anyone — anonymous aggregates |
-| 07–08 · Print & sign, More help | Open to anyone |
+| 01 · How it works | Open to anyone. Ten changes, one chart, and the printable tracking sheet. |
+| 02 · My log | Works offline; signs in for a record that follows the student. |
+| 03 · The school | Anonymous aggregates, readable by anyone with a school login. |
+| 04 · More help | Open to anyone. |
 
-**Out of the box it needs no setup.** With `CONFIG.STUDENT_ENDPOINT` and
-`CONFIG.PUBLIC_ENDPOINT` left blank, the tracker saves to the student's own browser
-and the school dashboard says plainly that it is not connected yet.
+**Out of the box it needs no setup.** With `CONFIG.ENDPOINT` blank the log saves to
+the student's own browser, their week-one/week-two comparison still works, and the
+school tab says plainly that it is not connected yet.
 
-To switch on Google sign-in and the live dashboard, follow
-[`apps-script/SETUP.md`](apps-script/SETUP.md). The short version: one Apps Script
-project bound to a counselling-owned Sheet, deployed twice — once for signed-in
-students on your domain, once for the anonymous public dashboard. Students never
-receive the Sheet link and never need access to it.
+To switch on Google sign-in and the school numbers, follow
+[`apps-script/SETUP.md`](apps-script/SETUP.md) — one Apps Script project bound to a
+counselling-owned Sheet, deployed once. Students never receive the Sheet link and
+never need access to it.
+
+### The fortnight
+
+`CONFIG.STUDY_START` sets the first morning of week one, so a whole class runs the
+same two weeks. Leave it blank and each student's first logged night becomes their
+own day one. Either way the page always knows where a student is and says so.
 
 ### Privacy shape
 
 - Identity is Google's job. This site holds no passwords and no tokens.
 - The Sheet lives in the counselling Drive and is a pastoral record.
-- The public dashboard can only read aggregate counts, and stays blank until
-  enough students have logged nights that nobody can be picked out of the totals.
+- The school dashboard reads aggregate counts only, and stays blank until enough
+  students have logged nights that nobody can be picked out of the totals.

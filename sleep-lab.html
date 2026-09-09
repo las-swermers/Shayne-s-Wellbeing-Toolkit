@@ -149,58 +149,36 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 .fact-n { font-family:var(--serif); font-size:2.3rem; line-height:1; color:var(--amber); display:block; margin-bottom:.35rem; }
 .fact-b { font-size:.86rem; color:var(--ink-soft); }
 
-/* ═══ CHECK ═══ */
-.q { border-top:1px solid var(--hairline-soft); padding:1.25rem 0; }
-.q:first-child { border-top:0; padding-top:0; }
-.q h3 { margin-bottom:.75rem; max-width:32ch; }
-.q .qn { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; color:var(--amber); display:block; margin-bottom:.3rem; }
-.opts { display:flex; flex-wrap:wrap; gap:.45rem; }
-.opt { border:1px solid var(--hairline); background:none; color:var(--ink-soft); font-family:var(--sans); font-size:.87rem; padding:.48rem .8rem; cursor:pointer; text-align:left; transition:.2s; }
-.opt:hover { border-color:var(--amber); color:var(--ink); }
-.opt[aria-pressed="true"] { background:var(--amber); color:var(--paper-deep); border-color:var(--amber); font-weight:500; }
-.progress-wrap { margin:1.75rem 0 0; }
-.progress-bar { height:3px; background:var(--track); border:1px solid var(--hairline-soft); }
-.progress-fill { height:100%; background:var(--amber); width:0; transition:width .35s cubic-bezier(.22,1,.36,1); }
-.progress-txt { font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); margin-top:.5rem; }
+/* ═══ STEPS ═══ */
+.steps { display:grid; grid-template-columns:1fr; gap:1px; background:var(--hairline-soft); border:1px solid var(--hairline-soft); margin:2rem 0; }
+@media (min-width:760px){ .steps { grid-template-columns:repeat(3,1fr); } }
+.step { background:var(--paper); padding:1.15rem 1.2rem; }
+.step-n { font-family:var(--mono); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); }
+.step h3 { font-size:1.15rem; margin:.35rem 0 .4rem; }
+.step p { font-size:.85rem; color:var(--ink-mute); max-width:none; }
 
-.result { display:none; margin-top:2.25rem; }
-.result.on { display:block; animation:fade .5s cubic-bezier(.22,1,.36,1); }
-.result-head { border:1px solid var(--amber); border-left-width:3px; background:var(--card-bg); padding:1.5rem; }
-.result-head h3 { color:var(--amber); font-size:1.6rem; margin-bottom:.5rem; }
-.result-head p { font-size:.95rem; color:var(--ink-soft); }
-.readout { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1px; background:var(--hairline-soft); border:1px solid var(--hairline-soft); margin-top:1.25rem; }
-.readout div { background:var(--paper); padding:.85rem .9rem; }
-.readout .rv { font-family:var(--mono); font-size:1.05rem; color:var(--ink); display:block; margin-top:.2rem; }
-.mini { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:.7rem; margin-top:1.25rem; }
-.mini-card { border:1px solid var(--hairline); background:var(--card-bg); padding:.95rem; display:flex; flex-direction:column; }
-.mini-card.on { border-color:var(--amber); border-left-width:3px; }
-.mini-card h4 { font-family:var(--serif); font-size:1.15rem; font-weight:500; margin-bottom:.35rem; }
-.mini-card .mw { font-size:.82rem; color:var(--ink-mute); flex:1; margin-bottom:.75rem; }
-.mini-btn { border:1px solid var(--hairline); background:none; color:var(--ink-soft); font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.42rem; cursor:pointer; transition:.2s; }
-.mini-btn:hover { border-color:var(--amber); color:var(--amber); }
-.mini-card.on .mini-btn { background:var(--amber); color:var(--paper-deep); border-color:var(--amber); }
+/* ═══ FACTS ═══ */
+.facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hairline-soft); border:1px solid var(--hairline-soft); margin:2rem 0; }
+.fact { background:var(--paper); padding:1rem 1.1rem; }
+.fact-n { font-family:var(--serif); font-size:2.4rem; line-height:1; color:var(--amber); display:block; }
+.fact-b { font-size:.8rem; color:var(--ink-mute); margin-top:.45rem; }
 
-/* ═══ CARDS ═══ */
-.filters { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:1.5rem; }
-.chip { border:1px solid var(--hairline); background:none; color:var(--ink-mute); font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; padding:.38rem .65rem; cursor:pointer; transition:.2s; }
-.chip:hover { color:var(--ink); }
-.chip[aria-pressed="true"] { background:var(--ink); color:var(--paper); border-color:var(--ink); }
-.cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(275px,1fr)); gap:.9rem; }
-.card { border:1px solid var(--hairline); background:var(--card-bg); padding:1.15rem; display:flex; flex-direction:column; transition:border-color .2s; }
-.card.picked { border-color:var(--amber); border-left-width:3px; }
-.card-top { display:flex; justify-content:space-between; align-items:baseline; gap:.6rem; margin-bottom:.45rem; }
-.card-cat,.card-eff { font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; }
-.card-cat { color:var(--ink-mute); }
-.card-eff { color:var(--teal); white-space:nowrap; }
-.card h3 { font-size:1.2rem; margin-bottom:.45rem; }
-.card-why { font-size:.83rem; color:var(--ink-mute); font-style:italic; margin-bottom:.65rem; }
-.card-how { font-size:.87rem; color:var(--ink-soft); margin-bottom:1rem; flex:1; }
-.card-how ul { list-style:none; }
-.card-how li { padding-left:.9rem; position:relative; margin-bottom:.28rem; }
-.card-how li::before { content:''; position:absolute; left:0; top:.62em; width:4px; height:4px; background:var(--amber); }
-.add-btn { border:1px solid var(--ink); background:none; color:var(--ink); font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; padding:.48rem; cursor:pointer; width:100%; transition:.2s; }
-.add-btn:hover { background:var(--ink); color:var(--paper); }
-.card.picked .add-btn { background:var(--amber); border-color:var(--amber); color:var(--paper-deep); }
+/* ═══ TOOL LIST ═══ */
+.tool-list { border-top:1px solid var(--hairline); }
+.tool { display:grid; grid-template-columns:1.6rem 1fr auto; gap:.9rem; align-items:baseline; padding:1.05rem .2rem; border-bottom:1px solid var(--hairline-soft); }
+.tool-i { font-family:var(--mono); font-size:.7rem; color:var(--ink-mute); }
+.tool h4 { font-size:1.08rem; font-family:var(--serif); font-weight:500; margin-bottom:.3rem; }
+.tool .tw { font-size:.86rem; color:var(--ink-soft); }
+.tool .th { font-size:.82rem; color:var(--ink-mute); margin-top:.35rem; }
+.tool .te { font-family:var(--mono); font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); white-space:nowrap; }
+
+/* ═══ PICKER ═══ */
+.pick-list { border-top:1px solid var(--hairline-soft); }
+.pick { display:flex; gap:.7rem; align-items:center; width:100%; text-align:left; padding:.6rem .2rem; background:none; border:0; border-bottom:1px solid var(--hairline-soft); color:var(--ink-soft); font-family:var(--sans); font-size:.86rem; cursor:pointer; }
+.pick .box { flex:0 0 14px; height:14px; border:1px solid var(--hairline); display:block; }
+.pick[aria-pressed="true"] { color:var(--ink); }
+.pick[aria-pressed="true"] .box { background:var(--amber); border-color:var(--amber); }
+.pick[disabled] { opacity:.4; cursor:default; }
 
 /* ═══ FORM ═══ */
 .grid2 { display:grid; grid-template-columns:1fr; gap:2rem; }
@@ -280,6 +258,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 .help-list li::before { content:''; position:absolute; left:0; top:1.35em; width:6px; height:1px; background:var(--coral); }
 
 /* ═══ SHEET ═══ */
+.print-only { display:none; }
 .sheet { background:var(--paper); border:1px solid var(--hairline); padding:2.25rem; max-width:52rem; margin:0 auto; }
 .sheet-head { border-bottom:2px solid var(--ink); padding-bottom:.85rem; margin-bottom:1.4rem; }
 .sheet-head h2 { font-size:1.9rem; margin-bottom:.2rem; }
@@ -296,6 +275,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 .tracker-t th { font-family:var(--mono); font-size:.56rem; color:var(--ink-mute); font-weight:500; }
 .tracker-t .rh { text-align:left; font-family:var(--sans); font-size:.72rem; color:var(--ink); min-width:7.5rem; }
 .tracker-t td { height:1.5rem; }
+.tracker-t .split { border-left:2px solid var(--ink); }
 .sig-row { display:grid; grid-template-columns:1fr 1fr; gap:2.25rem; margin-top:2.25rem; }
 .sig { border-top:1px solid var(--ink); padding-top:.35rem; }
 .sheet-foot { margin-top:1.75rem; padding-top:.9rem; border-top:1px solid var(--hairline-soft); font-size:.76rem; color:var(--ink-mute); }
@@ -308,6 +288,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   body::before { display:none; }
   .masthead,.no-print,.footer { display:none !important; }
   .panel { display:none !important; padding:0; }
+  .print-only { display:block !important; }
   #p-sheet { display:block !important; padding:0; animation:none; }
   .sheet { border:0; padding:0; max-width:none; background:#fff; }
   .sheet-head,.sig { border-color:#111; }
@@ -315,6 +296,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   .smeta .v,.commit li { border-color:#999; }
   .cbox { border-color:#111; }
   .tracker-t th,.tracker-t td { border-color:#999; color:#111; }
+  .tracker-t .rh { color:#111 !important; }
+  .tracker-t .split { border-left:2px solid #111 !important; }
   .sec-label,.label,.commit .cd,.sheet-foot,.tracker-t th { color:#444 !important; }
 }
 </style>
@@ -322,7 +305,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 <body>
 
 <header class="masthead no-print">
-  <div class="masthead-inner">
+  <div class="mast-inner">
     <div class="masthead-top">
       <div class="wordmark">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -334,26 +317,28 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       </button>
     </div>
     <div class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" id="t-why"   aria-controls="p-why"   aria-selected="true"><span class="n">01</span>How sleep works</button>
-      <button class="tab" role="tab" id="t-check" aria-controls="p-check" aria-selected="false"><span class="n">02</span>Sleep check</button>
-      <button class="tab" role="tab" id="t-tools" aria-controls="p-tools" aria-selected="false"><span class="n">03</span>Toolkit</button>
-      <button class="tab" role="tab" id="t-plan"  aria-controls="p-plan"  aria-selected="false"><span class="n">04</span>My plan<span class="badge" id="planBadge">0</span></button>
-      <button class="tab" role="tab" id="t-log"   aria-controls="p-log"   aria-selected="false"><span class="n">05</span>My tracker</button>
-      <button class="tab" role="tab" id="t-class" aria-controls="p-class" aria-selected="false"><span class="n">06</span>The whole school</button>
-      <button class="tab" role="tab" id="t-sheet" aria-controls="p-sheet" aria-selected="false"><span class="n">07</span>Print &amp; sign</button>
-      <button class="tab" role="tab" id="t-help"  aria-controls="p-help"  aria-selected="false"><span class="n">08</span>More help</button>
+      <button class="tab" role="tab" id="t-learn" aria-controls="p-learn" aria-selected="true"><span class="n">01</span>How it works</button>
+      <button class="tab" role="tab" id="t-log"   aria-controls="p-log"   aria-selected="false"><span class="n">02</span>My log</button>
+      <button class="tab" role="tab" id="t-class" aria-controls="p-class" aria-selected="false"><span class="n">03</span>The school</button>
+      <button class="tab" role="tab" id="t-help"  aria-controls="p-help"  aria-selected="false"><span class="n">04</span>More help</button>
     </div>
   </div>
 </header>
 
 <main>
 
-<!-- ══════ 01 ══════ -->
-<section class="panel active" id="p-why" role="tabpanel" aria-labelledby="t-why" tabindex="0">
+<!-- ══════ 01 · HOW IT WORKS ══════ -->
+<section class="panel active" id="p-learn" role="tabpanel" aria-labelledby="t-learn" tabindex="0">
   <div class="inner">
-    <span class="label">01 · How sleep works</span>
-    <h1>Your body clock <em>moved later.</em></h1>
-    <p class="lede" style="margin-top:1rem;">Around puberty the body clock shifts one to two hours later. You are running a body that wants to fall asleep late, inside a building that starts at seven.</p>
+    <span class="label">01 · How it works</span>
+    <h1>Two weeks. <em>One question.</em></h1>
+    <p class="lede" style="margin-top:1rem;">Measure a week of your ordinary sleep. Change two or three things. Measure a second week. Then look at whether it moved.</p>
+
+    <div class="steps">
+      <div class="step"><span class="step-n">Week 1</span><h3>Measure only</h3><p>Log every morning and change nothing on purpose. This is your baseline — without it there is nothing to compare against.</p></div>
+      <div class="step"><span class="step-n">Pick</span><h3>Choose two or three</h3><p>From the ten changes below. Not ten. The ones you will actually do for seven nights.</p></div>
+      <div class="step"><span class="step-n">Week 2</span><h3>Run and measure</h3><p>Keep logging, and tick off the changes you managed each day.</p></div>
+    </div>
 
     <div class="facts">
       <div class="fact"><span class="fact-n">8–10</span><div class="fact-b">Hours a 13–18 year old needs on a regular night.</div></div>
@@ -362,7 +347,9 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <div class="fact"><span class="fact-n">+40</span><div class="fact-b">Minutes more sleep boarders get than day students, in one Australian study.</div></div>
     </div>
 
-    <!-- VIZ 1 — two-process -->
+    <p class="prose">Around puberty the body clock shifts one to two hours later. You are running a body that wants to fall asleep late, inside a building that starts at seven.</p>
+
+<!-- VIZ 1 — two-process -->
     <div class="viz">
       <div class="viz-head">
         <h3>Sleep pressure, across one day</h3>
@@ -386,161 +373,28 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 
     <hr class="rule">
 
-    <!-- VIZ 2 — hypnogram -->
-    <div class="viz">
-      <div class="viz-head">
-        <h3>What a short night actually costs</h3>
-        <span class="label">Drag the slider</span>
-      </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">A night is four or five cycles. Deep sleep, which does the physical repair, loads into the early ones. Dream sleep, which does most of the memory and emotional work, loads into the last ones. A short night removes the end; it does not trim the whole evenly.</p>
-      <div class="slider-row">
-        <label for="hypSlider"><span class="label">Hours of sleep</span><span class="slider-val" id="hypVal">9h 00m</span></label>
-        <input type="range" id="hypSlider" min="4" max="9.5" step="0.5" value="9">
-      </div>
-      <div style="margin-top:1.1rem;"><svg id="hypSvg" viewBox="0 0 720 200" role="img" aria-label="Sleep stages across the night"></svg></div>
-      <div class="legend">
-        <span><i style="background:var(--indigo)"></i>Deep sleep</span>
-        <span><i style="background:var(--teal)"></i>Light sleep</span>
-        <span><i style="background:var(--violet)"></i>Dream sleep</span>
-        <span><i style="background:var(--ink-mute);opacity:.3"></i>Never happens</span>
-      </div>
-      <p class="viz-note" id="hypNote"></p>
+    <div class="head" style="margin-bottom:1rem;">
+      <span class="label">The ten changes</span>
+      <h2>Pick the ones you will <em>actually do</em>.</h2>
+      <p class="prose">Each one has evidence behind it and works in a boarding house. Effort is marked so you can be honest about week two.</p>
     </div>
+    <div class="tool-list" id="toolList"></div>
 
-    <hr class="rule">
-
-    <!-- VIZ 3 — caffeine -->
-    <div class="viz">
-      <div class="viz-head">
-        <h3>Where your last coffee actually goes</h3>
-        <span class="label">Set the time</span>
-      </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:1rem;max-width:none;">Caffeine blocks the receptors that let you feel sleep pressure. The pressure keeps building; you stop noticing it. That is why you can be exhausted and wired at once.</p>
-      <div class="slider-row" style="margin-bottom:.9rem;">
-        <label for="caffTime"><span class="label">Last caffeine at</span><span class="slider-val" id="caffTimeVal">16:00</span></label>
-        <input type="range" id="caffTime" min="7" max="23" step="1" value="16">
-      </div>
-      <div class="seg" role="group" aria-label="Caffeine source" id="caffSeg">
-        <button type="button" data-mg="45" aria-pressed="false">Tea / cola</button>
-        <button type="button" data-mg="95" aria-pressed="true">Coffee</button>
-        <button type="button" data-mg="160" aria-pressed="false">Energy drink</button>
-        <button type="button" data-mg="300" aria-pressed="false">Double / pre-workout</button>
-      </div>
-      <div style="margin-top:1.1rem;"><svg id="caffSvg" viewBox="0 0 720 210" role="img" aria-label="Caffeine remaining over time"></svg></div>
-      <p class="viz-note" id="caffNote"></p>
-    </div>
-
-    <hr class="rule">
-
-    <span class="label">Four things people believe</span>
-    <h3 style="margin:.5rem 0 1rem;">Tap to see.</h3>
-    <div class="mini" id="myths"></div>
-  </div>
-</section>
-
-<!-- ══════ 02 ══════ -->
-<section class="panel" id="p-check" role="tabpanel" aria-labelledby="t-check" tabindex="0">
-  <div class="inner">
-    <div class="head">
-      <span class="label">02 · Sleep check</span>
-      <h2>Which kind of <em>bad sleep</em>?</h2>
-      <p class="prose">Eight questions about your patterns. Not a score or a diagnosis — it works out which kind of bad night you are having, and hands you the five tools that match.</p>
-    </div>
-    <div id="quiz"></div>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill" id="qFill"></div></div>
-      <div class="progress-txt" id="qTxt">0 of 8 answered</div>
-    </div>
-
-    <div class="result" id="result">
-      <span class="label">Your pattern</span>
-      <div class="result-head" style="margin-top:.6rem;">
-        <h3 id="rName"></h3>
-        <p id="rBody"></p>
-      </div>
-      <div class="readout" id="rReadout"></div>
-      <div class="notice" id="rFlag" style="display:none;"></div>
-
-      <div style="margin-top:2rem;">
-        <span class="label">Your five</span>
-        <h3 style="margin:.5rem 0 .3rem;">Start with these five.</h3>
-        <p style="font-size:.9rem;color:var(--ink-mute);">Add all five, or drop the ones you know you will not do. The other twenty-four are in the toolkit.</p>
-        <div class="mini" id="rTools"></div>
-        <div class="btn-row">
-          <button class="btn" id="addFive">Add all five to my plan</button>
-          <button class="btn ghost" id="browseAll">Browse the full toolkit</button>
-          <button class="btn ghost" id="retake">Start over</button>
-        </div>
-      </div>
+    <div class="btn-row no-print">
+      <button class="btn" id="goLog">Start logging</button>
+      <button class="btn ghost" id="printBtn">Print the tracking sheet</button>
     </div>
   </div>
 </section>
 
-<!-- ══════ 03 ══════ -->
-<section class="panel" id="p-tools" role="tabpanel" aria-labelledby="t-tools" tabindex="0">
-  <div class="inner wide">
-    <div class="head">
-      <span class="label">03 · Toolkit</span>
-      <h2>Twenty-nine tools. Pick <em>three</em>.</h2>
-      <p class="prose">Everything here comes from sleep research that has held up, translated into a building with a roommate, a prep schedule and a bell in the morning. People who pick three finish the fortnight. People who pick seven quit on day four.</p>
-    </div>
-    <div class="filters" id="filters"></div>
-    <div class="cards" id="cards"></div>
-  </div>
-</section>
-
-<!-- ══════ 04 ══════ -->
-<section class="panel" id="p-plan" role="tabpanel" aria-labelledby="t-plan" tabindex="0">
-  <div class="inner">
-    <div class="head">
-      <span class="label">04 · My plan</span>
-      <h2>Set up your <em>fortnight</em>.</h2>
-      <p class="prose">Run your three tools for a set number of nights, then look at what happened.</p>
-    </div>
-
-    <div class="viz">
-      <div class="viz-head"><h3>Your night, drawn</h3><span class="label">Updates as you type</span></div>
-      <div style="display:grid;grid-template-columns:1fr;gap:1.25rem;align-items:center;" id="clockWrap">
-        <svg id="clockSvg" viewBox="0 0 340 340" role="img" aria-label="24-hour clock showing your sleep window"></svg>
-        <div id="clockKey"></div>
-      </div>
-    </div>
-
-    <div class="grid2" style="margin-top:2rem;">
-      <div>
-        <span class="label">What I'm trying</span>
-        <ul class="picked-list" id="planned"></ul>
-        <div class="notice" id="planWarn" style="display:none;"></div>
-      </div>
-      <div>
-        <span class="label" style="display:block;margin-bottom:.9rem;">The details</span>
-        <div class="field"><label class="label" for="fName">Name</label><input type="text" id="fName" placeholder="Your name"></div>
-        <div class="field"><label class="label" for="fHouse">House / year</label><input type="text" id="fHouse" placeholder="e.g. Belle Époque, Year 11"></div>
-        <div class="field"><label class="label" for="fWake">Wake time, every day</label><input type="time" id="fWake" value="07:00"><div class="hint">Weekends within about an hour. Wake time anchors the clock.</div></div>
-        <div class="field"><label class="label" for="fTarget">Sleep I'm aiming for</label><select id="fTarget"><option value="8">8 hours</option><option value="8.5" selected>8 hours 30</option><option value="9">9 hours</option><option value="9.5">9 hours 30</option></select></div>
-        <div class="field"><label class="label" for="fLength">How long I run it</label><select id="fLength"><option value="7">7 nights — a test</option><option value="14" selected>14 nights — recommended</option><option value="21">21 nights — clock reset</option></select></div>
-        <div class="field"><label class="label" for="fStart">Starting on</label><input type="date" id="fStart"></div>
-        <div class="field"><label class="label" for="fPerson">One person who knows</label><input type="text" id="fPerson" placeholder="Roommate, houseparent, tutor, counsellor"></div>
-        <div class="field"><label class="label" for="fWhy">Why I'm doing this, in one line</label><input type="text" id="fWhy" placeholder="Stop falling asleep in period 2"></div>
-        <div class="field"><label class="label" for="fObstacle">The hardest night, and my move</label><textarea id="fObstacle" placeholder="After a late match I'll be wired. I'll shower and read instead of going straight to bed."></textarea></div>
-        <div class="btn-row">
-          <button class="btn" id="toSheet">Build my sheet</button>
-          <button class="btn ghost" id="toLog">Start tracking</button>
-          <button class="btn ghost" id="clearPlan">Clear</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ 05 ══════ -->
+<!-- ══════ 02 · MY LOG ══════ -->
 <section class="panel" id="p-log" role="tabpanel" aria-labelledby="t-log" tabindex="0">
   <div class="inner wide">
     <div class="head">
-      <span class="label">05 · My tracker</span>
-      <h2>Thirty seconds <em>each morning.</em></h2>
-      <p class="prose">You are looking for the shape of two weeks, not what happened on Tuesday.</p>
+      <span class="label">02 · My log</span>
+      <h2>Thirty seconds <em>each morning</em>.</h2>
     </div>
+
     <div class="acct off" id="acct">
       <span class="acct-dot" aria-hidden="true"></span>
       <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
@@ -560,8 +414,16 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <div class="field"><label class="label" for="lWakings">Times I woke up</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div>
         <div class="field"><label class="label" for="lUp">Out of bed at</label><input type="time" id="lUp" value="07:00"></div>
         <div class="field"><label class="label" for="lEnergy">How today felt, 1–5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
-        <div class="field"><label class="label">Which of my tools I actually did</label><div class="chk-row" id="lChecks"></div></div>
+        <div class="field"><label class="label">Changes I actually did</label><div class="chk-row" id="lChecks"></div></div>
         <div class="btn-row"><button class="btn" id="saveLog">Save last night</button></div>
+
+        <hr class="rule" style="margin:2rem 0 1.4rem;">
+        <span class="label">What I am trying in week two</span>
+        <p class="hint" style="margin:.4rem 0 .7rem;">Choose up to <span id="maxTools">3</span>.</p>
+        <div class="pick-list" id="pickList"></div>
+        <div class="field" style="margin-top:1.1rem;"><label class="label" for="fName">Name, for the printed sheet</label><input type="text" id="fName" placeholder="Optional"></div>
+        <div class="field"><label class="label" for="fHouse">House or year</label><input type="text" id="fHouse" placeholder="Optional"></div>
+        <div class="btn-row no-print"><button class="btn ghost" id="printBtn2">Print my tracking sheet</button></div>
       </div>
 
       <div>
@@ -589,103 +451,46 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   </div>
 </section>
 
-<!-- ══════ 06 ══════ -->
+<!-- ══════ 03 · THE SCHOOL ══════ -->
 <section class="panel" id="p-class" role="tabpanel" aria-labelledby="t-class" tabindex="0">
   <div class="inner wide">
     <div class="head">
-      <span class="label">06 · The whole school</span>
-      <h2>How the school <em>is sleeping.</em></h2>
-      <p class="prose">Every night logged in the Lab lands here with the name stripped off. No account needed, and nobody can be picked out of the totals — including you.</p>
+      <span class="label">03 · The school</span>
+      <h2>How the school <em>is sleeping</em>.</h2>
+      <p class="prose">Every night logged in the Lab lands here with the name stripped off. Nobody can be picked out of the totals, including you.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
     <div class="stat-row" id="classStats"></div>
 
+    <div class="viz">
+      <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Week one vs week two</span></div>
+      <div id="classPhase"></div>
+      <p class="viz-note">Whole-school averages. No control group, no blinding.</p>
+    </div>
+
     <div class="class-grid">
       <div class="viz">
-        <div class="viz-head"><h3>How long we actually sleep</h3><span class="label">Nights, by length</span></div>
+        <div class="viz-head"><h3>How long we sleep</h3><span class="label">Nights, by length</span></div>
         <div class="bars" id="classHours"></div>
         <p class="viz-note">Teenagers need <strong>8&ndash;10 hours</strong>.</p>
       </div>
-
-      <div class="viz">
-        <div class="viz-head"><h3>How the day felt after</h3><span class="label">Rated 1&ndash;5 the next morning</span></div>
-        <div class="bars" id="classEnergy"></div>
-        <p class="viz-note">Day rating tracks sleep length more closely than anything else measured here.</p>
-      </div>
-
       <div class="viz">
         <div class="viz-head"><h3>Nights by weekday</h3><span class="label">Average hours asleep</span></div>
         <div class="bars" id="classWeek"></div>
-        <p class="viz-note">A big gap between weekday and weekend is <strong>social jet lag</strong>, and it is what makes Monday feel like a flight.</p>
+        <p class="viz-note">A big weekday-to-weekend gap is <strong>social jet lag</strong>, and it is what makes Monday feel like a flight.</p>
       </div>
-
-      <div class="viz">
-        <div class="viz-head"><h3>What people are trying</h3><span class="label">Tools chosen, most picked first</span></div>
-        <div class="bars" id="classTools"></div>
-        <p class="viz-note">Pick what fits your week rather than what tops this list.</p>
-      </div>
-    </div>
-
-    <div class="viz">
-      <div class="viz-head"><h3>Does the experiment move anything?</h3><span class="label">Baseline week vs intervention week</span></div>
-      <div id="classPhase"></div>
-      <p class="viz-note">Whole-school averages. No control group, no blinding.</p>
     </div>
 
     <p class="hint" id="classFoot" style="margin-top:1.2rem;"></p>
   </div>
 </section>
 
-<!-- ══════ 07 ══════ -->
-<section class="panel" id="p-sheet" role="tabpanel" aria-labelledby="t-sheet" tabindex="0">
-  <div class="inner">
-    <div class="btn-row no-print" style="margin:0 0 1.5rem;">
-      <button class="btn" id="printBtn">Print / save as PDF</button>
-      <button class="btn ghost" id="backPlan">Edit my plan</button>
-    </div>
-    <div class="sheet" id="sheet">
-      <div class="sheet-head">
-        <span class="label">Sleep experiment · Signed plan</span>
-        <h2 id="sTitle">My sleep experiment</h2>
-        <p style="font-size:.86rem;color:var(--ink-mute);max-width:none;">Kept by the student. A copy can go to a tutor or houseparent if you want someone checking in.</p>
-      </div>
-      <div class="smeta">
-        <div><span class="label">Name</span><div class="v" id="sName"></div></div>
-        <div><span class="label">House / year</span><div class="v" id="sHouse"></div></div>
-        <div><span class="label">Running</span><div class="v" id="sDates"></div></div>
-        <div><span class="label">Wake time, daily</span><div class="v" id="sWake"></div></div>
-        <div><span class="label">Lights out target</span><div class="v" id="sBed"></div></div>
-        <div><span class="label">Wind-down starts</span><div class="v" id="sWind"></div></div>
-        <div><span class="label">Told</span><div class="v" id="sPerson"></div></div>
-        <div><span class="label">Review on</span><div class="v" id="sReview"></div></div>
-      </div>
-      <span class="label sec-label">Why I'm running this</span>
-      <div style="border-bottom:1px solid var(--hairline);min-height:1.6rem;font-size:.95rem;padding-bottom:.25rem;" id="sWhy"></div>
-      <span class="label sec-label">For these nights I am trying</span>
-      <ul class="commit" id="sCommit"></ul>
-      <span class="label sec-label">The hardest night, and my move</span>
-      <div style="border-bottom:1px solid var(--hairline);min-height:2.4rem;font-size:.95rem;padding-bottom:.3rem;" id="sObstacle"></div>
-      <span class="label sec-label">Nightly log — tick what you actually did</span>
-      <div style="overflow-x:auto;"><table class="tracker-t" id="sTracker"></table></div>
-      <div class="sig-row">
-        <div class="sig"><span class="label">Student signature</span></div>
-        <div class="sig"><span class="label">Date</span></div>
-      </div>
-      <div class="sig-row">
-        <div class="sig"><span class="label">Counsellor / houseparent</span></div>
-        <div class="sig"><span class="label">Review date</span></div>
-      </div>
-      <div class="sheet-foot">Judge this on the fortnight, not one night. If it is not working by the review date, talk to someone. Nothing here replaces the counselling team or the health centre.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ 07 ══════ -->
+<!-- ══════ 04 · MORE HELP ══════ -->
 <section class="panel" id="p-help" role="tabpanel" aria-labelledby="t-help" tabindex="0">
   <div class="inner">
     <div class="head">
-      <span class="label">08 · More help</span>
+      <span class="label">04 · More help</span>
       <h2>When to <em>talk to someone.</em></h2>
       <p class="prose">Self-help covers the ordinary version of bad sleep, which is most of it. Some things need a person, and going early is easier than going late.</p>
     </div>
@@ -710,8 +515,31 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <h3 style="margin:1.6rem 0 .55rem;">If it is not really about sleep</h3>
       <p>Sleep is often the first thing to go when something else is wrong: homesickness, a relationship, results, something at home you are carrying alone at eleven at night. When the problem is a <em>thing</em> and not a habit, these tools will only get you so far. Come and talk about the thing.</p>
     </div>
-    <div class="btn-row"><button class="btn ghost" id="backStart">Back to the start</button></div>
   </div>
+</section>
+
+<!-- ══════ PRINTED TRACKING SHEET ══════ -->
+<section class="sheet print-only" id="p-sheet">
+  <div class="sheet-head">
+    <span class="label">The Sleep Lab · Two-week tracking sheet</span>
+    <h2>My sleep experiment</h2>
+  </div>
+  <div class="smeta">
+    <div><span class="label">Name</span><div class="v" id="sName"></div></div>
+    <div><span class="label">House / year</span><div class="v" id="sHouse"></div></div>
+    <div><span class="label">Week one · measure</span><div class="v" id="sBase"></div></div>
+    <div><span class="label">Week two · changes</span><div class="v" id="sInt"></div></div>
+  </div>
+  <span class="label sec-label">Week one: measure only. Change nothing on purpose.</span>
+  <span class="label sec-label" style="margin-top:.4rem;">Week two: run these</span>
+  <ul class="commit" id="sCommit"></ul>
+  <span class="label sec-label">Fill this in each morning</span>
+  <div style="overflow-x:auto;"><table class="tracker-t" id="sTracker"></table></div>
+  <div class="sig-row">
+    <div class="sig"><span class="label">Student signature</span></div>
+    <div class="sig"><span class="label">Counsellor / houseparent</span></div>
+  </div>
+  <div class="sheet-foot">Judge this on the fortnight, not one night. If it is not working by the end of week two, talk to someone. Nothing here replaces the counselling team or the health centre.</div>
 </section>
 
 </main>
@@ -722,54 +550,21 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 'use strict';
 
 /* ═════════ CONFIG ═════════
-   Every endpoint below is optional. With all of them blank the Lab still
-   works end to end — it just saves to the student's own browser and the
-   school dashboard says so honestly. Fill them in to switch the Lab on:
-   see apps-script/SETUP.md for the ten-minute version.
-
-   The two URLs below come from ONE Apps Script project deployed TWICE.
-     STUDENT_ENDPOINT — "Anyone in <your school>". Google does the login and
-       hands the script a verified school email, so the page never touches a
-       password and students never get the Sheet.
-     PUBLIC_ENDPOINT  — "Anyone". Serves aggregate counts only: no emails,
-       no rows, nothing that identifies a person. This is what the open
-       "whole school" tab reads. */
+   Blank ENDPOINT and the Lab still works end to end — it saves to this
+   browser and the school tab says so. Paste in the Apps Script web-app URL
+   to switch on sign-in, the shared Sheet and the school numbers.
+   Setup: apps-script/SETUP.md */
 var CONFIG = {
-  STUDENT_ENDPOINT: '',   // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
-  PUBLIC_ENDPOINT:  '',   // 'https://script.google.com/macros/s/AKfy.../exec'
-  SCHOOL_NAME:      'school',   // shown on the sign-in strip
+  ENDPOINT:    '',        // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
+  SCHOOL_NAME: 'school',  // shown on the sign-in strip
 
-  /* ── Route A · Google Form (legacy fallback) ──
-     Verified school emails, no OAuth, no backend. Create the Form, get a
-     prefilled link, and read the entry.NNN numbers out of that URL. */
-  FORM_ACTION: '',   // 'https://docs.google.com/forms/d/e/1FAIpQL.../viewform'
-  FORM_ENTRIES: {
-    wake_date:  '',  // 'entry.123456789'
-    lights_out: '',
-    out_of_bed: '',
-    mins_to_sleep: '',
-    wakings:    '',
-    mins_asleep:'',
-    efficiency: '',
-    day_rating: '',
-    tools_done: '',
-    tools:      '',
-    phase:      ''
-  },
-
-  /* ── Route B · Apps Script endpoint (anonymous, code-based) ──
-     Only used if FORM_ACTION is empty. No verified identity. */
-  LOG_ENDPOINT: '',
-  LOG_SECRET:   '',
-  ASK_CODE:     true,
-
-  /* ── Psychology class study mode ──
-     Turn this on and the tracker runs a baseline-then-intervention design:
-     during baseline the student changes NOTHING and only measures. */
-  STUDY_MODE:        false,
-  STUDY_START:       '',   // 'YYYY-MM-DD' — first day of baseline
+  /* The class fortnight. Set STUDY_START to the first baseline morning and
+     everyone runs the same two weeks. Leave it blank and each student's
+     first logged night becomes their own day one. */
+  STUDY_START:       '',  // 'YYYY-MM-DD'
   BASELINE_DAYS:     7,
-  INTERVENTION_DAYS: 7
+  INTERVENTION_DAYS: 7,
+  MAX_TOOLS:         3    // how many changes a student may run in week two
 };
 
 /* ═════════ STORAGE ═════════
@@ -842,206 +637,64 @@ var Account = {
   lastError: ''
 };
 
-/* ═════════ DATA ═════════ */
-var CATS = [
-  { id:'all',   name:'Everything' },
-  { id:'light', name:'Light &amp; clock' },
-  { id:'time',  name:'Timing' },
-  { id:'wind',  name:'Wind-down' },
-  { id:'room',  name:'The room' },
-  { id:'body',  name:'Body &amp; fuel' },
-  { id:'mind',  name:'A loud head' },
-  { id:'dorm',  name:'Boarding life' }
-];
-
+/* ═════════ DATA ═════════
+   Ten changes, chosen for the strength of the evidence behind them and for
+   working inside a boarding house. A student runs two or three in week two. */
 var STRATS = [
-  { id:'light-am', cat:'light', name:'Ten minutes of morning light', effort:'Tiny',
+  { id:'light-am', name:'Ten minutes of morning light', effort:'Tiny',
     why:'Light in the first hour awake is the strongest way to shift your body clock earlier.',
-    how:['Get outside within an hour of waking. Overcast still counts — outdoor light beats any room.','A window is much weaker than a doorway. Actually go out.'] },
-  { id:'light-pm', cat:'light', name:'Dim the lights an hour before', effort:'Tiny',
-    why:'Bright evening light tells your clock the day is not over, and pushes sleep later.',
-    how:['One lamp instead of the ceiling light for the last hour.','Screens on their dimmest setting. A clip-on reading light keeps the peace in a shared room.'] },
-  { id:'light-winter', cat:'light', name:'Chase daylight in winter', effort:'Medium',
-    why:'Dark mornings push an already-late clock later, and flatten mood with it.',
-    how:['Take breaks outside during daylight, especially in the cold.','If winter wrecks your sleep and mood every year, tell the counselling team.'] },
-  { id:'wake-anchor', cat:'time', name:'Same wake time every day', effort:'Hard',
+    how:'Get outside within an hour of waking. Overcast still counts — a window is much weaker than a doorway.' },
+  { id:'wake-anchor', name:'Same wake time every day', effort:'Hard',
     why:'Wake time anchors the whole clock. Your bedtime follows it on its own within a week or two.',
-    how:['Pick a time you can hold seven days a week, weekends within about an hour.','Get up at it even after a bad night.'] },
-  { id:'sleepy-not-tired', cat:'time', name:'Wait until you are sleepy', effort:'Medium',
-    why:'Tired is a body state. Sleepy is your eyes closing. Getting into bed on tired alone trains you to lie awake.',
-    how:['Look for heavy eyelids and losing the thread of what you are reading.','If it is lights out and you are wired, lie quietly rather than fighting for sleep.'] },
-  { id:'nap', cat:'time', name:'Short naps, early', effort:'Tiny',
-    why:'Twenty minutes restores alertness. A long evening nap spends the sleep pressure you need at night.',
-    how:['Twenty minutes with an alarm, before about four in the afternoon.','Never after dinner.'] },
-  { id:'weekend', cat:'time', name:'Hold the weekend within an hour', effort:'Hard',
+    how:'Pick a time you can hold seven days a week, weekends within about an hour. Get up at it even after a bad night.' },
+  { id:'weekend', name:'Hold the weekend within an hour', effort:'Hard',
     why:'Sleeping until noon on Saturday drags your clock two hours later and makes Sunday night the worst of the week.',
-    how:['Get up within an hour of your weekday time, Sunday included.','Take the extra sleep as an afternoon nap instead of a lie-in.'] },
-  { id:'runway', cat:'wind', name:'Build a thirty-minute runway', effort:'Medium',
-    why:'The same actions in the same order become a cue that sleep is next.',
-    how:['Pick three things — shower, teeth, ten pages — and keep the order every night.','Start at the same time even when the work is not finished.'] },
-  { id:'shower', cat:'wind', name:'Warm shower, ninety minutes out', effort:'Tiny',
-    why:'Warming your skin triggers a drop in core temperature afterwards, one of the strongest sleep cues you have.',
-    how:['Ten minutes, warm rather than scalding, about an hour before lights out.','Works better if the room afterwards is cool.'] },
-  { id:'cutoff', cat:'wind', name:'Stop the hard work first', effort:'Medium',
-    why:'Demanding work leaves the brain in a high-arousal state that takes time to come down from.',
-    how:['Finish the last difficult task forty-five minutes before lights out.','Save copying notes and packing kit for the end.'] },
-  { id:'analog', cat:'wind', name:'Finish the day on paper', effort:'Medium',
-    why:'A book ends. A feed never tells you that you are finished.',
-    how:['Fiction beats revision, paper beats a screen, and a dull book beats a gripping one.','An audiobook on a sleep timer works if reading is not your thing.'] },
-  { id:'cool-dark', cat:'room', name:'Cool and dark', effort:'Tiny',
-    why:'Your core temperature has to fall for sleep to start, and a warm room blocks it.',
-    how:['Around eighteen degrees — cooler than feels cosy getting in.','Eye mask if the room never really goes dark, or the sun arrives at five in summer.'] },
-  { id:'sound', cat:'room', name:'Cover the noise', effort:'Tiny',
-    why:'Changes in volume wake you, not volume itself. Steady sound hides the doors and the corridor.',
-    how:['A fan, an air purifier, or a white-noise track on repeat.','Foam earplugs work better than people expect. Give them three nights.'] },
-  { id:'bed-for-sleep', cat:'room', name:'Keep the bed for sleep', effort:'Hard',
+    how:'Take the extra sleep as an afternoon nap instead of a lie-in.' },
+  { id:'twenty-min', name:'The twenty-minute rule', effort:'Hard',
+    why:'Lying awake and frustrated teaches your brain that bed means frustration. The most effective change here, and the one that feels most wrong.',
+    how:'Awake and irritated for what feels like twenty minutes? Get up. Somewhere dim, something dull, no screens. Go back when you feel sleepy.' },
+  { id:'bed-for-sleep', name:'Keep the bed for sleep', effort:'Hard',
     why:'Working, scrolling and worrying in bed teach your brain that bed is where those things happen.',
-    how:['Study at a desk or in the common room.','If there is nowhere else, sit on top of the covers facing the other way.'] },
-  { id:'phone-park', cat:'room', name:'Park the phone across the room', effort:'Medium',
+    how:'Study at a desk or in the common room. If there is nowhere else, sit on top of the covers facing the other way.' },
+  { id:'phone-park', name:'Park the phone across the room', effort:'Medium',
     why:'Distance works better than willpower. Reaching for it at 2am should cost you getting out of bed.',
-    how:['Charge it on the far side of the room, in a bag, or in the house box.','A cheap alarm clock solves the “but it is my alarm” problem.'] },
-  { id:'caffeine', cat:'body', name:'Caffeine curfew at lunchtime', effort:'Medium',
+    how:'Charge it on the far side of the room or in the house box. A cheap alarm clock solves the “but it is my alarm” problem.' },
+  { id:'caffeine', name:'Caffeine curfew at lunchtime', effort:'Medium',
     why:'Half of it is still in you five to six hours later, blocking the receptors that let you feel sleepy.',
-    how:['Nothing caffeinated after about two, earlier if you are sensitive.','Energy drinks are the usual culprit. Nicotine counts too.'] },
-  { id:'move', cat:'body', name:'Move, but earlier', effort:'Medium',
-    why:'Regular exercise improves sleep quality. Hard training close to lights out delays it for some people.',
-    how:['Any movement, most days. Even a walk helps.','Leave an hour to cool down after an evening session.'] },
-  { id:'fuel', cat:'body', name:'Keep late meals small', effort:'Tiny',
-    why:'Hunger keeps you alert, and a heavy late meal keeps digestion working while your body is trying to cool.',
-    how:['If dinner was early, eat something small with a bit of protein an hour before bed.','Avoid big or spicy meals within two hours of lights out.'] },
-  { id:'no-selfmed', cat:'body', name:'Skip the sleep-aid experiments', effort:'Tiny',
-    why:'Melatonin shifts timing; it does not sedate you. The hour and the dose matter more than the brand.',
-    how:['Ask the health centre before ordering supplements off a video.','Alcohol puts you under, then breaks up the second half of the night.'] },
-  { id:'brain-dump', cat:'mind', name:'Empty your head onto paper', effort:'Tiny',
+    how:'Nothing caffeinated after about two. Energy drinks are the usual culprit; nicotine counts too.' },
+  { id:'runway', name:'Build a thirty-minute runway', effort:'Medium',
+    why:'The same actions in the same order become a cue that sleep is next.',
+    how:'Pick three things — shower, teeth, ten pages — and keep the order every night, even when the work is not finished.' },
+  { id:'brain-dump', name:'Empty your head onto paper', effort:'Tiny',
     why:'Writing tomorrow down before bed helps people fall asleep faster. The list holds it so you do not have to.',
-    how:['Five minutes before the runway starts, not in bed.','Deadlines, the awkward conversation, what you forgot to say. Then close the notebook.'] },
-  { id:'twenty-min', cat:'mind', name:'The twenty-minute rule', effort:'Hard',
-    why:'Lying awake and frustrated teaches your brain that bed means frustration. This is the most effective tool here and the one that feels most wrong.',
-    how:['Awake and irritated for what feels like twenty minutes? Get up.','Somewhere dim, something dull, no screens. Go back when you feel sleepy.'] },
-  { id:'stop-trying', cat:'mind', name:'Give up on falling asleep', effort:'Medium',
-    why:'Trying creates pressure, pressure creates arousal, and arousal is the opposite of sleep.',
-    how:['Lie still and give yourself permission to be awake all night.','Do not check the time. Turn the clock away.'] },
-  { id:'reframe', cat:'mind', name:'Argue back at the 3am thought', effort:'Medium',
-    why:'“If I do not sleep I will fail tomorrow” is the thought keeping you awake, and you have functioned on bad sleep before.',
-    how:['Name it instead of arguing with it: “there is the exam one again”.','Write the single next step for tomorrow, then drop it.'] },
-  { id:'breathe', cat:'mind', name:'Long exhales, then a body scan', effort:'Tiny',
-    why:'A slow exhale nudges the nervous system out of alert mode. It lowers the floor; it will not knock you out.',
-    how:['In for four, out for six or eight. Ten rounds.','Then move attention slowly from your feet upward, unclenching as you go.'] },
-  { id:'roommate', cat:'dorm', name:'Write a roommate treaty', effort:'Medium',
-    why:'Most dorm sleep problems are negotiations nobody has had yet.',
-    how:['Agree four things: lights out, alarm rules, headphones after a time, guests.','Write it down and stick it inside a wardrobe door.'] },
-  { id:'transition', cat:'dorm', name:'Invent your commute home', effort:'Tiny',
-    why:'Day students get a bus ride between work and home. You go from prep to bedroom in ninety seconds, and your brain never files the day as finished.',
-    how:['Ten minutes outside after prep, a lap of the building, or a shower.','Same thing every night. Especially if you study in your room.'] },
-  { id:'calls', cat:'dorm', name:'Call home earlier', effort:'Medium',
-    why:'Home calls carry feelings, and a hard one at eleven at night leaves nowhere to put them.',
-    how:['Schedule the regular call for afternoon or early evening where the time difference allows.','If it has to be late, leave twenty minutes and something calm afterwards.'] },
-  { id:'jetlag', cat:'dorm', name:'Land the flight properly', effort:'Medium',
-    why:'Coming back across time zones drops a delayed clock further out. You cannot force it back in one night.',
-    how:['Morning light on the first day back, however wrecked you feel.','Shift by thirty to sixty minutes a day. No long naps on day one.'] },
-  { id:'sunday', cat:'dorm', name:'Do the Sunday reset in daylight', effort:'Medium',
-    why:'Sunday night insomnia is usually the week arriving all at once in the dark.',
-    how:['Plan the week on Sunday afternoon: bag packed, kit found, deadlines written.','Hold your normal wake time on Sunday morning.'] }
-];
-
-var PROFILES = {
-  late:   { name:'Your clock is running late',
-            body:'Wide awake at midnight, destroyed at seven. This is a timing problem, and it answers to morning light and a fixed wake time far more than to an earlier bedtime. Start with your mornings.',
-            picks:['light-am','wake-anchor','light-pm','caffeine','weekend'] },
-  head:   { name:'Your head will not switch off',
-            body:'The body is ready and the mind is still in prep. Your work is lowering arousal before you get into bed, and giving the thoughts somewhere to go.',
-            picks:['brain-dump','runway','cutoff','breathe','transition'] },
-  wait:   { name:'You lie there for hours',
-            body:'Long stretches awake in bed teach your brain that bed is where frustration happens. Breaking that is uncomfortable for a week, then it works better than anything else here.',
-            picks:['twenty-min','bed-for-sleep','sleepy-not-tired','stop-trying','phone-park'] },
-  broken: { name:'The night keeps getting broken',
-            body:'You get to sleep fine, then the room, the corridor, the heat or your roommate takes it apart. Most of this is environmental and fixable this week.',
-            picks:['sound','cool-dark','roommate','phone-park','fuel'] },
-  drift:  { name:'Your schedule moves every day',
-            body:'No two nights look the same, so your clock never gets a consistent signal. Regularity will do more for you than any single technique.',
-            picks:['wake-anchor','weekend','nap','runway','sunday'] }
-};
-
-/* 8 items — behavioural pattern questions, not a diagnostic scale */
-var QUESTIONS = [
-  { q:'Lights out. What usually happens?',
-    a:[{t:'I am nowhere near sleepy yet',p:['late','late']},
-       {t:'My brain starts replaying the day',p:['head','head']},
-       {t:'I lie there for an hour or more',p:['wait','wait']},
-       {t:'I go out quickly, most nights',p:['broken']}] },
-  { q:'Roughly how long does falling asleep take?',
-    a:[{t:'Under 15 minutes',p:['broken'],lat:10},
-       {t:'15 to 30 minutes',p:['drift'],lat:22},
-       {t:'30 to 60 minutes',p:['wait','late'],lat:45},
-       {t:'Over an hour',p:['wait','wait','head'],lat:75}] },
-  { q:'Do you wake in the night and struggle to get back?',
-    a:[{t:'Almost never',p:['late']},
-       {t:'Once or twice a week',p:['drift']},
-       {t:'Most nights',p:['broken','broken']},
-       {t:'Most nights, and then I am awake for ages',p:['broken','wait']}] },
-  { q:'Weekday to weekend, how far does your wake time move?',
-    a:[{t:'Four hours or more',p:['drift','drift','late'],jet:4},
-       {t:'Two or three hours',p:['drift','late'],jet:2.5},
-       {t:'About an hour',p:['head'],jet:1},
-       {t:'Barely changes',p:['wait'],jet:0.25}] },
-  { q:'When you are in bed but not asleep, what are you doing?',
-    a:[{t:'Phone. Always the phone',p:['wait','late']},
-       {t:'Worrying, or replaying something',p:['head','head']},
-       {t:'Homework, or messages',p:['wait','head']},
-       {t:'Just lying there',p:['broken','late']}] },
-  { q:'When was your last caffeine yesterday?',
-    a:[{t:'I do not drink it',p:['head']},
-       {t:'Morning only',p:['drift']},
-       {t:'Around lunch',p:['late']},
-       {t:'Afternoon or evening',p:['late','broken'],caf:true}] },
-  { q:'What is the room like at night?',
-    a:[{t:'Noisy — corridor, roommate, doors',p:['broken','broken']},
-       {t:'Too warm, or too bright',p:['broken']},
-       {t:'My roommate is on a different schedule',p:['broken','drift']},
-       {t:'Quiet and dark, no complaints',p:['late','head']}] },
-  { q:'How often do you fight to stay awake in class?',
-    a:[{t:'Almost never',p:['head']},
-       {t:'A couple of times a week',p:['drift']},
-       {t:'Most days',p:['late','drift'],day:true},
-       {t:'Every day, and it is affecting my work',p:['late','wait'],day:true}] }
-];
-
-var MYTHS = [
-  { c:'"I\u2019ll catch up at the weekend."',
-    a:'Partly. One long lie-in repays some of the debt, but sleeping until noon on Saturday shoves your clock two hours later and makes Sunday night the worst of the week. Researchers call that gap <em>social jetlag</em>. Cap the lie-in at about an hour and take an afternoon nap instead.' },
-  { c:'"The blue light is the problem."',
-    a:'The light matters less than the pull. A dim screen at arm\u2019s length is not a disaster. A feed built to keep you scrolling for another forty minutes is. Night mode does not fix a device that never tells you it is finished.' },
-  { c:'"If I can\u2019t sleep I should try harder."',
-    a:'This is the one that backfires most. Lying awake and frustrated teaches your brain that bed is where you lie awake and get frustrated. After about twenty restless minutes, get up, sit somewhere dim, do something dull, and return when sleepy. It feels wrong. It works.' },
-  { c:'"I just need less sleep than other people."',
-    a:'Genuine short sleepers are roughly one in a few thousand. Everyone else who believes this has been tired long enough to forget what rested feels like — sleep loss blunts your ability to judge how impaired you are, which is exactly why it feels fine.' }
+    how:'Five minutes before the runway starts, not in bed. Deadlines, the awkward conversation, what you forgot to say.' },
+  { id:'cool-dark', name:'Cool and dark', effort:'Tiny',
+    why:'Your core temperature has to fall for sleep to start, and a warm room blocks it.',
+    how:'Around eighteen degrees — cooler than feels cosy getting in. Eye mask if the room never really goes dark.' }
 ];
 
 /* ═════════ STATE ═════════ */
-var state = { picked:[], filter:'all', answers:{}, profile:null, caffMg:95, caffHour:16, scenario:'normal', hypH:9, log:[], synced:{} };
+var state = { picked:[], scenario:'normal', log:[], synced:{} };
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function byId(i){ for(var n=0;n<STRATS.length;n++) if(STRATS[n].id===i) return STRATS[n]; return null; }
-function catName(c){ for(var n=0;n<CATS.length;n++) if(CATS[n].id===c) return CATS[n].name; return ''; }
 function pad(n){ return (n<10?'0':'')+n; }
 function hhmm(mins){ mins=((mins%1440)+1440)%1440; return pad(Math.floor(mins/60))+':'+pad(Math.round(mins%60)); }
 function toMin(t){ if(!t) return null; var p=t.split(':'); return (+p[0])*60+(+p[1]); }
 function svgEl(t,a){ var e=document.createElementNS('http://www.w3.org/2000/svg',t); for(var k in a) e.setAttribute(k,a[k]); return e; }
 
 /* ═════════ PERSISTENCE ═════════ */
-var FIELDS = ['fName','fHouse','fWake','fTarget','fLength','fStart','fPerson','fWhy','fObstacle'];
+var FIELDS = ['fName','fHouse'];
 function saveAll(){
   var f={}; FIELDS.forEach(function(id){ var el=$(id); if(el) f[id]=el.value; });
-  Store.set('sleeplab', JSON.stringify({ picked:state.picked, fields:f, answers:state.answers, profile:state.profile, log:state.log, synced:state.synced }));
+  Store.set('sleeplab', JSON.stringify({ picked:state.picked, fields:f, log:state.log, synced:state.synced }));
 }
 function loadAll(){
   var raw=Store.get('sleeplab'); if(!raw) return;
   try {
     var d=JSON.parse(raw);
     if(d.picked) state.picked=d.picked.filter(function(i){ return !!byId(i); });
-    if(d.answers) state.answers=d.answers;
-    if(d.profile && PROFILES[d.profile]) state.profile=d.profile;
     if(d.log) state.log=d.log;
     if(d.synced) state.synced=d.synced;
     if(d.fields) FIELDS.forEach(function(id){ var el=$(id); if(el && d.fields[id]!=null && d.fields[id]!=='') el.value=d.fields[id]; });
@@ -1057,10 +710,8 @@ function showTab(id){
     var p=$(t.getAttribute('aria-controls'));
     if(p) p.classList.toggle('active', on);
   });
-  if(id==='t-plan') drawClock();
-  if(id==='t-log') { renderLogChart(); renderAcct(); }
+  if(id==='t-log') { renderLogChart(); renderAcct(); renderPicks(); }
   if(id==='t-class') loadClass();
-  if(id==='t-sheet') buildSheet();
   window.scrollTo({ top:0, behavior:'auto' });
 }
 tabs.forEach(function(t,i){
@@ -1083,7 +734,7 @@ $('themeToggle').addEventListener('click', function(){
 (function(){ var t=Store.get('sleeplab-theme'); if(t==='day') document.documentElement.setAttribute('data-theme','day'); })();
 
 function cssv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
-function redrawAll(){ drawPressure(); drawHypnogram(); drawCaffeine(); drawClock(); renderLogChart(); }
+function redrawAll(){ drawPressure(); renderLogChart(); }
 
 /* ═════════ VIZ 1 · SLEEP PRESSURE ═════════ */
 function gate(hour){ return 0.72 + 0.22*Math.cos(2*Math.PI*(hour-16)/24); }
@@ -1151,332 +802,30 @@ function drawPressure(){
   $('pressureNote').innerHTML=note;
 }
 
-/* ═════════ VIZ 2 · HYPNOGRAM ═════════ */
-var CYCLES = [
-  ['light',20],['deep',45],['light',15],['rem',5],['light',5],
-  ['light',20],['deep',35],['light',15],['rem',15],['light',5],
-  ['light',25],['deep',15],['light',20],['rem',25],['light',5],
-  ['light',25],['deep',8],['light',17],['rem',35],['light',5],
-  ['light',20],['deep',0],['light',25],['rem',40],['wake',5],
-  ['light',20],['rem',45],['light',20],['wake',5]
-];
-function drawHypnogram(){
-  var svg=$('hypSvg'); if(!svg) return; svg.innerHTML='';
-  var W=720,H=200, L=64,R=706, TOTAL=540;
-  var rows={ wake:{y:18,c:'--ink-mute',n:'Awake'}, rem:{y:56,c:'--violet',n:'Dream'}, light:{y:96,c:'--teal',n:'Light'}, deep:{y:136,c:'--indigo',n:'Deep'} };
-  var mute=cssv('--ink-mute'), hair=cssv('--hairline-soft');
-  var cut=state.hypH*60;
-  var X=function(m){ return L+(m/TOTAL)*(R-L); };
-
-  Object.keys(rows).forEach(function(k){
-    var r=rows[k];
-    var t=svgEl('text',{x:L-10,y:r.y+16,'text-anchor':'end','font-family':'JetBrains Mono, monospace','font-size':'9.5',fill:mute,'letter-spacing':'1'});
-    t.textContent=r.n.toUpperCase(); svg.appendChild(t);
-    svg.appendChild(svgEl('line',{x1:L,y1:r.y+11,x2:R,y2:r.y+11,stroke:hair,'stroke-width':'1'}));
-  });
-
-  var m=0, kept={deep:0,rem:0,light:0}, all={deep:0,rem:0,light:0};
-  CYCLES.forEach(function(seg){
-    var stage=seg[0], len=seg[1]; if(!len) { return; }
-    var r=rows[stage], x1=X(m), x2=X(m+len);
-    var inside=(m+len)<=cut, partial=(m<cut && m+len>cut);
-    var visLen = inside?len : (partial? cut-m : 0);
-    if(all[stage]!==undefined) all[stage]+=len;
-    if(kept[stage]!==undefined) kept[stage]+=visLen;
-    /* full block, faded = did not happen */
-    svg.appendChild(svgEl('rect',{x:x1,y:r.y,width:Math.max(1,x2-x1),height:22,fill:cssv(r.c),opacity:'0.16'}));
-    if(visLen>0) svg.appendChild(svgEl('rect',{x:x1,y:r.y,width:Math.max(1,X(m+visLen)-x1),height:22,fill:cssv(r.c),opacity:'0.92'}));
-    m+=len;
-  });
-
-  /* cut line */
-  var cx=X(Math.min(cut,TOTAL));
-  svg.appendChild(svgEl('line',{x1:cx,y1:8,x2:cx,y2:170,stroke:cssv('--coral'),'stroke-width':'2'}));
-  var ct=svgEl('text',{x:cx,y:186,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'10',fill:cssv('--coral')});
-  ct.textContent='ALARM'; svg.appendChild(ct);
-
-  for(var h=0;h<=9;h++){
-    var x=X(h*60);
-    var tt=svgEl('text',{x:x,y:180,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'9.5',fill:mute});
-    tt.textContent=h+'h'; if(h*60<=cut-30||h===0) svg.appendChild(tt);
-  }
-
-  var remPct=Math.round(kept.rem/all.rem*100), deepPct=Math.round(kept.deep/all.deep*100);
-  var lost=Math.round(all.rem-kept.rem);
-  var msg;
-  if(state.hypH>=8.5) msg='A full night. Every cycle completes, and the last two — the ones that do most of your memory and emotional processing — actually happen.';
-  else msg='At '+state.hypH+' hours you keep <strong>'+deepPct+'%</strong> of your deep sleep but only <strong>'+remPct+'%</strong> of your dream sleep. That is about <strong>'+lost+' minutes</strong> of the sleep that consolidates what you revised, gone. Your body gets repaired. Your brain does not get filed.';
-  $('hypNote').innerHTML=msg;
-  $('hypVal').textContent=Math.floor(state.hypH)+'h '+pad(Math.round((state.hypH%1)*60));
-}
-
-/* ═════════ VIZ 3 · CAFFEINE ═════════ */
-var HALF=5.7;
-function drawCaffeine(){
-  var svg=$('caffSvg'); if(!svg) return; svg.innerHTML='';
-  var L=52,R=706,T=22,B=160;
-  var amber=cssv('--amber'), indigo=cssv('--indigo'), mute=cssv('--ink-mute'), hair=cssv('--hairline-soft'), coral=cssv('--coral');
-  var X=function(h){ return L+((h-6)/24)*(R-L); };
-  var Y=function(mg){ return B-Math.min(mg,320)/320*(B-T); };
-
-  svg.appendChild(svgEl('rect',{x:X(22),y:T,width:X(31)-X(22),height:B-T,fill:indigo,opacity:'0.16'}));
-  var zt=svgEl('text',{x:X(26.5),y:T+14,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'10',fill:indigo,'letter-spacing':'1.5'});
-  zt.textContent='TRYING TO SLEEP'; svg.appendChild(zt);
-  svg.appendChild(svgEl('line',{x1:L,y1:B,x2:R,y2:B,stroke:hair}));
-
-  for(var h=6;h<=30;h+=4){
-    var x=X(h);
-    var t=svgEl('text',{x:x,y:B+18,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'10',fill:mute});
-    t.textContent=pad(h%24)+':00'; svg.appendChild(t);
-  }
-  var yl=svgEl('text',{x:L,y:T-8,'font-family':'JetBrains Mono, monospace','font-size':'10',fill:mute,'letter-spacing':'1.5'});
-  yl.textContent='CAFFEINE IN YOUR SYSTEM'; svg.appendChild(yl);
-
-  var d='', started=false;
-  for(var hh=6;hh<=30;hh+=0.25){
-    var mg = hh<state.caffHour ? 0 : state.caffMg*Math.pow(0.5,(hh-state.caffHour)/HALF);
-    d += (started?'L':'M')+X(hh).toFixed(1)+' '+Y(mg).toFixed(1)+' '; started=true;
-  }
-  svg.appendChild(svgEl('path',{d:d,fill:'none',stroke:amber,'stroke-width':'2.5'}));
-
-  var atBed = state.caffMg*Math.pow(0.5,(23-state.caffHour)/HALF);
-  if(23>state.caffHour){
-    svg.appendChild(svgEl('circle',{cx:X(23),cy:Y(atBed),r:'5',fill:coral}));
-    var lt=svgEl('text',{x:X(23)+10,y:Y(atBed)-6,'font-family':'JetBrains Mono, monospace','font-size':'11',fill:coral});
-    lt.textContent=Math.round(atBed)+' mg at 23:00'; svg.appendChild(lt);
-  }
-  var msg;
-  if(atBed<15) msg='Mostly cleared by lights out. This one is not what is keeping you up.';
-  else if(atBed<45) msg='A small amount still circulating. Fine for most people, noticeable if you are sensitive.';
-  else if(atBed<100) msg='Enough to blunt how sleepy you feel and to lighten the first part of the night.';
-  else msg='That is roughly a fresh cup of coffee, sitting in your system, at the moment you are trying to fall asleep.';
-  $('caffNote').innerHTML='<strong>'+Math.round(atBed)+' mg</strong> still active at 23:00. '+esc(msg);
-  $('caffTimeVal').textContent=pad(state.caffHour)+':00';
-}
-
-/* ═════════ VIZ 4 · CLOCK RING ═════════ */
-function polar(cx,cy,r,mins){ var a=(mins/1440)*2*Math.PI-Math.PI/2; return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; }
-function arcPath(cx,cy,r,m1,m2){
-  var span=((m2-m1)%1440+1440)%1440;
-  var p1=polar(cx,cy,r,m1), p2=polar(cx,cy,r,m2);
-  return 'M'+p1[0].toFixed(1)+' '+p1[1].toFixed(1)+' A'+r+' '+r+' 0 '+(span>720?1:0)+' 1 '+p2[0].toFixed(1)+' '+p2[1].toFixed(1);
-}
-function drawClock(){
-  var svg=$('clockSvg'); if(!svg) return; svg.innerHTML='';
-  var C=170, R=126;
-  var wake=toMin($('fWake').value)||420;
-  var target=parseFloat($('fTarget').value||'8.5');
-  var bed=((wake-target*60)%1440+1440)%1440;
-  var wind=((bed-45)%1440+1440)%1440;
-  var caff=((bed-480)%1440+1440)%1440;
-  var mute=cssv('--ink-mute'), hair=cssv('--hairline');
-
-  svg.appendChild(svgEl('circle',{cx:C,cy:C,r:R,fill:'none',stroke:hair,'stroke-width':'1'}));
-  for(var h=0;h<24;h++){
-    var big=(h%3===0), p1=polar(C,C,R,h*60), p2=polar(C,C,R-(big?9:4),h*60);
-    svg.appendChild(svgEl('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:mute,'stroke-width':'1',opacity:big?'0.7':'0.3'}));
-    if(big){
-      var lp=polar(C,C,R+15,h*60);
-      var t=svgEl('text',{x:lp[0],y:lp[1]+3.5,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'10',fill:mute});
-      t.textContent=pad(h); svg.appendChild(t);
-    }
-  }
-  svg.appendChild(svgEl('path',{d:arcPath(C,C,R-19,bed,wake),fill:'none',stroke:cssv('--indigo'),'stroke-width':'15',opacity:'0.85','stroke-linecap':'butt'}));
-  svg.appendChild(svgEl('path',{d:arcPath(C,C,R-19,wind,bed),fill:'none',stroke:cssv('--violet'),'stroke-width':'15',opacity:'0.8'}));
-  svg.appendChild(svgEl('path',{d:arcPath(C,C,R-19,wake,(wake+60)%1440),fill:'none',stroke:cssv('--amber'),'stroke-width':'15',opacity:'0.9'}));
-  var cp1=polar(C,C,R-30,caff), cp2=polar(C,C,R-8,caff);
-  svg.appendChild(svgEl('line',{x1:cp1[0],y1:cp1[1],x2:cp2[0],y2:cp2[1],stroke:cssv('--coral'),'stroke-width':'2.5'}));
-
-  var t1=svgEl('text',{x:C,y:C-14,'text-anchor':'middle','font-family':"Cormorant Garamond, serif",'font-size':'40',fill:cssv('--ink')});
-  t1.textContent=target+'h'; svg.appendChild(t1);
-  var t2=svgEl('text',{x:C,y:C+12,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'12',fill:cssv('--amber'),'letter-spacing':'1'});
-  t2.textContent=hhmm(bed)+' → '+hhmm(wake); svg.appendChild(t2);
-  var t3=svgEl('text',{x:C,y:C+32,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':'9',fill:mute,'letter-spacing':'1.5'});
-  t3.textContent='IN BED'; svg.appendChild(t3);
-
-  $('clockKey').innerHTML =
-    '<div class="legend" style="flex-direction:column;gap:.5rem;">'+
-    '<span><i style="background:var(--amber)"></i>'+hhmm(wake)+' — get outside for ten minutes</span>'+
-    '<span><i style="background:var(--indigo)"></i>'+hhmm(bed)+' — lights out target</span>'+
-    '<span><i style="background:var(--violet)"></i>'+hhmm(wind)+' — wind-down starts, hard work stops</span>'+
-    '<span><i style="background:var(--coral)"></i>'+hhmm(caff)+' — last caffeine of the day</span>'+
-    '</div><p class="viz-note">If you are a strong night owl, do not jump straight to '+hhmm(bed)+'. Hold the wake time, and let bedtime move earlier by fifteen minutes every two or three nights. Getting into bed hours before you are sleepy is the fastest way to teach yourself to lie awake.</p>';
-}
-
-/* ═════════ MYTHS ═════════ */
-$('myths').innerHTML = MYTHS.map(function(m,i){
-  return '<div class="mini-card"><h4>'+m.c+'</h4><div class="mw" id="my'+i+'" style="display:none">'+m.a+'</div>'+
-         '<button class="mini-btn" type="button" data-my="'+i+'">Tap to see</button></div>';
-}).join('');
-Array.prototype.forEach.call($('myths').querySelectorAll('[data-my]'), function(b){
-  b.addEventListener('click', function(){
-    var d=$('my'+b.dataset.my), open=d.style.display!=='none';
-    d.style.display=open?'none':'block';
-    b.textContent=open?'Tap to see':'Close';
-    b.parentNode.classList.toggle('on',!open);
-  });
-});
-
-/* ═════════ QUIZ ═════════ */
-function renderQuiz(){
-  $('quiz').innerHTML = QUESTIONS.map(function(q,qi){
-    return '<div class="q"><span class="qn">Question '+(qi+1)+'</span><h3>'+esc(q.q)+'</h3><div class="opts">'+
-      q.a.map(function(a,ai){
-        return '<button class="opt" type="button" data-q="'+qi+'" data-a="'+ai+'" aria-pressed="'+(state.answers[qi]===ai?'true':'false')+'">'+esc(a.t)+'</button>';
-      }).join('')+'</div></div>';
-  }).join('');
-  Array.prototype.forEach.call($('quiz').querySelectorAll('.opt'), function(b){
-    b.addEventListener('click', function(){
-      state.answers[b.dataset.q]=parseInt(b.dataset.a,10);
-      renderQuiz(); score(); saveAll();
-    });
-  });
-  var n=Object.keys(state.answers).length;
-  $('qFill').style.width=(n/QUESTIONS.length*100)+'%';
-  $('qTxt').textContent=n+' of '+QUESTIONS.length+' answered';
-}
-
-function score(){
-  var keys=Object.keys(state.answers);
-  if(keys.length<QUESTIONS.length){ $('result').classList.remove('on'); return; }
-  var tally={late:0,head:0,wait:0,broken:0,drift:0}, lat=null, jet=null, caf=false, day=false;
-  keys.forEach(function(qi){
-    var a=QUESTIONS[qi].a[state.answers[qi]];
-    a.p.forEach(function(p){ tally[p]+=1; });
-    if(a.lat!=null) lat=a.lat;
-    if(a.jet!=null) jet=a.jet;
-    if(a.caf) caf=true;
-    if(a.day) day=true;
-  });
-  var best='late'; Object.keys(tally).forEach(function(k){ if(tally[k]>tally[best]) best=k; });
-  state.profile=best;
-
-  $('rName').textContent=PROFILES[best].name;
-  $('rBody').textContent=PROFILES[best].body;
-  $('rReadout').innerHTML =
-    '<div><span class="label">Time to fall asleep</span><span class="rv">'+(lat!=null?('~'+lat+' min'):'—')+'</span></div>'+
-    '<div><span class="label">Weekend clock shift</span><span class="rv">'+(jet!=null?(jet+' h'):'—')+'</span></div>'+
-    '<div><span class="label">Caffeine late in the day</span><span class="rv">'+(caf?'Yes':'No')+'</span></div>'+
-    '<div><span class="label">Fighting sleep in class</span><span class="rv">'+(day?'Most days':'Not often')+'</span></div>';
-
-  var flag='';
-  if(lat!=null && lat>=45 && day) flag='Falling asleep takes you around '+lat+' minutes and you are fighting to stay awake most days. Run the plan, and book a conversation with the counselling team at the same time rather than instead. Two weeks of trying alone is enough.';
-  else if(lat!=null && lat>=60) flag='An hour or more to fall asleep, most nights, is worth mentioning to someone. Start the plan, and put a conversation in the diary for the review date.';
-  else if(jet!=null && jet>=4) flag='A four-hour weekend swing is doing more damage than almost anything else on your list. If you change one thing, change that.';
-  $('rFlag').style.display=flag?'block':'none';
-  $('rFlag').textContent=flag;
-
-  renderFive();
-  $('result').classList.add('on');
-  renderCards();
-}
-
-function renderFive(){
-  if(!state.profile) return;
-  $('rTools').innerHTML = PROFILES[state.profile].picks.map(function(id){
-    var s=byId(id), on=state.picked.indexOf(id)!==-1;
-    return '<div class="mini-card'+(on?' on':'')+'"><h4>'+esc(s.name)+'</h4><div class="mw">'+esc(s.why)+'</div>'+
-      '<button class="mini-btn" type="button" data-five="'+id+'">'+(on?'In my plan':'Add this one')+'</button></div>';
-  }).join('');
-  Array.prototype.forEach.call($('rTools').querySelectorAll('[data-five]'), function(b){
-    b.addEventListener('click', function(){ toggle(b.dataset.five); });
-  });
-}
-
-$('addFive').addEventListener('click', function(){
-  if(!state.profile) return;
-  PROFILES[state.profile].picks.forEach(function(id){ if(state.picked.indexOf(id)===-1) state.picked.push(id); });
-  renderFive(); renderCards(); renderPlan(); renderBadge(); renderChecks(); saveAll();
-  showTab('t-plan');
-});
-$('browseAll').addEventListener('click', function(){ showTab('t-tools'); });
-$('retake').addEventListener('click', function(){
-  state.answers={}; state.profile=null; $('result').classList.remove('on'); renderQuiz(); renderCards(); saveAll();
-});
-
-/* ═════════ LIBRARY ═════════ */
-function renderFilters(){
-  $('filters').innerHTML = CATS.map(function(c){
-    return '<button class="chip" type="button" data-cat="'+c.id+'" aria-pressed="'+(state.filter===c.id?'true':'false')+'">'+c.name+'</button>';
-  }).join('');
-  Array.prototype.forEach.call($('filters').querySelectorAll('.chip'), function(b){
-    b.addEventListener('click', function(){ state.filter=b.dataset.cat; renderFilters(); renderCards(); });
-  });
-}
-function renderCards(){
-  var list=STRATS.filter(function(s){ return state.filter==='all'||s.cat===state.filter; });
-  if(state.profile){
-    var order=PROFILES[state.profile].picks;
-    list=list.slice().sort(function(a,b){
-      var ai=order.indexOf(a.id), bi=order.indexOf(b.id);
-      if(ai===-1&&bi===-1) return 0; if(ai===-1) return 1; if(bi===-1) return -1; return ai-bi;
-    });
-  }
-  $('cards').innerHTML=list.map(function(s){
-    var on=state.picked.indexOf(s.id)!==-1;
-    return '<div class="card'+(on?' picked':'')+'">'+
-      '<div class="card-top"><span class="card-cat">'+catName(s.cat)+'</span><span class="card-eff">'+esc(s.effort)+'</span></div>'+
-      '<h3>'+esc(s.name)+'</h3><div class="card-why">'+esc(s.why)+'</div>'+
-      '<div class="card-how"><ul>'+s.how.map(function(h){ return '<li>'+esc(h)+'</li>'; }).join('')+'</ul></div>'+
-      '<button class="add-btn" type="button" data-add="'+s.id+'">'+(on?'In my plan · remove':'Add to my plan')+'</button></div>';
-  }).join('');
-  Array.prototype.forEach.call($('cards').querySelectorAll('.add-btn'), function(b){
-    b.addEventListener('click', function(){ toggle(b.dataset.add); });
-  });
-}
-function toggle(id){
-  var i=state.picked.indexOf(id);
-  if(i===-1) state.picked.push(id); else state.picked.splice(i,1);
-  renderCards(); renderPlan(); renderBadge(); renderFive(); renderChecks(); saveAll();
-}
-function renderBadge(){ var b=$('planBadge'); b.textContent=state.picked.length; b.classList.toggle('on',state.picked.length>0); }
-
-/* ═════════ PLAN ═════════ */
-function renderPlan(){
-  var l=$('planned');
-  if(!state.picked.length){
-    l.innerHTML='<li class="empty">Nothing chosen yet. Run the sleep check, or browse the toolkit and add two or three.</li>';
-  } else {
-    l.innerHTML=state.picked.map(function(id,i){
-      var s=byId(id);
-      return '<li class="pi"><span class="n">'+(i+1)+'</span><span class="t">'+esc(s.name)+'<span>'+catName(s.cat)+' · '+esc(s.effort)+'</span></span>'+
-             '<button class="rm" type="button" data-rm="'+id+'">Remove</button></li>';
-    }).join('');
-    Array.prototype.forEach.call(l.querySelectorAll('.rm'), function(b){
-      b.addEventListener('click', function(){ toggle(b.dataset.rm); });
-    });
-  }
-  var w=$('planWarn');
-  if(state.picked.length>5){
-    w.style.display='block'; w.className='notice warn';
-    w.textContent='That is '+state.picked.length+' changes at once. People who pick three finish the fortnight; people who pick seven quit on day four. Cut it back and add the rest at the review.';
-  } else if(state.picked.length===1){
-    w.style.display='block'; w.className='notice';
-    w.textContent='One is a fine start. A second, easier one gives you something to succeed at on the nights the first one fails.';
-  } else { w.style.display='none'; }
-}
-FIELDS.forEach(function(id){
-  var el=$(id); if(!el) return;
-  el.addEventListener('input', function(){ saveAll(); if(id==='fWake'||id==='fTarget') drawClock(); });
-  el.addEventListener('change', function(){ saveAll(); if(id==='fWake'||id==='fTarget') drawClock(); });
-});
-$('clearPlan').addEventListener('click', function(){
-  state.picked=[]; ['fName','fHouse','fPerson','fWhy','fObstacle'].forEach(function(i){ $(i).value=''; });
-  renderCards(); renderPlan(); renderBadge(); renderFive(); renderChecks(); saveAll();
-});
-$('toSheet').addEventListener('click', function(){ buildSheet(); showTab('t-sheet'); });
-$('toLog').addEventListener('click', function(){ showTab('t-log'); });
-$('backPlan').addEventListener('click', function(){ showTab('t-plan'); });
-$('backStart').addEventListener('click', function(){ showTab('t-why'); });
-
 /* ═════════ TRACKER ═════════ */
 var checkState={};
 
 /* Which phase of the study a given date falls in. Returns null when
    study mode is off, so the tool behaves exactly as before. */
+/* The first night logged anchors the fortnight when no class-wide date is set,
+   so every entry is re-stamped whenever the log changes — otherwise the very
+   first night, saved before any start existed, stays outside the comparison. */
+function restamp(){
+  var changed=false;
+  state.log.forEach(function(e){
+    var p=phaseFor(e.date), ph=p?p.phase:'';
+    if(e.phase!==ph){ e.phase=ph; changed=true; }
+  });
+  return changed;
+}
+function studyStart(){
+  if(CONFIG.STUDY_START) return CONFIG.STUDY_START;
+  return state.log.length ? state.log[0].date : '';
+}
 function phaseFor(dateStr){
-  if(!CONFIG.STUDY_MODE || !CONFIG.STUDY_START || !dateStr) return null;
-  var s=new Date(CONFIG.STUDY_START+'T00:00:00'), d=new Date(dateStr+'T00:00:00');
+  if(!dateStr) return null;
+  var start=studyStart(); if(!start) return null;
+  var s=new Date(start+'T00:00:00'), d=new Date(dateStr+'T00:00:00');
   var day=Math.floor((d-s)/86400000)+1;
   if(day<1) return {phase:'before',day:day};
   if(day<=CONFIG.BASELINE_DAYS) return {phase:'baseline',day:day,of:CONFIG.BASELINE_DAYS};
@@ -1491,16 +840,16 @@ function renderPhase(){
   b.style.display='block';
   if(p.phase==='baseline'){
     b.className='notice';
-    b.innerHTML='<strong>Baseline — night '+p.day+' of '+p.of+'.</strong> Change nothing this week. Sleep the way you already sleep and just record it. This is the measurement your own results get compared against, and if you start fixing things now you will have nothing to compare to.';
+    b.innerHTML='<strong>Baseline — night '+p.day+' of '+p.of+'.</strong> Change nothing on purpose this week. Sleep the way you already sleep and record it. Without this there is nothing to compare week two against.';
   } else if(p.phase==='intervention'){
     b.className='notice';
-    b.innerHTML='<strong>Intervention — night '+p.day+' of '+p.of+'.</strong> Run the tools you chose and tick the ones you actually did. Missing a night is data, not failure. Record it honestly or the whole class dataset gets worse.';
+    b.innerHTML='<strong>Week two — night '+p.day+' of '+p.of+'.</strong> Run the changes you chose and tick the ones you managed. A night you miss is still worth recording honestly.';
   } else if(p.phase==='before'){
     b.className='notice warn';
-    b.innerHTML='That date is before the study starts on '+CONFIG.STUDY_START+'. You can still log it for yourself, but it will sit outside the analysis.';
+    b.innerHTML='That date is before the experiment starts on '+esc(studyStart())+'. You can still log it, but it sits outside the comparison.';
   } else {
     b.className='notice';
-    b.innerHTML='The study window has finished. Anything you log now is yours alone — keep going if it is useful.';
+    b.innerHTML='Your fortnight is finished. Anything you log now is yours alone — keep going if it is useful.';
   }
 }
 
@@ -1543,65 +892,16 @@ $('saveLog').addEventListener('click', function(){
   state.log.push(entry);
   state.log.sort(function(a,b){ return a.date<b.date?-1:1; });
   delete state.synced[date];
-  checkState={}; renderChecks(); renderLog(); saveAll();
+  checkState={}; renderChecks(); renderLog(); renderPhase(); buildSheet(); saveAll();
   flash(Account.on ? 'Saved to your record.' : 'Saved on this device.');
-  if(CONFIG.STUDENT_ENDPOINT) pushPending(); else postEntry(entry);
+  pushPending();
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
   $('lDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 });
 function flash(m){ $('copyMsg').textContent=m; setTimeout(function(){ if($('copyMsg').textContent===m) $('copyMsg').textContent=''; },2600); }
 
-/* Fire-and-forget POST to a Google Apps Script endpoint, if one is configured.
-   no-cors avoids a preflight; nothing is read back. Silent on failure — a
-   dropped log must never block the student's own record. */
-function getCode(){
-  if(!CONFIG.ASK_CODE) return ($('fName').value||'').trim();
-  var c=Store.get('sleeplab-code');
-  if(!c){
-    c=window.prompt('Pick a 4-character code you will remember. It goes on the shared sheet instead of your name.','');
-    if(!c) return '';
-    c=c.trim().slice(0,8); Store.set('sleeplab-code',c);
-  }
-  return c;
-}
-function postEntry(entry){
-  if(CONFIG.FORM_ACTION){ openForm(entry); return; }
-  if(!CONFIG.LOG_ENDPOINT) return;
-  try{
-    var code=getCode(); if(!code) return;
-    var body=JSON.stringify({ secret:CONFIG.LOG_SECRET, code:code, entry:entry,
-      tools:state.picked.map(function(i){ return byId(i).name; }).join('; ') });
-    fetch(CONFIG.LOG_ENDPOINT,{ method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, body:body })['catch'](function(){});
-  }catch(e){}
-}
-
-/* Prefilled Google Form. Google handles the login and stamps the verified
-   school email, so no auth code lives here. The student sees every value
-   before they submit, which is a consent advantage over silent posting. */
-function buildFormUrl(entry){
-  var E=CONFIG.FORM_ENTRIES||{}, v={
-    wake_date: entry.date, lights_out: entry.out, out_of_bed: entry.up,
-    mins_to_sleep: entry.lat, wakings: entry.wk, mins_asleep: entry.asleep,
-    efficiency: entry.eff, day_rating: entry.energy,
-    tools_done: entry.done+' of '+entry.of,
-    tools: state.picked.map(function(i){ return byId(i).name; }).join('; '),
-    phase: entry.phase||'n/a'
-  };
-  var parts=[];
-  Object.keys(v).forEach(function(k){
-    if(E[k]) parts.push(encodeURIComponent(E[k])+'='+encodeURIComponent(v[k]));
-  });
-  var base=CONFIG.FORM_ACTION.replace(/\/(viewform|edit).*$/,'/viewform');
-  return base+'?usp=pp_url&'+parts.join('&');
-}
-function openForm(entry){
-  var w=window.open(buildFormUrl(entry),'_blank');
-  if(!w) flash('Your browser blocked the pop-up. Allow pop-ups for this page, then press Save again.');
-  else flash('Opened the class form with your night already filled in — press Submit there to send it.');
-}
-
 function renderLog(){
+  restamp();
   var L=state.log;
   var avg=function(f){ return L.length? L.reduce(function(a,e){ return a+f(e); },0)/L.length : 0; };
   var hrs=avg(function(e){ return e.asleep; })/60;
@@ -1620,7 +920,7 @@ function renderLog(){
   if(cmp){
     var base=L.filter(function(e){ return e.phase==='baseline'; });
     var iv=L.filter(function(e){ return e.phase==='intervention'; });
-    if(CONFIG.STUDY_MODE && base.length>=3 && iv.length>=3){
+    if(base.length>=3 && iv.length>=3){
       var m=function(arr,f){ return arr.reduce(function(a,e){ return a+f(e); },0)/arr.length; };
       var rows=[
         ['Hours asleep', m(base,function(e){return e.asleep/60;}), m(iv,function(e){return e.asleep/60;}), 'h', 1, true],
@@ -1629,8 +929,8 @@ function renderLog(){
         ['Day rating', m(base,function(e){return e.energy;}), m(iv,function(e){return e.energy;}), '/5', 1, true]
       ];
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Baseline ('+base.length+' nights) vs intervention ('+iv.length+' nights)</span>'+
-        '<table class="log-table" style="margin-top:.6rem;"><tr><th>Measure</th><th>Baseline</th><th>After</th><th>Change</th></tr>'+
+      cmp.innerHTML='<span class="label">Week one ('+base.length+' nights) vs week two ('+iv.length+' nights)</span>'+
+        '<table class="log-table" style="margin-top:.6rem;"><tr><th>Measure</th><th>Week one</th><th>Week two</th><th>Change</th></tr>'+
         rows.map(function(r){
           var diff=r[2]-r[1], good=r[5]?diff>0:diff<0;
           var col=Math.abs(diff)<0.05?'var(--ink-mute)':(good?'var(--teal)':'var(--coral)');
@@ -1638,10 +938,10 @@ function renderLog(){
                  '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
         }).join('')+'</table>'+
         '<p class="hint" style="margin-top:.6rem;">A change here does not prove the tools caused it: no control group, you knew which phase you were in, and people who start measuring anything drift toward the middle. Write those limitations up.</p>';
-    } else if(CONFIG.STUDY_MODE){
+    } else {
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Baseline vs intervention</span><p class="hint" style="margin-top:.5rem;">Needs three nights in each phase. '+base.length+' baseline, '+iv.length+' intervention so far.</p>';
-    } else { cmp.style.display='none'; }
+      cmp.innerHTML='<span class="label">Week one vs week two</span><p class="hint" style="margin-top:.5rem;">Needs three nights in each week. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
+    }
   }
 
   $('logTable').innerHTML = L.length
@@ -1655,7 +955,7 @@ function renderLog(){
   Array.prototype.forEach.call($('logTable').querySelectorAll('[data-del]'), function(b){
     b.addEventListener('click', function(){
       var gone=b.dataset.del;
-      if(Account.on) Net.call(CONFIG.STUDENT_ENDPOINT, { route:'delete', date:gone });
+      if(Account.on) Net.call(CONFIG.ENDPOINT, { route:'delete', date:gone });
       state.log=state.log.filter(function(e){ return e.date!==gone; });
       delete state.synced[gone];
       renderLog(); saveAll(); renderAcct();
@@ -1723,60 +1023,74 @@ $('copySummary').addEventListener('click', function(){
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
   if(Account.on && window.confirm('Also delete these nights from your record in the school Sheet?'))
-    state.log.forEach(function(e){ Net.call(CONFIG.STUDENT_ENDPOINT, { route:'delete', date:e.date }); });
+    state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
   state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); flash('Log deleted.');
 });
 
-/* ═════════ SHEET ═════════ */
-function fmtD(d){ return d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}); }
-function buildSheet(){
-  var name=$('fName').value.trim(), house=$('fHouse').value.trim();
-  var days=parseInt($('fLength').value,10);
-  var sv=$('fStart').value, start=sv?new Date(sv+'T00:00:00'):new Date();
-  var end=new Date(start.getTime()+(days-1)*86400000);
-  var wake=toMin($('fWake').value)||420, target=parseFloat($('fTarget').value||'8.5');
-  var bed=((wake-target*60)%1440+1440)%1440, wind=((bed-45)%1440+1440)%1440;
+/* ═════════ RENDERING · TOOLS, PICKER, SHEET ═════════ */
+function renderTools(){
+  var el=$('toolList'); if(!el) return;
+  el.innerHTML = STRATS.map(function(t,i){
+    return '<div class="tool"><span class="tool-i">'+pad(i+1)+'</span>'+
+      '<div><h4>'+esc(t.name)+'</h4><div class="tw">'+esc(t.why)+'</div>'+
+      '<div class="th">'+esc(t.how)+'</div></div>'+
+      '<span class="te">'+esc(t.effort)+'</span></div>';
+  }).join('');
+}
 
-  $('sTitle').textContent = name ? name+'\u2019s sleep experiment' : 'My sleep experiment';
-  $('sName').textContent=name; $('sHouse').textContent=house;
-  $('sDates').textContent=fmtD(start)+' — '+fmtD(end)+' ('+days+' nights)';
-  $('sWake').textContent=hhmm(wake); $('sBed').textContent=hhmm(bed); $('sWind').textContent=hhmm(wind);
-  $('sPerson').textContent=$('fPerson').value.trim();
-  $('sReview').textContent=fmtD(end);
-  $('sWhy').textContent=$('fWhy').value.trim();
-  $('sObstacle').textContent=$('fObstacle').value.trim();
+function renderPicks(){
+  var el=$('pickList'); if(!el) return;
+  var full = state.picked.length >= CONFIG.MAX_TOOLS;
+  el.innerHTML = STRATS.map(function(t){
+    var on = state.picked.indexOf(t.id)!==-1;
+    return '<button class="pick" type="button" aria-pressed="'+(on?'true':'false')+'"'+
+      (!on && full ? ' disabled' : '')+' data-pick="'+t.id+'">'+
+      '<span class="box" aria-hidden="true"></span>'+esc(t.name)+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(el.querySelectorAll('[data-pick]'), function(b){
+    b.addEventListener('click', function(){
+      var id=b.dataset.pick, at=state.picked.indexOf(id);
+      if(at!==-1) state.picked.splice(at,1);
+      else if(state.picked.length < CONFIG.MAX_TOOLS) state.picked.push(id);
+      renderPicks(); renderChecks(); saveAll(); buildSheet();
+    });
+  });
+  var m=$('maxTools'); if(m) m.textContent=CONFIG.MAX_TOOLS;
+}
+
+/* The printed sheet: fourteen blank rows a student fills in by hand. */
+function fmtD(d){ return d.toLocaleDateString(undefined,{day:'numeric',month:'short'}); }
+function addDays(d,n){ var x=new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
+function buildSheet(){
+  var start = studyStart();
+  var s0 = start ? new Date(start+'T00:00:00') : null;
+  var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS;
+  $('sName').textContent  = ($('fName')  && $('fName').value.trim())  || '';
+  $('sHouse').textContent = ($('fHouse') && $('fHouse').value.trim()) || '';
+  $('sBase').textContent = s0 ? fmtD(s0)+' – '+fmtD(addDays(s0,B-1)) : '';
+  $('sInt').textContent  = s0 ? fmtD(addDays(s0,B))+' – '+fmtD(addDays(s0,B+I-1)) : '';
 
   $('sCommit').innerHTML = state.picked.length
-    ? state.picked.map(function(id){ var s=byId(id);
-        return '<li><div class="cbox"></div><div><span class="ct">'+esc(s.name)+'</span><span class="cd">'+esc(s.how[0])+'</span></div></li>'; }).join('')
-    : '<li><div class="cbox"></div><div><span class="ct">Nothing selected yet</span><span class="cd">Run the sleep check and this sheet fills itself in.</span></div></li>';
+    ? state.picked.map(function(id){
+        var t=byId(id); if(!t) return '';
+        return '<li><span class="cbox" aria-hidden="true"></span><div><div class="ct">'+esc(t.name)+
+               '</div><div class="cd">'+esc(t.how)+'</div></div></li>';
+      }).join('')
+    : '<li><span class="cbox" aria-hidden="true"></span><div class="ct">&nbsp;</div></li>'.repeat(3);
 
-  var cols=Math.min(days,21), head='<tr><th class="rh">Each night</th>';
-  for(var d=1;d<=cols;d++) head+='<th>'+d+'</th>';
-  head+='</tr>';
-  var rows='', list=state.picked.length?state.picked:[null,null,null];
-  list.forEach(function(id){
-    var s=id?byId(id):null;
-    rows+='<tr><td class="rh">'+(s?esc(s.name):'')+'</td>';
-    for(var i=0;i<cols;i++) rows+='<td></td>';
-    rows+='</tr>';
+  var rows='<tr><th class="rh">Morning</th>';
+  for(var d=0; d<B+I; d++){
+    var lbl = s0 ? fmtD(addDays(s0,d)).replace(' ','\u00a0') : (d+1);
+    rows += '<th'+(d===B?' class="split"':'')+'>'+lbl+'</th>';
+  }
+  rows+='</tr>';
+  [['Lights out',''],['Minutes to sleep',''],['Times I woke',''],['Out of bed',''],['Day felt 1–5',''],['Changes done',''] ].forEach(function(r){
+    rows += '<tr><td class="rh">'+r[0]+'</td>';
+    for(var d=0; d<B+I; d++) rows += '<td'+(d===B?' class="split"':'')+'></td>';
+    rows += '</tr>';
   });
-  ['Lights out','Hours asleep','Day out of 5'].forEach(function(lbl){
-    rows+='<tr><td class="rh">'+lbl+'</td>';
-    for(var i=0;i<cols;i++) rows+='<td></td>';
-    rows+='</tr>';
-  });
-  $('sTracker').innerHTML=head+rows;
+  $('sTracker').innerHTML = rows;
 }
-$('printBtn').addEventListener('click', function(){
-  var prev=document.documentElement.getAttribute('data-theme');
-  document.documentElement.setAttribute('data-theme','day');
-  buildSheet();
-  setTimeout(function(){
-    window.print();
-    setTimeout(function(){ document.documentElement.setAttribute('data-theme',prev); redrawAll(); },400);
-  },120);
-});
 
 /* ═════════ CONTROLS ═════════ */
 Array.prototype.forEach.call($('pressureSeg').querySelectorAll('button'), function(b){
@@ -1785,22 +1099,19 @@ Array.prototype.forEach.call($('pressureSeg').querySelectorAll('button'), functi
     b.setAttribute('aria-pressed','true'); state.scenario=b.dataset.sc; drawPressure();
   });
 });
-Array.prototype.forEach.call($('caffSeg').querySelectorAll('button'), function(b){
-  b.addEventListener('click', function(){
-    Array.prototype.forEach.call($('caffSeg').querySelectorAll('button'), function(o){ o.setAttribute('aria-pressed','false'); });
-    b.setAttribute('aria-pressed','true'); state.caffMg=parseInt(b.dataset.mg,10); drawCaffeine();
-  });
+$('goLog').addEventListener('click', function(){ showTab('t-log'); });
+['printBtn','printBtn2'].forEach(function(id){
+  var b=$(id); if(b) b.addEventListener('click', function(){ buildSheet(); window.print(); });
 });
-$('caffTime').addEventListener('input', function(e){ state.caffHour=parseInt(e.target.value,10); drawCaffeine(); });
-$('hypSlider').addEventListener('input', function(e){ state.hypH=parseFloat(e.target.value); drawHypnogram(); });
-window.addEventListener('resize', function(){ drawClock(); });
-
+['fName','fHouse'].forEach(function(id){
+  var el=$(id); if(el) el.addEventListener('input', function(){ saveAll(); buildSheet(); });
+});
 /* ═════════ SYNC ═════════
    Local first, always. state.synced remembers the shape of each night as the
    Sheet last confirmed it, which is what lets two devices disagree sensibly:
    a night the student has edited since the last confirmation wins, anything
    else defers to the Sheet. */
-function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of].join('|'); }
+function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of,e.phase||''].join('|'); }
 
 function acctSay(msg){ var el=$('acctSync'); if(el) el.textContent=msg||''; }
 
@@ -1809,7 +1120,7 @@ function renderAcct(){
   if(!box) return;
   var unsent = state.log.filter(function(e){ return state.synced[e.date]!==sigOf(e); }).length;
 
-  if(!CONFIG.STUDENT_ENDPOINT){
+  if(!CONFIG.ENDPOINT){
     box.className='acct';
     txt.innerHTML='<strong>Saving to this device only.</strong> Nothing you type here leaves this browser. Use the CSV download to keep a copy.';
     inBtn.style.display='none'; syBtn.style.display='none'; acctSay('');
@@ -1832,9 +1143,9 @@ function renderAcct(){
 /* Ask the script who Google thinks we are. Failure is normal and quiet: not
    signed in, signed into a personal account, or the endpoint is not live yet. */
 function syncPull(opts){
-  if(!CONFIG.STUDENT_ENDPOINT) { renderAcct(); return; }
+  if(!CONFIG.ENDPOINT) { renderAcct(); return; }
   if(opts && opts.loud) acctSay('Checking…');
-  Net.call(CONFIG.STUDENT_ENDPOINT, { route:'me' }, function(d){
+  Net.call(CONFIG.ENDPOINT, { route:'me' }, function(d){
     Account.on=true; Account.lastError='';
     Account.email=d.email||''; Account.name=d.name||''; Account.house=d.house||'';
     mergeNights(d.nights||[]);
@@ -1870,7 +1181,7 @@ function pushPending(){
   Account.pushing=queue.length; renderAcct();
   var left=queue.length;
   queue.forEach(function(e){
-    Net.call(CONFIG.STUDENT_ENDPOINT, nightParams(e), function(){
+    Net.call(CONFIG.ENDPOINT, nightParams(e), function(){
       state.synced[e.date]=sigOf(e); saveAll();
       if(!--left){ Account.pushing=0; renderAcct(); loadClass(true); }
     }, function(){
@@ -1891,14 +1202,14 @@ function nightParams(e){
    popup to the script's own URL. The script answers with a page that closes
    itself; we re-ask "who am I?" a few times until the cookie lands. */
 function openSignIn(){
-  if(!CONFIG.STUDENT_ENDPOINT) return;
-  var w=window.open(CONFIG.STUDENT_ENDPOINT+'?route=signin','sleeplab-signin','width=520,height=650');
+  if(!CONFIG.ENDPOINT) return;
+  var w=window.open(CONFIG.ENDPOINT+'?route=signin','sleeplab-signin','width=520,height=650');
   if(!w){ Account.lastError='Your browser blocked the sign-in window. Allow pop-ups for this page and try again.'; renderAcct(); return; }
   acctSay('Waiting for Google…');
   var tries=0;
   var poll=setInterval(function(){
     tries++;
-    Net.call(CONFIG.STUDENT_ENDPOINT, { route:'me' }, function(d){
+    Net.call(CONFIG.ENDPOINT, { route:'me' }, function(d){
       clearInterval(poll); try{ w.close(); }catch(e){}
       Account.on=true; Account.lastError=''; Account.email=d.email||'';
       Account.name=d.name||''; Account.house=d.house||'';
@@ -1929,7 +1240,7 @@ function bars(el, rows, klass){
 
 function classOffline(msg){
   $('classStats').innerHTML='';
-  ['classHours','classEnergy','classWeek','classTools'].forEach(function(id){
+  ['classHours','classWeek'].forEach(function(id){
     var el=$(id); if(el) el.innerHTML='<div class="class-empty">'+esc(msg)+'</div>';
   });
   $('classPhase').innerHTML='';
@@ -1955,9 +1266,7 @@ function renderClass(d){
 
   var pct=function(n){ return d.nights? Math.round(n/d.nights*100)+'%' : '0%'; };
   bars($('classHours'),  (d.hours||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }));
-  bars($('classEnergy'), (d.energy||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }), 'teal');
-  bars($('classWeek'),   (d.weekday||[]).map(function(r){ return [r.day, r.hours, r.hours.toFixed(1)+'h']; }));
-  bars($('classTools'),  (d.tools||[]).map(function(r){ return [r.name, r.n, r.n+'\u00d7']; }), 'teal');
+  bars($('classWeek'),   (d.weekday||[]).map(function(r){ return [r.day, r.hours, r.hours.toFixed(1)+'h']; }), 'teal');
 
   var ph=d.phases;
   if(ph && ph.baseline && ph.intervention){
@@ -1967,7 +1276,7 @@ function renderClass(d){
       ['Asleep while in bed', ph.baseline.eff, ph.intervention.eff, '%', 0, true],
       ['Day rating', ph.baseline.energy, ph.intervention.energy, '/5', 1, true]
     ];
-    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Baseline week</th><th>Intervention week</th><th>Change</th></tr>'+
+    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Week one</th><th>Week two</th><th>Change</th></tr>'+
       rows.map(function(r){
         var diff=r[2]-r[1], good=r[5]?diff>0:diff<0;
         var col=Math.abs(diff)<0.05?'var(--ink-mute)':(good?'var(--teal)':'var(--coral)');
@@ -1982,7 +1291,7 @@ function renderClass(d){
 
 function loadClass(force){
   if(classLoaded && !force) return;
-  if(!CONFIG.PUBLIC_ENDPOINT){
+  if(!CONFIG.ENDPOINT){
     classLoaded=true;
     $('classNote').style.display='block';
     $('classNote').textContent='Not switched on yet. Once counselling connects the Lab, every night logged across the school appears here with the names stripped off.';
@@ -1990,7 +1299,7 @@ function loadClass(force){
     return;
   }
   classLoaded=true;
-  Net.call(CONFIG.PUBLIC_ENDPOINT, { route:'class' }, renderClass, function(){
+  Net.call(CONFIG.ENDPOINT, { route:'class' }, renderClass, function(){
     $('classNote').style.display='block';
     $('classNote').textContent='Could not reach the school dashboard. Your own log is unaffected.';
     classOffline('Dashboard unavailable.');
@@ -2001,19 +1310,16 @@ function loadClass(force){
 /* ═════════ INIT ═════════ */
 (function(){
   var t=new Date(), iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
-  $('fStart').value=iso; $('lDate').value=iso;
+  $('lDate').value=iso;
 })();
 loadAll();
 if(!Store.ok){
   $('storeNote').style.display='block';
   $('storeNote').textContent='This browser will not let the page save anything, so your log disappears when you close the tab. Download the CSV to keep it, or open this page in its own tab.';
 }
-renderQuiz();
-if(CONFIG.FORM_ACTION) $('saveLog').textContent='Save & submit to the study';
-if(Object.keys(state.answers).length===QUESTIONS.length) score();
-renderFilters(); renderCards(); renderPlan(); renderBadge(); renderChecks(); renderPhase(); renderLog();
+renderTools(); renderPicks(); renderChecks(); renderPhase(); renderLog();
 renderAcct(); syncPull();
-drawPressure(); drawHypnogram(); drawCaffeine(); drawClock(); buildSheet();
+drawPressure(); buildSheet();
 })();
 </script>
 </body>

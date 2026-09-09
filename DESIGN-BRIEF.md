@@ -11,7 +11,7 @@ Restyle two existing pages. Do not redesign what they do — the structure,
 copy and behaviour are settled and working. This is a skin.
 
 - `index.html` — the shelf. A heading and four tool cards, rendered from `tools.js`.
-- `sleep-lab.html` — the Sleep Lab. One file, eight tabs, ~1,900 lines.
+- `sleep-lab.html` — the Sleep Lab. One file, four tabs, plus a printed sheet.
 
 ## Hard constraints
 
@@ -21,9 +21,9 @@ These are not preferences. Breaking any of them breaks the site.
    Pages. No React, no Tailwind, no bundler, no npm. Styles stay inline in each
    file's own `<style>` block.
 2. **Everything already in the page keeps working.** The tab bar and its arrow-key
-   navigation, the night/day theme toggle, the six hand-drawn SVG visualisations,
-   the quiz, the card filters, the tracker form, the print stylesheet, the
-   sign-in strip and its four states. Restyle them; do not rewrite their logic.
+   navigation, the night/day theme toggle, the sleep-pressure chart, the hours
+   chart, the tracker form, the tool picker, the printed tracking sheet, and the
+   sign-in strip with its four states. Restyle them; do not rewrite their logic.
 3. **The CSS custom properties are the theming system.** `--paper`, `--ink`,
    `--amber`, `--teal`, `--coral`, `--indigo`, `--hairline` and the rest are
    redefined under `:root[data-theme="day"]`, and the SVG charts read them at
@@ -71,18 +71,19 @@ What that means concretely:
 
 In order:
 
-1. **The tab bar.** Eight items is a lot. It has to survive a 360px screen without
-   becoming a scrolling mess, and it is the first thing anyone sees.
-2. **The whole-school dashboard (tab 06).** The newest and least designed part.
-   Five stat tiles, four bar charts, one comparison table. Make it read like an
-   instrument panel.
-3. **The tracker's sign-in strip.** Four states — not connected, not signed in,
-   signed in, syncing. It must communicate "your data is safe either way" at a
-   glance, without alarming anyone.
-4. **The shelf (`index.html`).** Currently a different visual language from the
-   Lab entirely. Bring them into one system; the Lab is the reference.
-5. **The six SVG visualisations.** They work well. Sharpen the marks, tighten the
-   type, unify the axis treatment. Do not change what they plot.
+1. **The printed tracking sheet.** A student fills this in by hand for fourteen
+   nights and pins it up. It prints from the same file, so it has to work in black
+   on white with no colour to lean on. Currently the weakest piece.
+2. **The week-one/week-two comparison tables.** This is the whole point of the
+   tool and it currently renders as a plain table. It should be the moment the
+   page pays off.
+3. **The school dashboard (tab 03).** Five stat tiles, two bar charts, one
+   comparison. Make it read like an instrument panel, and remember a teacher may
+   project it.
+4. **The sign-in strip.** Four states — not connected, not signed in, signed in,
+   syncing. It must say "your data is safe either way" at a glance.
+5. **The shelf (`index.html`).** A different visual language from the Lab. Bring
+   them into one system; the Lab is the reference.
 
 ## The copy
 
