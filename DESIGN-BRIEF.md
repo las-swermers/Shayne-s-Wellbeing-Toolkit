@@ -1,5 +1,12 @@
 # Design brief — LAS wellbeing toolkit
 
+> Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
+> implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
+> documents the optional IAP/Sheet connectivity foundation. These current-status
+> documents take precedence over older implementation-status statements below.
+> The design preview remains local-only; student record sync is not deployed.
+
+
 This brief reflects the current user request: high-end visual design and purposeful
 motion, a sleek informational landing page, a clear entrance to the working tool,
 and both printable and digital records. It supersedes the previous skin-only brief.

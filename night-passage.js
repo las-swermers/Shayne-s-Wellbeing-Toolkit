@@ -5,7 +5,7 @@
   var curtain, timer, destination, ready = false;
   var cloud = new Image();
   cloud.onload = function () { ready = true; };
-  cloud.src = 'assets/moonlit-clouds.png';
+  cloud.src = 'assets/moonlit-clouds.webp';
   function clearStamp() { try { sessionStorage.removeItem(storageKey); } catch (e) {} }
   function reset() {
     clearTimeout(timer);
@@ -40,7 +40,7 @@
         (anchor.target && anchor.target !== '_self') || motion.matches || !ready) return;
     var target = new URL(anchor.href, location.href);
     if (target.origin !== location.origin || target.pathname === location.pathname) return;
-    if (destination) return;
+    if (destination) { event.preventDefault(); return; }
     event.preventDefault();
     reset();
     destination = target;

@@ -1,5 +1,12 @@
 # Shayne's Wellbeing Toolkit
 
+> Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
+> implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
+> documents the optional IAP/Sheet connectivity foundation. These current-status
+> documents take precedence over older implementation-status statements below.
+> The design preview remains local-only; student record sync is not deployed.
+
+
 > **Design implementation branch:** the updated scope and next-phase architecture
 > are in [DELIVERY-PLAN.md](DELIVERY-PLAN.md) and [DESIGN-BRIEF.md](DESIGN-BRIEF.md).
 > This branch improves the local frontend and printing; it does not connect Google

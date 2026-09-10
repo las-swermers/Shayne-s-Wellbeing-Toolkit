@@ -5,7 +5,7 @@
 }
 .night-passage::before,.night-passage::after {
   content:""; position:absolute; inset:-35% -45%;
-  background:url('assets/moonlit-clouds.png') center 78% / cover no-repeat;
+  background:url('assets/moonlit-clouds.webp') center 78% / cover no-repeat;
   transition:transform 650ms cubic-bezier(.22,1,.36,1);
 }
 .night-passage::before{transform:translate(-32%,22%) scale(1.15)}

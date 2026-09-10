@@ -7,7 +7,7 @@
 <title>The Sleep Lab — A Toolkit for Boarders</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══ NIGHT (default) ═══ */
 :root, :root[data-theme="night"] {
@@ -199,8 +199,11 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 .tool .te { font-family:var(--mono); font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); white-space:nowrap; }
 
 /* ═══ REVEAL ═══ */
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in { opacity:1; transform:none; }
+.reveal { opacity:1; transform:none; }
+@media (prefers-reduced-motion:no-preference){
+  .reveal.in { animation:lab-arrive 420ms var(--ease) both; }
+  @keyframes lab-arrive { from { opacity:.65; transform:translateY(10px); } to { opacity:1; transform:none; } }
+}
 @media (prefers-reduced-motion:reduce){ .reveal { opacity:1; transform:none; transition:none; } }
 
 /* ═══ STAGE ═══ */
@@ -510,6 +513,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 }
 </style>
 <link rel="stylesheet" href="night-passage.css">
+<link rel="stylesheet" href="lab-polish.css">
 <script src="night-passage.js" defer></script>
 </head>
 <body>
@@ -657,6 +661,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     </div>
 
     <div class="notice" id="resultsNote" style="display:none;"></div>
+    <p class="label">Current round</p>
     <div class="stat-row" id="stats"></div>
     <div id="phaseCompare" style="margin-bottom:1.5rem;"></div>
 
@@ -790,7 +795,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
    Setup: apps-script/SETUP.md */
 var CONFIG = {
   ENDPOINT:    '',        // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
-  SCHOOL_NAME: 'school',  // shown on the sign-in strip
+  SCHOOL_NAME: 'LAS',  // shown on the sign-in strip
 
   /* The class fortnight. Set STUDY_START to the first baseline morning and
      everyone runs the same two weeks. Leave it blank and each student's
@@ -1407,6 +1412,7 @@ $('lEnergy').addEventListener('input', function(e){ $('lEnergyVal').textContent=
 
 $('saveLog').addEventListener('click', function(){
   var date=$('lDate').value; if(!date){ flash('Pick a date first.'); return; }
+  if(date > todayLocal()){ flash('Choose today or an earlier morning.'); return; }
   var out=toMin($('lOut').value), up=toMin($('lUp').value), lat=+$('lLatency').value, wk=+$('lWakings').value;
   if(out==null||up==null){ flash('Fill in lights out and out of bed.'); return; }
   var inBed=((up-out)%1440+1440)%1440;
@@ -1414,6 +1420,7 @@ $('saveLog').addEventListener('click', function(){
   var done=currentCycle().picked.filter(function(id){ return checkState[id]; });
   var ph=phaseFor(date);
   var entry={ date:date, out:$('lOut').value, up:$('lUp').value, lat:lat, wk:wk,
+              strategyIds:done.slice(), calculationVersion:'legacy-wakings-12',
               inBed:inBed, asleep:asleep, eff:inBed?Math.round(asleep/inBed*100):0,
               energy:+$('lEnergy').value, done:done.length, of:currentCycle().picked.length,
               phase: ph?ph.phase:'' };
@@ -1425,7 +1432,8 @@ $('saveLog').addEventListener('click', function(){
   flash(Store.ok ? 'Saved on this device.' : 'Saved for this session. Download a copy before closing.');
   pushPending();
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
-  $('lDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  var nextDate=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  $('lDate').value=nextDate>todayLocal()?todayLocal():nextDate;
 });
 function flash(m){ say('copyMsg',m); }
 function rflash(m){ say('resultsMsg',m); }
@@ -1433,7 +1441,7 @@ function say(id,m){ var el=$(id); if(!el) return; el.textContent=m; setTimeout(f
 
 function renderLog(){
   restamp();
-  var L=state.log;
+  var L=nightsIn(currentCycle().n);
   var rn=$('resultsNote');
   if(rn){
     var st=stage();
@@ -1463,7 +1471,7 @@ function renderLog(){
   if(cmp){
     var base=L.filter(function(e){ return e.phase==='baseline'; });
     var iv=L.filter(function(e){ return e.phase==='intervention'; });
-    if(base.length>=3 && iv.length>=3){
+    if(currentCycle().committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
       var m=function(arr,f){ return arr.reduce(function(a,e){ return a+f(e); },0)/arr.length; };
       var rows=[
         ['Hours asleep', m(base,function(e){return e.asleep/60;}), m(iv,function(e){return e.asleep/60;}), 'h', 1, true],
@@ -1483,13 +1491,13 @@ function renderLog(){
         '<p class="hint" style="margin-top:.6rem;">A change here does not prove the tools caused it: no control group, you knew which phase you were in, and people who start measuring anything drift toward the middle. Write those limitations up.</p>';
     } else {
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Week one vs week two</span><p class="hint" style="margin-top:.5rem;">Needs three nights in each week. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
+      cmp.innerHTML='<span class="label">Current round · week one vs week two</span><p class="hint" style="margin-top:.5rem;">Complete your review and log '+CONFIG.REVIEW_AFTER+' baseline nights and '+CONFIG.RESULTS_AFTER+' week-two nights. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
     }
   }
 
-  $('logTable').innerHTML = L.length
+  $('logTable').innerHTML = state.log.length
     ? '<tr><th>Date</th><th>Lights out</th><th>Up</th><th>Asleep</th><th>Efficiency</th><th>Day</th><th>Tools</th><th></th></tr>'+
-      L.slice().reverse().map(function(e){
+      state.log.slice().reverse().map(function(e){
         return '<tr><td>'+e.date+'</td><td>'+e.out+'</td><td>'+e.up+'</td><td>'+Math.floor(e.asleep/60)+'h'+pad(e.asleep%60)+'</td>'+
                '<td>'+e.eff+'%</td><td>'+e.energy+'/5</td><td>'+e.done+'/'+e.of+'</td>'+
                '<td class="del"><button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
@@ -1509,7 +1517,7 @@ function renderLog(){
 
 function renderLogChart(){
   var svg=$('logSvg'); if(!svg) return; svg.innerHTML='';
-  var L=state.log.slice(-14), Lp=48,R=706,T=20,B=180;
+  var L=nightsIn(currentCycle().n).slice(-14), Lp=48,R=706,T=20,B=180;
   var mute=cssv('--ink-mute'), hair=cssv('--hairline-soft');
   var Y=function(h){ return B-Math.min(h,12)/12*(B-T); };
   svg.appendChild(svgEl('rect',{x:Lp,y:Y(10),width:R-Lp,height:Y(8)-Y(10),fill:cssv('--indigo'),opacity:'0.18'}));
@@ -1565,6 +1573,7 @@ $('copySummary').addEventListener('click', function(){
 });
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
+  if(!window.confirm('Delete all nights from this browser? Download a CSV first if you want a copy.')) return;
   if(Account.on && window.confirm('Also delete these nights from your record in the school Sheet?'))
     state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
   state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); rflash('Log deleted.');
@@ -1883,9 +1892,14 @@ function loadClass(force){
 }
 
 /* ═════════ INIT ═════════ */
+function todayLocal(){
+  var t=new Date();
+  return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
+}
 (function(){
   var t=new Date(), iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
   $('lDate').value=iso;
+  $('lDate').max=iso;
 })();
 loadAll();
 if(!Store.ok){

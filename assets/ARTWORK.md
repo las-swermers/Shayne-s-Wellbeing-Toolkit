@@ -1,5 +1,14 @@
 # Artwork used in the cinematic landing pass
 
+## Delivery optimization
+
+The refinement serves WebP encodings of the existing artwork at quality 88:
+alpine-night-clean (94,318 bytes), cow-leap (172,190), moonlit-clouds (310,352)
+and sleep-sheep (93,636). Combined: 670,496 bytes instead of 5,492,059 for
+the same four PNG originals. PNG masters remain for future art work but are not
+requested by the landing page. The unused 2.4 MB alpine-night.png preload is gone.
+This is file-size evidence, not a measured Lighthouse or mobile timing score.
+
 Generated with built-in imagegen on September 10, 2026. Existing alpine-night.png
 is retained from the original vision. These are original assets, not assets
 downloaded from the reference template.

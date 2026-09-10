@@ -1,5 +1,12 @@
 # LAS Sleep Lab — design first, then one private school Sheet
 
+> Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
+> implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
+> documents the optional IAP/Sheet connectivity foundation. These current-status
+> documents take precedence over older implementation-status statements below.
+> The design preview remains local-only; student record sync is not deployed.
+
+
 Status: design implementation branch; Google connection and access enforcement are not deployed.
 Baseline reviewed: `main` at `6981425909df2f8fd2ca00b93c08e693d99c108a`.
 
