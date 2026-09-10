@@ -1,60 +1,82 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="night">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Simple wellbeing tools for boarding-school students.">
-  <title>Shayne’s Wellbeing Toolkit</title>
-  <style>
-    :root { --paper:#f7f5f1; --ink:#1c2730; --quiet:#69737a; --line:#dde1e0; --accent:#d77b3e; --night:#253744; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--paper); color:var(--ink); font-family:Georgia, 'Times New Roman', serif; }
-    main { width:min(960px, calc(100% - 40px)); margin:0 auto; padding:28px 0 64px; }
-    .topline { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:18px; font-size:.9rem; }
-    .brand { display:flex; align-items:center; gap:9px; font-weight:bold; letter-spacing:.01em; }
-    .brand-mark { width:24px; height:24px; color:var(--accent); }
-    .open { color:var(--quiet); }
-    header { max-width:650px; padding:80px 0 62px; }
-    .eyebrow { color:var(--accent); font:italic 1rem/1 Georgia,serif; }
-    h1 { margin:12px 0 17px; font-size:clamp(2.75rem, 7vw, 5.4rem); font-weight:normal; letter-spacing:-.065em; line-height:.92; }
-    h1 em { color:var(--accent); }
-    .intro { margin:0; color:var(--quiet); font-size:1.12rem; line-height:1.6; }
-    .section-title { display:flex; justify-content:space-between; align-items:baseline; margin:0 0 14px; }
-    .section-title h2 { font-size:1rem; margin:0; letter-spacing:.03em; }
-    .section-title span { color:var(--quiet); font-size:.9rem; }
-    .tools { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-    .tool { position:relative; display:grid; grid-template-columns:42px 1fr auto; gap:14px; align-items:start; min-height:144px; padding:24px; color:inherit; text-decoration:none; border-bottom:1px solid var(--line); transition:background .15s ease; }
-    .tool:nth-child(odd) { border-right:1px solid var(--line); }
-    .tool:nth-last-child(-n+2) { border-bottom:0; }
-    .tool:not(.soon):hover { background:#fff; }
-    .tool-icon { width:38px; height:38px; padding:9px; border-radius:50%; background:#edf0ee; color:var(--night); }
-    .tool h3 { margin:1px 0 6px; font-size:1.3rem; font-weight:normal; line-height:1.1; }
-    .tool p { margin:0; color:var(--quiet); font-size:.95rem; line-height:1.45; }
-    .arrow { color:var(--accent); font-size:1.25rem; padding-top:3px; }
-    .soon { background:#f2f1ed; cursor:default; }
-    .soon .tool-icon, .soon .arrow { color:#8d9699; }
-    .tag { display:block; margin-top:9px; color:#8d9699; font:italic .82rem Georgia,serif; }
-    footer { display:flex; justify-content:space-between; gap:20px; margin-top:68px; padding-top:18px; border-top:1px solid var(--line); color:var(--quiet); font-size:.85rem; }
-    @media (max-width:620px) { main { width:min(100% - 28px, 960px); } header { padding:58px 0 46px; } .tools { grid-template-columns:1fr; } .tool:nth-child(odd) { border-right:0; } .tool:nth-last-child(2) { border-bottom:1px solid var(--line); } .topline .open { display:none; } footer { display:block; } footer p + p { margin-top:10px; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Shayne’s Wellbeing Toolkit at Leysin American School. Explore Sleep Lab: a two-week sleep experiment with digital and printable records.">
+<meta name="color-scheme" content="dark light">
+<title>Shayne’s Wellbeing Toolkit · LAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/alpine-night.png" as="image">
+<link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="night-passage.css">
+<script>try{if(localStorage.getItem('sleeplab-theme')==='day')document.documentElement.dataset.theme='day';}catch(e){}</script>
+<script src="landing.js" defer></script>
+<script src="night-passage.js" defer></script>
 </head>
 <body>
-  <main>
-    <div class="topline">
-      <div class="brand"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A8 8 0 1 1 12 2Z"/></svg>Shayne’s Wellbeing Toolkit</div>
-      <span class="open">For boarding students</span>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="index.html"><span class="brand-symbol" aria-hidden="true">s.</span><span>Shayne’s<span class="brand-sub">Wellbeing toolkit</span></span></a>
+  <nav aria-label="Main navigation"><a href="#toolkit">The toolkit</a><a href="#how-it-works">How it works</a></nav>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to day view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+</header>
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-rule"></span> Leysin American School</p>
+      <h1 id="hero-title">A little space.<br><span>A better tomorrow.</span></h1>
+      <p class="hero-description">For better nights, shared rooms, and the days in between.<br class="desktop-break"> Small tools to find what works for you.</p>
+      <div class="actions"><a class="button button-primary" id="enterLab" data-night-passage href="sleep-lab.html#log"><span>Enter Sleep Lab</span><span aria-hidden="true">↗</span></a><a class="button button-quiet" href="#toolkit">Explore the toolkit <span aria-hidden="true">↓</span></a></div>
     </div>
-    <header>
-      <div class="eyebrow">Counselling · Leysin American School</div>
-      <h1>Wellbeing <em>toolkit.</em></h1>
-      <p class="intro">Practical tools for the parts of school life that get heavy. Pick one, try it, keep what helps.</p>
-    </header>
-    <section aria-labelledby="tools-title">
-      <div class="section-title"><h2 id="tools-title">Tools</h2><span>Free to use, no sign-in</span></div>
-      <div class="tools" id="tools"></div>
-    </section>
-    <footer><p>A school sign-in is only used where a tool keeps a record for you.</p><p>LS · Wellbeing</p></footer>
-  </main>
-  <script src="tools.js"></script>
+    <figure class="alpine-window" aria-label="An alpine night beneath the moon, with a cow leaping above it">
+      <img class="alpine-scene" src="assets/alpine-night-clean.png" alt="" width="1774" height="887" fetchpriority="high">
+      <div class="scene-shade" aria-hidden="true"></div>
+      <img class="cloud-layer cloud-back" src="assets/moonlit-clouds.png" alt="" width="1536" height="1024">
+      <img class="cloud-layer cloud-front" src="assets/moonlit-clouds.png" alt="" width="1536" height="1024">
+      <figcaption><span class="scene-caption">A small experiment, under a big sky.</span><span class="scene-index">01 / Sleep Lab</span></figcaption>
+    </figure>
+  </section>
+  <section class="moon-passage" aria-labelledby="passage-title">
+    <div class="passage-stage">
+      <img class="passage-scene" src="assets/alpine-night-clean.png" alt="" width="1774" height="887">
+      <div class="passage-vignette" aria-hidden="true"></div>
+      <div class="passage-copy passage-copy-start"><p class="eyebrow">Keep scrolling</p><h2 id="passage-title">Follow the moon.</h2><p>The night opens a little at a time.</p></div>
+      <div class="passage-copy passage-copy-end"><p class="eyebrow">Welcome in</p><h2>Find what helps.</h2><p>Sleep Lab is the first path through the toolkit.</p></div>
+      <img class="passage-cow" src="assets/cow-leap.png" alt="" width="1254" height="1254" aria-hidden="true">
+      <img class="passage-cloud passage-cloud-one" src="assets/moonlit-clouds.png" alt="" width="1536" height="1024" aria-hidden="true">
+      <img class="passage-cloud passage-cloud-two" src="assets/moonlit-clouds.png" alt="" width="1536" height="1024" aria-hidden="true">
+      <div class="passage-meter" aria-hidden="true"><i></i><span>Through the clouds</span></div>
+    </div>
+  </section>
+  <section class="toolkit section-wrap" id="toolkit" aria-labelledby="toolkit-title">
+    <div class="section-heading"><div><p class="eyebrow">Find your starting point</p><h2 id="toolkit-title">Your everyday toolkit.</h2></div><p>Start with sleep.<br>More tools are on their way.</p></div>
+    <div class="tool-dock">
+      <a class="tool-item available" href="sleep-lab.html#log" data-night-passage><span class="app-icon sheep-icon"><img src="assets/sleep-sheep.png" width="128" height="128" alt=""></span><h3>Sleep Lab</h3><p>Understand your nights.</p><span class="tool-status">Explore <span aria-hidden="true">↗</span></span></a>
+      <article class="tool-item"><span class="app-icon bed-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18m18-18v18M3 10h18M3 18h18M5 10V6h5v4m-5 8v-4h5v4M17 10v11M3 6h18M3 14h18"/></svg></span><h3>Roommate Treaty</h3><p>Make room for each other.</p><span class="tool-status">Coming soon</span></article>
+      <article class="tool-item"><span class="app-icon compass-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg></span><h3>First Weeks Away</h3><p>Find your feet.</p><span class="tool-status">Coming soon</span></article>
+      <article class="tool-item"><span class="app-icon spark-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"/></svg></span><h3>Exam Nerves</h3><p>Take a breath. Take a step.</p><span class="tool-status">Coming soon</span></article>
+    </div>
+  </section>
+  <section class="sleep-feature section-wrap" id="how-it-works" aria-labelledby="sleep-title">
+    <div class="feature-heading reveal"><p class="eyebrow">Inside Sleep Lab</p><h2 id="sleep-title">Get curious<br>about your nights.</h2><p>Two weeks. Your own observations.<br>A few changes worth trying.</p><a class="text-link" href="sleep-lab.html#learn" data-night-passage>Explore the experiment <span aria-hidden="true">↗</span></a></div>
+    <div class="experiment-panel reveal">
+      <div class="panel-caption"><span>Your two-week experiment</span><span>14 nights</span></div>
+      <div class="week-row"><div><span class="week-label">Week 01</span><h3>Notice your patterns.</h3></div><div class="nights" aria-label="Seven baseline nights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="week-row"><div><span class="week-label">Week 02</span><h3>Try something small.</h3></div><div class="nights intervention" aria-label="Seven intervention nights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <p class="panel-note">Your review connects the two. Choose up to three changes, then see what you notice.</p>
+    </div>
+  </section>
+  <section class="record-section section-wrap reveal" aria-labelledby="record-title">
+    <p class="eyebrow">On screen. On paper.</p>
+    <h2 id="record-title">Something to come back to.</h2>
+    <p>Keep a short daily log, compare your weeks, and print a record to reflect on or talk through with counselling.</p>
+    <div class="record-links"><a href="sleep-lab.html#log" data-night-passage>Keep my log <span aria-hidden="true">↗</span></a><a href="sleep-lab.html#learn" data-night-passage>Find the printable tracker <span aria-hidden="true">↗</span></a></div>
+    <p class="storage-note">For now, entries save in this browser. LAS sign-in and school sync are being prepared.</p>
+  </section>
+</main>
+<footer class="site-footer section-wrap"><span>Shayne’s Wellbeing Toolkit</span><span>Counselling · Leysin American School</span><a href="sleep-lab.html#help">Help &amp; privacy</a></footer>
 </body>
 </html>

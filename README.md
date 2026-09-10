@@ -1,5 +1,15 @@
 # Shayne's Wellbeing Toolkit
 
+> **Design implementation branch:** the updated scope and next-phase architecture
+> are in [DELIVERY-PLAN.md](DELIVERY-PLAN.md) and [DESIGN-BRIEF.md](DESIGN-BRIEF.md).
+> This branch improves the local frontend and printing; it does not connect Google
+> or enforce school sign-in. The backend description below documents the legacy
+> prototype. Its JSONP, anonymity and sync claims are not production guarantees.
+> The current decision is one private school Sheet with server-owned account IDs.
+> Optional class studies use staff-generated cohort codes; students can remain in
+> personal mode, and teacher/block labels belong to the cohort rather than each log.
+> Follow the delivery plan where older constraints below conflict.
+
 Static wellbeing tools for boarding-school students at Leysin American School,
 built and owned by the counselling team. Plain HTML, CSS and JavaScript served
 from GitHub Pages. No framework, no build step, no package manager.

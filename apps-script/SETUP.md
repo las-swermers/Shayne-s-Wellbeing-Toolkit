@@ -118,3 +118,4 @@ document students or teaching staff open.
 **What is not.** There is no route that lists students and no route that returns
 another person's rows. The class dashboard can only call `classSummary_`, which
 returns totals.
+

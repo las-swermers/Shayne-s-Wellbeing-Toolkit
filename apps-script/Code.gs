@@ -429,3 +429,4 @@ function phaseFor_(date) {
   if (day < CONFIG.BASELINE_DAYS + CONFIG.INTERVENTION_DAYS) return 'intervention';
   return 'after_study';
 }
+

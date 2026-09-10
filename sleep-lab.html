@@ -11,16 +11,16 @@
 <style>
 /* ═══ NIGHT (default) ═══ */
 :root, :root[data-theme="night"] {
-  --paper:      #121A2B;
-  --paper-warm: #1A2338;
+  --paper:      #101A28;
+  --paper-warm: #182536;
   --paper-deep: #0D1421;
-  --ink:        #EDE6D6;
-  --ink-soft:   #B4BDCE;
-  --ink-mute:   #7B8698;
-  --amber:      #E0B264;
+  --ink:        #F3EEE4;
+  --ink-soft:   #C0CAD7;
+  --ink-mute:   #9AAABE;
+  --amber:      #E7BD7D;
   --amber-soft: #C58A2A;
-  --teal:       #5FA8A0;
-  --coral:      #D87470;
+  --teal:       #82C9BE;
+  --coral:      #F09F98;
   --indigo:     #6B7FB8;
   --violet:     #8E7BB5;
   --hairline:      rgba(237,230,214,0.16);
@@ -28,21 +28,22 @@
   --grain-1: rgba(237,230,214,0.03);
   --grain-2: rgba(237,230,214,0.022);
   --grain-blend: screen;
-  --card-bg: rgba(26,35,56,0.85);
+  --card-bg: #182536;
+  --button-ink: #18202A;
   --track:   #0D1421;
 }
 /* ═══ DAY ═══ */
 :root[data-theme="day"] {
-  --paper:      #F5F0E6;
-  --paper-warm: #EFE8D8;
+  --paper:      #F7F5F0;
+  --paper-warm: #EEEBE4;
   --paper-deep: #E8DFC9;
   --ink:        #1E2A38;
   --ink-soft:   #3E4A58;
-  --ink-mute:   #6B7280;
-  --amber:      #B07C1E;
+  --ink-mute:   #536176;
+  --amber:      #775015;
   --amber-soft: #C58A2A;
-  --teal:       #2F7A7A;
-  --coral:      #C25450;
+  --teal:       #24635D;
+  --coral:      #9C3732;
   --indigo:     #4A6FA5;
   --violet:     #6B5B95;
   --hairline:      rgba(30,42,56,0.16);
@@ -50,7 +51,8 @@
   --grain-1: rgba(30,42,56,0.04);
   --grain-2: rgba(30,42,56,0.03);
   --grain-blend: multiply;
-  --card-bg: rgba(245,240,230,0.9);
+  --card-bg: #EEEBE4;
+  --button-ink: #FFFAF0;
   --track:   #E8DFC9;
 }
 :root {
@@ -321,6 +323,110 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 
 .footer { padding:2rem var(--gutter) 2.5rem; text-align:center; font-family:var(--mono); font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-mute); border-top:1px solid var(--hairline-soft); background:var(--paper-deep); position:relative; z-index:5; }
 
+/* ═══ DESIGN PASS · screen styles are isolated from the worksheet ═══ */
+@media screen {
+  :root { --ease: cubic-bezier(.22,1,.36,1); }
+  body { font-size:16px; overflow-x:visible; transition:background-color 220ms ease,color 220ms ease; }
+  body::before { display:none; }
+  button,a,input,select,summary { -webkit-tap-highlight-color:transparent; }
+  :focus-visible { outline:3px solid var(--amber); outline-offset:4px; }
+  .skip-link { position:fixed; left:20px; top:-100px; z-index:100; background:var(--ink); color:var(--paper); padding:12px 18px; }
+  .skip-link:focus { top:12px; }
+  .mast-inner { max-width:1280px; padding:20px var(--gutter) 0; margin:auto; }
+  .masthead-top { margin-bottom:14px; min-height:44px; }
+  .wordmark { font-size:14px; letter-spacing:.02em; font-family:var(--sans); }
+  .wordmark svg { width:22px; height:22px; }
+  .mast-actions { display:flex; align-items:center; gap:20px; }
+  .back-link { color:var(--ink-soft); font-size:14px; text-decoration:none; padding:10px 0; }
+  .back-link:hover { color:var(--amber); }
+  .theme-toggle { width:44px; height:44px; }
+  .theme-toggle svg { width:18px; height:18px; }
+  .tabs { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; overflow:visible; }
+  .tab { font-family:var(--sans); font-size:14px; letter-spacing:0; text-transform:none; padding:14px 8px; min-height:48px; display:flex; justify-content:center; align-items:center; gap:8px; white-space:normal; line-height:1.35; min-width:0; overflow-wrap:anywhere; }
+  .tab .n { display:none; }
+  .tab-icon { width:18px; height:18px; flex:none; }
+  .tab[aria-selected=true] { color:var(--amber); }
+  .panel { padding-top:36px; }
+  .panel.active { animation:fade 280ms var(--ease); }
+  .inner,.inner.wide { max-width:1120px; min-width:0; }
+  .label { font:500 14px/1.5 var(--sans); text-transform:none; letter-spacing:.01em; }
+  .inner>.label,.head>.label { display:block; font:12px/1.6 var(--mono); text-transform:uppercase; letter-spacing:.12em; margin-bottom:18px; }
+  h1 { font-size:clamp(44px,6vw,76px); letter-spacing:-.025em; max-width:17ch; }
+  .lede { font:18px/1.7 var(--sans); max-width:55ch; }
+  .head h2 { font-size:clamp(36px,5vw,56px); max-width:22ch; }
+  .stage,.review,.log-form,.viz { border-radius:16px; padding:28px; }
+  .stage { position:relative; margin-top:24px; border-top:2px solid var(--amber); }
+  .stage h3 { font-size:32px; margin:8px 0 12px; }
+  .stage p,.step p,.fact-b,.tool .tw,.tool .th,.rec .rh,.rec .rw,.rq h4 { font-size:16px; }
+  .stage-step,.step-n,.pips-key { font:12px/1.6 var(--mono); letter-spacing:.08em; }
+  .pips { gap:6px; margin:24px 0 12px; }
+  .pip { width:22px; height:22px; border-radius:5px; transition:background 220ms ease; }
+  .pips-key { color:var(--ink-mute); }
+  .steps { border-radius:12px; overflow:hidden; }
+  .step { padding:24px; }
+  .step h3 { font-size:27px; margin:10px 0; }
+  .facts { border-radius:12px; overflow:hidden; }
+  .fact { padding:24px; }
+  .fact-n { font-size:44px; }
+  .log-form>.label { display:block; color:var(--ink); font:500 28px/1.2 var(--serif); margin-bottom:25px; }
+  .field { margin-bottom:24px; min-width:0; }
+  .field input,.field select,.field textarea { font-size:16px; min-height:48px; border-radius:8px; padding:10px 12px; min-width:0; max-width:100%; }
+  .field input[type=range] { padding:0; background:transparent; border:0; }
+  .slider-val { display:inline-block; margin-left:5px; font-size:14px; }
+  .hint,.viz-note { font-size:14px; }
+  .btn { min-height:48px; font:600 14px/1.5 var(--sans); text-transform:none; letter-spacing:0; border-radius:9px; color:var(--button-ink); padding:12px 20px; transition:transform 160ms var(--ease),background 160ms ease,color 160ms ease; }
+  .btn:active { transform:scale(.98); }
+  .btn:disabled { cursor:not-allowed; opacity:.5; }
+  .btn-row { align-items:center; gap:12px; }
+  .acct { border-radius:10px; background:transparent; margin-top:18px; padding:16px 18px; }
+  .acct-txt { font-size:14px; }
+  .acct-sync { font:14px/1.5 var(--sans); text-transform:none; letter-spacing:0; }
+  .acct-txt .who { font-size:13px; }
+  .acct-dot { border-radius:50%; }
+  .print-options { padding:20px 0; border-top:1px solid var(--hairline); }
+  .print-options summary { cursor:pointer; font-size:15px; color:var(--ink-soft); padding:8px 0; }
+  .print-options[open] summary { margin-bottom:20px; }
+  .readout,.stat-row { border-radius:12px; overflow:hidden; }
+  .readout div,.stat { padding:22px 18px; }
+  .readout .rv,.stat .sv { font:500 38px/1.15 var(--serif); margin-top:12px; font-variant-numeric:tabular-nums; }
+  .rec { border-radius:10px; padding:20px; transition:background 160ms ease,border-color 160ms ease; }
+  .rec h4 { font:600 20px/1.3 var(--sans); }
+  .rec .box { width:20px; height:20px; border-radius:4px; display:grid; place-items:center; }
+  .rec[aria-pressed=true] .box::after { content:'✓'; color:var(--button-ink); font-size:14px; }
+  .rec[aria-pressed=true] { background:var(--paper-warm); }
+  .rq-opts button,.chk { min-height:44px; border-radius:8px; font-size:14px; padding:10px 14px; }
+  .rq-opts button[aria-pressed=true],.seg button[aria-pressed=true],.chk[aria-pressed=true] { color:var(--button-ink); }
+  .seg { border-radius:9px; overflow:hidden; }
+  .seg button { font:500 14px/1.4 var(--sans); text-transform:none; letter-spacing:0; min-height:44px; padding:10px 14px; }
+  .legend span { font:12px/1.5 var(--sans); letter-spacing:0; text-transform:none; }
+  .viz-head h3 { font-size:28px; }
+  .log-table { font-size:14px; font-variant-numeric:tabular-nums; }
+  .log-table th { font:500 13px/1.5 var(--sans); text-transform:none; letter-spacing:0; padding:14px 12px; }
+  .log-table td { padding:14px 12px; }
+  .rm { min-height:44px; font:14px var(--sans); text-transform:none; letter-spacing:0; }
+  .table-scroll { overflow:auto; border:1px solid var(--hairline); border-radius:12px; }
+  .table-scroll .log-table { margin:0; }
+  #phaseCompare { overflow-x:auto; border:1px solid var(--hairline); border-radius:12px; padding:24px; }
+  .tool { padding:24px 0; }
+  .tool h4 { font-size:25px; }
+  .tool-i,.tool .te { font-size:12px; letter-spacing:0; }
+  .class-empty { border-radius:12px; font-size:16px; padding:40px 24px; }
+  .bar-row { font-size:14px; grid-template-columns:7rem 1fr 4rem; }
+  .bar-row .bv { font-size:13px; }
+  .bar-track { border-radius:4px; height:18px; overflow:hidden; }
+  .footer { font:12px/1.6 var(--mono); letter-spacing:.04em; }
+  @media(hover:hover){ .btn:not(:disabled):hover { transform:translateY(-1px); } .rec:hover { border-color:var(--amber); } }
+  @media(max-width:680px){
+    .mast-inner { padding:12px 16px 0; }.masthead-top { gap:8px; }.mast-actions{gap:12px}.wordmark{font-size:14px}.wordmark .counselling{display:none}.back-link{font-size:13px}
+    .tab { flex-direction:column; gap:5px; padding:10px 2px; font-size:13px; }.tab-icon{width:19px;height:19px}.tabs{gap:0}.panel{padding:26px 20px 48px}.stage,.review,.log-form,.viz{padding:20px}.stage h3{font-size:29px}
+    .pip{width:14px;height:20px}.pips{gap:4px}.pip.gap{margin-left:6px}.stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:last-child:nth-child(odd){grid-column:1/-1}.stat{padding:18px 14px}.stat .sv{font-size:34px}
+    .tool{grid-template-columns:20px minmax(0,1fr);gap:10px}.tool .te{grid-column:2}.bar-row{grid-template-columns:5rem 1fr 3.5rem;gap:8px}.seg button{flex:1 1 45%}.rec{padding:16px}.btn-row .btn{flex:1 1 auto}.readout{grid-template-columns:repeat(2,minmax(0,1fr))}#phaseCompare{padding:16px}.log-table th,.log-table td{padding:10px 8px}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+
 @media print {
   @page { margin:13mm; }
   body { background:#fff !important; color:#111 !important; font-size:11pt; }
@@ -339,33 +445,62 @@ input[type=range] { width:100%; accent-color:var(--amber); }
   .tracker-t .split { border-left:2px solid #111 !important; }
   .sec-label,.label,.commit .cd,.sheet-foot,.tracker-t th { color:#444 !important; }
 }
+
+/* Default printing produces the blank tracker; the results button selects a personal report. */
+@media print {
+  @page { size:A4 portrait; margin:12mm; }
+  #personalReport { display:none!important; }
+  body[data-print-mode="results"] #p-sheet { display:none!important; }
+  body[data-print-mode="results"] #personalReport { display:block!important; }
+  #personalReport { font:10pt/1.5 Arial,sans-serif; color:#111; }
+  #personalReport p { max-width:none; color:#333; margin:3mm 0; }
+  #personalReport h1 { font:28pt/1.1 Georgia,serif; margin:3mm 0; }
+  #personalReport h2 { font:16pt/1.3 Georgia,serif; margin:6mm 0 2mm; break-after:avoid; }
+  #personalReport table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:9pt; }
+  #personalReport th,#personalReport td { text-align:left; padding:2.5mm 1.5mm; border-bottom:1px solid #aaa; overflow-wrap:anywhere; }
+  #personalReport thead { display:table-header-group; }
+  #personalReport tr { break-inside:avoid; }
+  #personalReport .report-head { border-bottom:2px solid #111; padding-bottom:3mm; }
+  #personalReport .report-note { margin-top:6mm; font-size:9pt; }
+  .sheet { font-size:10pt; }
+  .sheet-head,.smeta,.commit li,.sig-row { break-inside:avoid; }
+  .tracker-t { table-layout:fixed; }
+  .tracker-t .rh { width:27mm; min-width:0; font-size:8pt; }
+  .tracker-t th { font-size:7pt; }
+  .tracker-t th,.tracker-t td { padding:1mm .5mm; overflow-wrap:anywhere; }
+  .tracker-t td { height:9mm; }
+}
 </style>
+<link rel="stylesheet" href="night-passage.css">
+<script src="night-passage.js" defer></script>
 </head>
 <body>
+<a href="#main" class="skip-link no-print">Skip to content</a>
 
 <header class="masthead no-print">
   <div class="mast-inner">
     <div class="masthead-top">
       <div class="wordmark">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <strong>The Sleep Lab</strong> · Counselling
+        <strong>The Sleep Lab</strong><span class="counselling"> · Counselling</span>
       </div>
+      <div class="mast-actions"><a class="back-link" href="index.html">Toolkit</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Switch between night and day view">
         <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></svg>
-      </button>
+      </button></div>
     </div>
     <div class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" id="t-learn"   aria-controls="p-learn"   aria-selected="true"><span class="n">01</span>How it works</button>
-      <button class="tab" role="tab" id="t-log"     aria-controls="p-log"     aria-selected="false"><span class="n">02</span>My log</button>
-      <button class="tab" role="tab" id="t-results" aria-controls="p-results" aria-selected="false"><span class="n">03</span>My results</button>
-      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><span class="n">04</span>The school</button>
-      <button class="tab" role="tab" id="t-help"    aria-controls="p-help"    aria-selected="false"><span class="n">05</span>More help</button>
+      <button class="tab" role="tab" id="t-learn"   aria-controls="p-learn"   aria-selected="true"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4V4Zm16 0h-4a3 3 0 0 0-3 3m0 14a4 4 0 0 1 4-3h3V4"/></svg><span class="n">01</span>How it works</button>
+      <button class="tab" role="tab" id="t-log"     aria-controls="p-log"     aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17H6V4Zm3-2h6v4H9V2Zm0 8h6m-6 4h6"/></svg><span class="n">02</span>My log</button>
+      <button class="tab" role="tab" id="t-results" aria-controls="p-results" aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v17h17M8 16v-4m5 4V7m5 9V4"/></svg><span class="n">03</span>My results</button>
+      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>The school</button>
+      <button class="tab" role="tab" id="t-help"    aria-controls="p-help"    aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v.01M9 8a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20"/></svg><span class="n">05</span>More help</button>
     </div>
   </div>
 </header>
 
-<main>
+<main id="main">
 
 <!-- ══════ 01 · HOW IT WORKS ══════ -->
 <section class="panel active" id="p-learn" role="tabpanel" aria-labelledby="t-learn" tabindex="0">
@@ -374,6 +509,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
     <h1>Two weeks. <em>One question.</em></h1>
     <p class="lede" style="margin-top:1rem;">Measure a week of your ordinary sleep. Change two or three things. Measure a second week. Then look at whether it moved.</p>
 
+    <div class="btn-row"><button class="btn" id="startNow">Start logging</button><button class="btn ghost" id="printIntro">Print tracking sheet</button></div>
     <div class="steps">
       <div class="step"><span class="step-n">Week 1</span><h3>Measure only</h3><p>Log every morning and change nothing on purpose. This is your baseline — without it there is nothing to compare against.</p></div>
       <div class="step"><span class="step-n">Review</span><h3>See what your week says</h3><p>After five nights the Lab reads your log, asks five questions, and suggests the changes your own data points at. You pick three.</p></div>
@@ -437,7 +573,7 @@ input[type=range] { width:100%; accent-color:var(--amber); }
       <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
       <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with school Google</button>
       <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
-      <span class="acct-sync" id="acctSync"></span>
+      <span class="acct-sync" id="acctSync" role="status" aria-live="polite"></span>
     </div>
     <div class="notice" id="storeNote" style="display:none;"></div>
 
@@ -458,14 +594,15 @@ input[type=range] { width:100%; accent-color:var(--amber); }
         <div class="field"><label class="label" for="lEnergy">How today felt, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
       </div>
       <div class="field" id="checkField"><label class="label">Changes I actually did</label><div class="chk-row" id="lChecks"></div></div>
-      <div class="btn-row"><button class="btn" id="saveLog">Save last night</button><span class="acct-sync" id="copyMsg"></span></div>
+      <div class="btn-row"><button class="btn" id="saveLog">Save last night</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
     </div>
 
-    <hr class="rule">
+    <details class="print-options"><summary>Personalise your printed tracking sheet</summary>
     <div class="lf-grid">
       <div class="field"><label class="label" for="fName">Name, for the printed sheet</label><input type="text" id="fName" placeholder="Optional"></div>
       <div class="field"><label class="label" for="fHouse">House or year</label><input type="text" id="fHouse" placeholder="Optional"></div>
     </div>
+    </details>
     <div class="btn-row no-print">
       <button class="btn ghost" id="printBtn2">Print my tracking sheet</button>
       <button class="btn ghost" id="goResults">See my results</button>
@@ -496,8 +633,9 @@ input[type=range] { width:100%; accent-color:var(--amber); }
     </div>
 
     <span class="label">Every night logged</span>
-    <div style="overflow-x:auto;"><table class="log-table" id="logTable"></table></div>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Logged nights, scroll to see all columns"><table class="log-table" id="logTable"></table></div>
     <div class="btn-row">
+      <button class="btn ghost" id="printResults">Print my results</button>
       <button class="btn ghost" id="exportCsv">Download as CSV</button>
       <button class="btn ghost" id="copySummary">Copy summary</button>
       <button class="btn ghost" id="newCycle">Start another round</button>
@@ -599,6 +737,8 @@ input[type=range] { width:100%; accent-color:var(--amber); }
 </section>
 
 </main>
+
+<section class="print-only" id="personalReport" aria-label="Personal sleep record"></section>
 
 <footer class="footer no-print">The Sleep Lab · Counselling · <span style="font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ink-soft);font-style:italic;">Leysin American School</span></footer>
 <script>
@@ -768,9 +908,11 @@ function showTab(id){
   tabs.forEach(function(t){
     var on=t.id===id;
     t.setAttribute('aria-selected', on?'true':'false');
+    t.tabIndex=on?0:-1;
     var p=$(t.getAttribute('aria-controls'));
     if(p) p.classList.toggle('active', on);
   });
+  try { history.replaceState(null,'','#'+id.replace('t-','')); } catch(e){}
   if(id==='t-log') { renderAcct(); renderStage(); }
   if(id==='t-results') { renderLog(); renderLogChart(); }
   if(id==='t-class') loadClass();
@@ -780,8 +922,9 @@ tabs.forEach(function(t,i){
   t.addEventListener('click', function(){ showTab(t.id); });
   t.addEventListener('keydown', function(e){
     var d = e.key==='ArrowRight'?1 : e.key==='ArrowLeft'?-1 : 0;
-    if(!d) return; e.preventDefault();
-    var nx=tabs[(i+d+tabs.length)%tabs.length]; nx.focus(); showTab(nx.id);
+    if(!d && e.key!=='Home' && e.key!=='End') return; e.preventDefault();
+    var index=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+d+tabs.length)%tabs.length;
+    var nx=tabs[index]; nx.focus(); showTab(nx.id);
   });
 });
 
@@ -791,6 +934,7 @@ $('themeToggle').addEventListener('click', function(){
   var next = r.getAttribute('data-theme')==='day' ? 'night' : 'day';
   r.setAttribute('data-theme', next);
   Store.set('sleeplab-theme', next);
+  $('themeToggle').setAttribute('aria-label',next==='day'?'Switch to night view':'Switch to day view');
   redrawAll();
 });
 (function(){ var t=Store.get('sleeplab-theme'); if(t==='day') document.documentElement.setAttribute('data-theme','day'); })();
@@ -1155,7 +1299,10 @@ function renderReview(st){
     b.addEventListener('click', function(){
       reviewAnswers[b.dataset.q]=b.dataset.k;
       currentCycle().answers=reviewAnswers;
+      var q=b.dataset.q,k=b.dataset.k;
       saveAll(); renderReview(st);
+      var next=box.querySelector('[data-q="'+q+'"][data-k="'+k+'"]');
+      if(next) next.focus({preventScroll:true});
     });
   });
   Array.prototype.forEach.call(box.querySelectorAll('[data-rec]'), function(b){
@@ -1164,6 +1311,8 @@ function renderReview(st){
       if(at!==-1) p.splice(at,1);
       else if(p.length<CONFIG.MAX_TOOLS) p.push(id);
       saveAll(); renderReview(st);
+      var next=box.querySelector('[data-rec="'+id+'"]');
+      if(next) next.focus({preventScroll:true});
     });
   });
   var cb=$('commitBtn');
@@ -1172,7 +1321,7 @@ function renderReview(st){
     if(!c2.picked.length) return;
     c2.committed=new Date().toISOString().slice(0,10);
     saveAll(); renderStage(); renderChecks(); buildSheet(); pushCycle();
-    window.scrollTo({ top:0, behavior:'smooth' });
+    window.scrollTo({ top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth' });
   });
 }
 
@@ -1216,7 +1365,7 @@ $('saveLog').addEventListener('click', function(){
   state.log.sort(function(a,b){ return a.date<b.date?-1:1; });
   delete state.synced[date];
   checkState={}; renderChecks(); renderLog(); renderStage(); buildSheet(); saveAll();
-  flash(Account.on ? 'Saved to your record.' : 'Saved on this device.');
+  flash(Store.ok ? 'Saved on this device.' : 'Saved for this session. Download a copy before closing.');
   pushPending();
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
   $('lDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
@@ -1417,7 +1566,30 @@ Array.prototype.forEach.call($('pressureSeg').querySelectorAll('button'), functi
   });
 });
 $('goLog').addEventListener('click', function(){ showTab('t-log'); });
+$('startNow').addEventListener('click', function(){ showTab('t-log'); });
 $('goResults').addEventListener('click', function(){ showTab('t-results'); });
+$('printResults').addEventListener('click', function(){
+  var c=currentCycle(), entries=nightsIn(c.n), base=nightsIn(c.n,'baseline'), iv=nightsIn(c.n,'intervention');
+  var report=$('personalReport');
+  var person=$('fName').value.trim();
+  var picked=c.picked.map(function(id){var tool=byId(id);return tool?esc(tool.name):'';}).filter(Boolean);
+  var out='<header class="report-head"><span>The Sleep Lab · Leysin American School</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
+  out+='<h2>Changes chosen</h2><p>'+(picked.length?picked.join(' · '):'No changes chosen for this round yet.')+'</p>';
+  out+='<h2>My two weeks</h2><p>'+base.length+' baseline entries · '+iv.length+' intervention entries</p>';
+  if(c.committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
+    var avg=function(rows,key){return rows.reduce(function(total,e){return total+e[key];},0)/rows.length;};
+    out+='<table><thead><tr><th>Measure</th><th>Baseline</th><th>Intervention</th></tr></thead><tbody>';
+    [['Estimated sleep','asleep',60,' h'],['Time to fall asleep','lat',1,' min'],['Day rating','energy',1,' / 5']].forEach(function(r){
+      out+='<tr><td>'+r[0]+'</td><td>'+(avg(base,r[1])/r[2]).toFixed(1)+r[3]+'</td><td>'+(avg(iv,r[1])/r[2]).toFixed(1)+r[3]+'</td></tr>';
+    });
+    out+='</tbody></table>';
+  }else out+='<p>The comparison is not ready yet. Keep this record of what you have logged so far.</p>';
+  out+='<h2>Recorded nights</h2><table><thead><tr><th>Morning</th><th>Phase</th><th>Lights out</th><th>Out of bed</th><th>Estimated sleep</th><th>Day</th></tr></thead><tbody>';
+  out+=entries.length?entries.map(function(e){return '<tr><td>'+esc(e.date)+'</td><td>'+esc(e.phase||'—')+'</td><td>'+esc(e.out)+'</td><td>'+esc(e.up)+'</td><td>'+Math.floor(e.asleep/60)+'h '+pad(e.asleep%60)+'m</td><td>'+e.energy+'/5</td></tr>';}).join(''):'<tr><td colspan="6">No nights recorded in this round.</td></tr>';
+  out+='</tbody></table><p class="report-note">Sleep duration is estimated from your entries. The current calculation assumes 12 minutes awake per waking. A difference between weeks does not establish what caused it.</p>';
+  report.innerHTML=out; document.body.dataset.printMode='results'; window.print();
+});
+window.addEventListener('afterprint',function(){delete document.body.dataset.printMode;});
 $('newCycle').addEventListener('click', function(){
   var st=stage();
   if(st.id!=='results' && !window.confirm('You are part-way through a round. Start a new one anyway? Your logged nights are kept.')) return;
@@ -1435,8 +1607,8 @@ $('newCycle').addEventListener('click', function(){
   renderLog(); renderStage(); renderChecks(); buildSheet(); saveAll();
   showTab('t-log');
 });
-['printBtn','printBtn2'].forEach(function(id){
-  var b=$(id); if(b) b.addEventListener('click', function(){ buildSheet(); window.print(); });
+['printBtn','printBtn2','printIntro'].forEach(function(id){
+  var b=$(id); if(b) b.addEventListener('click', function(){ delete document.body.dataset.printMode; buildSheet(); window.print(); });
 });
 ['fName','fHouse'].forEach(function(id){
   var el=$(id); if(el) el.addEventListener('input', function(){ saveAll(); buildSheet(); });
@@ -1640,7 +1812,7 @@ function loadClass(force){
   if(!CONFIG.ENDPOINT){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='Not switched on yet. Once counselling connects the Lab, every night logged across the school appears here with the names stripped off.';
+    $('classNote').textContent='School insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
     classOffline('Waiting on the school connection.');
     return;
   }
@@ -1666,6 +1838,11 @@ if(!Store.ok){
 renderTools(); renderChecks(); renderLog(); renderStage();
 renderAcct(); syncPull();
 drawPressure(); buildSheet();
+var initialTab=location.hash.slice(1);
+if(!['learn','log','results','class','help'].includes(initialTab)) initialTab=state.log.length?'log':'learn';
+showTab('t-'+initialTab);
+$('themeToggle').setAttribute('aria-label',document.documentElement.dataset.theme==='day'?'Switch to night view':'Switch to day view');
+window.addEventListener('hashchange',function(){ var key=location.hash.slice(1); if(['learn','log','results','class','help'].includes(key))showTab('t-'+key); });
 })();
 </script>
 </body>

@@ -1,114 +1,93 @@
-# Design brief — Sleep Lab & the toolkit shelf
+# Design brief — LAS wellbeing toolkit
 
-Hand this to a design pass verbatim, with the reference board alongside it:
-<https://www.cosmos.so/e/2028547921>
+This brief reflects the current user request: high-end visual design and purposeful
+motion, a sleek informational landing page, a clear entrance to the working tool,
+and both printable and digital records. It supersedes the previous skin-only brief.
 
----
+## Product surface
 
-## The job
+- `index.html`: informational landing page, immediate entry to Sleep Lab, concise
+  explanation of the experiment, upcoming tools clearly secondary.
+- `sleep-lab.html`: daily logging, review, personal results, school summaries and help.
+- One private school Sheet with stable account IDs is the agreed next-phase data
+  model. See `DELIVERY-PLAN.md`. No per-student Sheet connection flow is needed.
+- Optional class studies use staff-generated cohort codes. Teacher and block are
+  confirmed labels after joining; they are not free-text fields repeated on each log.
 
-Restyle two existing pages. Do not redesign what they do — the structure,
-copy and behaviour are settled and working. This is a skin.
+## Visual direction
 
-- `index.html` — the shelf. A heading and four tool cards, rendered from `tools.js`.
-- `sleep-lab.html` — the Sleep Lab. One file, five tabs, plus a printed sheet.
+Keep the original alpine world: mountains, moonlight, clouds, the cow above the
+moon, and playful tool icons. Use the user-supplied cinematic reference
+(https://t3code-cinematic-dark-saas-landing-page-template-v2.21st.app/) for
+presentation: near-black space, centered sans-serif type, restrained luminous
+edges, compact controls and carefully timed motion. Do not import the template's
+copy, testimonials, brand, or code.
 
-## Hard constraints
+The hero introduces the whole toolkit. The alpine scene beneath it introduces
+Sleep Lab. A compact dock uses a sculpted sheep for sleep, a bunk-bed icon for
+Roommate Treaty, and restrained symbols for the other tools. Upcoming tools must
+be clearly marked and never masquerade as working links. Retain functional day
+and night themes.
 
-These are not preferences. Breaking any of them breaks the site.
+The September 10 pass replaces the earlier duplicated/hidden landing layout.
+It uses one original mountain/moon/cow illustration and independently moving
+transparent cloud layers. The mountain ridges and cow are still part of the
+static illustration; independently animated ridges and cow are future asset
+work, not a capability to claim in this pass.
 
-1. **Two files, no build step.** Plain HTML/CSS/JS, served straight off GitHub
-   Pages. No React, no Tailwind, no bundler, no npm. Styles stay inline in each
-   file's own `<style>` block.
-2. **Everything already in the page keeps working.** The tab bar and its arrow-key
-   navigation, the night/day theme toggle, the sleep-pressure chart, the hours
-   chart, the tracker form, the printed tracking sheet, the sign-in strip with
-   its four states, and the staged flow — the stage card, the progress pips, the
-   five-question review and its recommendation cards. Restyle them; do not
-   rewrite their logic.
-3. **The CSS custom properties are the theming system.** `--paper`, `--ink`,
-   `--amber`, `--teal`, `--coral`, `--indigo`, `--hairline` and the rest are
-   redefined under `:root[data-theme="day"]`, and the SVG charts read them at
-   runtime via `getComputedStyle`. Change the *values* freely. Do not remove a
-   token or hard-code a colour anywhere a token is in use.
-4. **Both themes ship.** Night is the default; day must stay legible, not an
-   afterthought. Check every chart in both.
-5. **The print stylesheet survives.** Tab 07 prints to a signable A4 sheet.
-6. **Mobile first, genuinely.** Boarding students read this on a phone in a dark
-   room at 11pm. Nothing may scroll sideways.
-7. **Accessible.** Keep every `aria-*` attribute and `role` already present. Text
-   contrast at least 4.5:1 in both themes — including the amber on dark, which is
-   marginal today.
+Graphics should explain the experiment and results. The fourteen-day figure is
+an overview, never fabricated performance data. Keep exact charts in SVG or a
+charting library; never use generated imagery for numeric evidence.
 
-## The direction
+## Interaction
 
-Modern minimal tech, with a pixel-era edge. Clean, concise, confident. Lots of
-small icons doing real work, short text, nothing flashy or decorative for its own
-sake. It should feel like a well-made instrument, not a wellness brochure.
+- About 160ms for button feedback; 280ms for panel transitions.
+- Introductory entrance motion is brief, finite and does not delay interaction.
+- The landing page may use restrained parallax and reveal motion: the mountain
+  scene shifts slightly with scroll, clouds move at two depths, and entering
+  Sleep Lab passes through a short cloud threshold. No scroll
+  hijacking, autoplay video or continuous decorative motion.
+- Respect reduced-motion preferences in CSS and JavaScript.
+- Keep normal modified-click/new-tab navigation. Skip the passage if its image
+  is unavailable. Escape cancels a pending passage; returning with browser Back
+  clears its overlay. No-JavaScript content and links remain usable.
+- Consistent pressed, focus, selected, disabled, empty and error states.
+- Save confirmation is precise: saved locally, waiting, syncing or confirmed.
+- Class membership is an optional, explicit step labelled **Join a class study**;
+  students can always remain in personal mode.
+- A valid code returns the teacher/block label before the student confirms. Invalid,
+  expired and revoked codes get a plain error without revealing whether a code exists.
+- All five navigation options remain discoverable on a small phone.
+- Direct section links work. Existing users can continue their record.
 
-What that means concretely:
+## Accessibility and print
 
-- **Grid and hairlines over cards and shadows.** Structure comes from alignment
-  and 1px rules, not from boxes floating on drop shadows. No rounded-corner card
-  soup. Zero gradients used as decoration.
-- **A monospace voice for the interface.** Labels, tab numbers, stat captions,
-  axis ticks, buttons — small, uppercase, wide letter-spacing. The page already
-  does this; push it further and make it consistent.
-- **One expressive face for the headlines.** The page currently pairs a serif
-  display face with a sans body. Either keep that tension or replace it with a
-  sharper pairing — but keep the tension. A single-typeface page would go flat.
-- **Pixel as a motif, not a filter.** Think 1px-stepped icons, blocky 8×8 or
-  16×16 glyphs, stepped chart marks, a dot-matrix texture at very low opacity.
-  Do not apply a pixelation effect to photographs or type; do not use a pixel
-  font for body copy.
-- **An icon system, hand-built.** No icon library — inline SVG only, one
-  consistent grid and stroke weight, on a 24×24 box. Every tab needs one. Every
-  stat tile, every strategy category, every state of the sign-in strip.
-- **Restraint with colour.** One accent carries the page. Teal reads as good,
-  coral as bad, in the charts only. Everything else is ink on paper.
-- **Motion is small and purposeful.** A bar filling, a tab underline sliding.
-  Nothing that moves while a tired person is trying to read.
+Use at least 16px body text, around 14px for regular labels and at least 12px
+metadata. Check contrast at 4.5:1 for normal text. Provide visible keyboard focus,
+semantic labels, live status feedback and sufficiently large touch targets.
+Test 360, 390, 768 and 1440px widths and 200% text enlargement. Tables may scroll
+inside a labelled region; the page itself must not overflow.
 
-## Where to spend the effort
+Deliver a blank A4 tracking sheet with handwriting space and a populated personal
+report. Check both in black and white with long names, partial logs and complete
+rounds. Print styling is independent of the selected screen theme. Do not print
+navigation, hidden actions or destructive controls.
 
-In order:
+## Implementation constraints
 
-1. **The stage card and the review.** This is the app now: a student opens My log
-   and is told exactly where they are and what to do today. The progress pips,
-   the "your review is ready" moment, the readout of their own numbers, and the
-   recommendation cards are the emotional core of the tool. They currently look
-   like ordinary form furniture.
-2. **The printed tracking sheet.** A student fills this in by hand for fourteen
-   nights and pins it up. It prints from the same file, so it has to work in black
-   on white with no colour to lean on. Currently the weakest piece.
-3. **The week-one/week-two comparison tables.** This is the whole point of the
-   tool and it currently renders as a plain table. It should be the moment the
-   page pays off.
-4. **The school dashboard (tab 04).** Five stat tiles, two bar charts, one
-   comparison. Make it read like an instrument panel, and remember a teacher may
-   project it.
-5. **The sign-in strip.** Four states — not connected, not signed in, signed in,
-   syncing. It must say "your data is safe either way" at a glance.
-6. **The shelf (`index.html`).** A different visual language from the Lab. Bring
-   them into one system; the Lab is the reference.
+Preserve local records and existing functions during the design pass. Keep plain
+HTML/CSS/JS for this phase; scoped shared styles and scripts are appropriate.
+No framework migration is needed to
+improve the appearance. Preserve the runtime chart colour tokens. Correct
+interaction defects where necessary, but explicitly document changes to the
+experiment and data model in a separate implementation slice.
 
-## The copy
+Production authentication and Google connection follow the design phase. Do not
+present a simulated sign-in as real or put student records into a public preview.
+The previous requirement to preserve JSONP does not apply to future integration.
 
-The text has been through an editing pass to cut length and strip the "X, not Y"
-slogan construction that had crept into every heading. Hold that line:
+## Review
 
-- **Do not add words.** If a layout needs a subtitle, a strapline or filler body
-  copy to look right, the layout is wrong. Design around the text that is there.
-- **No slogans.** Nothing in the shape of "It is not X, it is Y", "not a promise,
-  an experiment", or a heading that pivots on a comma into a reassurance.
-- **Headings say what the section is.** "How the school is sleeping", not a line
-  of encouragement.
-- Plain and direct is the register. Not corporate, not therapeutic, not chirpy.
-
-If a piece of copy genuinely does not work in the new layout, cut it or flag it —
-do not rewrite it longer.
-
-## Deliverable
-
-The two files, edited in place, opening cleanly with no console errors, with every
-tab checked in both themes at 360px and 1440px.
+The implementation branch includes static validation. Visual browser acceptance,
+actual-phone checks and A4 print inspection remain required before design sign-off.
+See the delivery plan for the exact acceptance cases and remaining backend defects.
