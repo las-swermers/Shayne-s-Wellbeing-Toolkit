@@ -1,60 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="night">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Simple wellbeing tools for boarding-school students.">
-  <title>Shayne’s Wellbeing Toolkit</title>
-  <style>
-    :root { --paper:#f7f5f1; --ink:#1c2730; --quiet:#69737a; --line:#dde1e0; --accent:#d77b3e; --night:#253744; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--paper); color:var(--ink); font-family:Georgia, 'Times New Roman', serif; }
-    main { width:min(960px, calc(100% - 40px)); margin:0 auto; padding:28px 0 64px; }
-    .topline { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:18px; font-size:.9rem; }
-    .brand { display:flex; align-items:center; gap:9px; font-weight:bold; letter-spacing:.01em; }
-    .brand-mark { width:24px; height:24px; color:var(--accent); }
-    .open { color:var(--quiet); }
-    header { max-width:650px; padding:80px 0 62px; }
-    .eyebrow { color:var(--accent); font:italic 1rem/1 Georgia,serif; }
-    h1 { margin:12px 0 17px; font-size:clamp(2.75rem, 7vw, 5.4rem); font-weight:normal; letter-spacing:-.065em; line-height:.92; }
-    h1 em { color:var(--accent); }
-    .intro { margin:0; color:var(--quiet); font-size:1.12rem; line-height:1.6; }
-    .section-title { display:flex; justify-content:space-between; align-items:baseline; margin:0 0 14px; }
-    .section-title h2 { font-size:1rem; margin:0; letter-spacing:.03em; }
-    .section-title span { color:var(--quiet); font-size:.9rem; }
-    .tools { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-    .tool { position:relative; display:grid; grid-template-columns:42px 1fr auto; gap:14px; align-items:start; min-height:144px; padding:24px; color:inherit; text-decoration:none; border-bottom:1px solid var(--line); transition:background .15s ease; }
-    .tool:nth-child(odd) { border-right:1px solid var(--line); }
-    .tool:nth-last-child(-n+2) { border-bottom:0; }
-    .tool:not(.soon):hover { background:#fff; }
-    .tool-icon { width:38px; height:38px; padding:9px; border-radius:50%; background:#edf0ee; color:var(--night); }
-    .tool h3 { margin:1px 0 6px; font-size:1.3rem; font-weight:normal; line-height:1.1; }
-    .tool p { margin:0; color:var(--quiet); font-size:.95rem; line-height:1.45; }
-    .arrow { color:var(--accent); font-size:1.25rem; padding-top:3px; }
-    .soon { background:#f2f1ed; cursor:default; }
-    .soon .tool-icon, .soon .arrow { color:#8d9699; }
-    .tag { display:block; margin-top:9px; color:#8d9699; font:italic .82rem Georgia,serif; }
-    footer { display:flex; justify-content:space-between; gap:20px; margin-top:68px; padding-top:18px; border-top:1px solid var(--line); color:var(--quiet); font-size:.85rem; }
-    @media (max-width:620px) { main { width:min(100% - 28px, 960px); } header { padding:58px 0 46px; } .tools { grid-template-columns:1fr; } .tool:nth-child(odd) { border-right:0; } .tool:nth-last-child(2) { border-bottom:1px solid var(--line); } .topline .open { display:none; } footer { display:block; } footer p + p { margin-top:10px; } }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Shayne’s Wellbeing Toolkit at Leysin American School. Start a two-week sleep experiment, keep your log, and see what changes.">
+<meta name="color-scheme" content="dark light"><title>Shayne’s Wellbeing Toolkit · LAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem('sleeplab-theme')==='day')document.documentElement.dataset.theme='day';}catch(e){}</script>
+<style>
+:root{--paper:#101a28;--surface:#182536;--ink:#f3eee4;--soft:#c0cad7;--mute:#9aaabe;--accent:#e7bd7d;--button-ink:#18202a;--line:#3e4d60;--mono:'JetBrains Mono',monospace;--sans:'Manrope',system-ui,sans-serif;--serif:'Cormorant Garamond',Georgia,serif;--ease:cubic-bezier(.22,1,.36,1)}
+:root[data-theme=day]{--paper:#f7f5f0;--surface:#eeebe4;--ink:#172538;--soft:#445369;--mute:#536176;--accent:#775015;--button-ink:#fffaf0;--line:#b9bfc4}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--sans)}a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit}a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:5px}svg{display:block}p,h1,h2,h3{margin:0}p{color:var(--soft)}.wrap{width:min(1200px,calc(100% - 64px));margin:auto}.skip{position:fixed;top:-100px;left:20px;background:var(--ink);color:var(--paper);padding:12px;z-index:5}.skip:focus{top:12px}
+.topline{min-height:100px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:14px;font-weight:600;text-decoration:none;font-size:15px;line-height:1.35}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;color:var(--accent);font:18px var(--serif)}.brand small{display:block;font:12px/1.6 var(--mono);color:var(--mute);letter-spacing:.09em;margin-top:3px}.top-actions{display:flex;align-items:center;gap:24px}.top-actions>a{font-size:14px;text-decoration:none;color:var(--soft)}.theme{min-width:44px;min-height:44px;padding:10px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center}.theme svg{width:20px;height:20px}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:72px;align-items:center;padding:88px 0 84px}.eyebrow{display:block;font:12px/1.6 var(--mono);color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px}h1{font:500 clamp(52px,6.3vw,88px)/.98 var(--serif);letter-spacing:-.035em;max-width:9ch}h1 em{font-weight:500;color:var(--accent)}.intro{font-size:18px;max-width:39ch;margin-top:26px}.actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:32px}.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:52px;padding:14px 22px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;transition:transform 160ms var(--ease),background 160ms var(--ease)}.primary{background:var(--accent);color:var(--button-ink);border:1px solid var(--accent)}.secondary{border:1px solid var(--line);color:var(--ink)}.primary svg{width:18px;height:18px}.primary:active,.secondary:active{transform:scale(.98)}.local-note{font-size:13px;color:var(--mute);margin-top:17px}
+.experiment{margin:0;padding:30px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}.experiment-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font:12px var(--mono);letter-spacing:.09em;color:var(--mute)}.experiment-top span:last-child{color:var(--accent)}.experiment-title{font:500 38px/1.1 var(--serif);margin-top:35px}.fortnight{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;margin:28px 0}.night{aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;color:var(--soft);font:13px var(--mono)}.night:nth-child(n+8){border-color:var(--accent);color:var(--accent)}.phase-key{display:flex;justify-content:space-between;gap:18px;padding:18px 0 24px;border-bottom:1px solid var(--line);font-size:14px;color:var(--soft)}.phase-key b{display:block;color:var(--ink);font-weight:500}.phase-key span:last-child{text-align:right}.experiment figcaption{margin-top:22px;color:var(--soft);font-size:14px;max-width:34ch}.experiment figcaption strong{color:var(--ink);font-weight:500}
+.overview{border-top:1px solid var(--line);padding:42px 0 60px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}.overview article{padding-right:20px}.step-number{font:12px var(--mono);letter-spacing:.1em;color:var(--accent)}.overview h2{font:500 29px/1.1 var(--serif);margin:15px 0 12px}.overview p{font-size:16px;max-width:31ch}.shelf{padding:32px 0 64px}.shelf-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:24px}.shelf h2{font:500 35px var(--serif)}.shelf-heading>span{font-size:13px;color:var(--mute)}.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.tool{display:grid;grid-template-columns:28px 1fr;gap:14px;border-top:1px solid var(--line);padding-top:22px;text-decoration:none}.tool-icon{color:var(--mute)}.tool-icon svg{width:24px;height:24px}.tool h3{font-size:16px;font-weight:500;margin-bottom:7px}.tool p{font-size:16px}.tag{display:block;color:var(--mute);font:12px var(--mono);margin-top:13px}.arrow{display:none}.footer{display:flex;justify-content:space-between;gap:20px;padding:24px 0 32px;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+@media(hover:hover){.primary:hover,.secondary:hover{transform:translateY(-2px)}.theme:hover{background:var(--surface)}.top-actions>a:hover{color:var(--ink)}}
+@media(prefers-reduced-motion:no-preference){.hero-copy,.experiment{animation:enter 650ms var(--ease) both}.experiment{animation-delay:90ms}.night{animation:enter 500ms var(--ease) both;animation-delay:calc(100ms + var(--i)*25ms)}@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}}
+@media(max-width:900px){.hero{gap:34px;padding:60px 0}.experiment{padding:24px}.hero h1{font-size:66px}.overview{gap:24px}.experiment-title{font-size:32px}}
+@media(max-width:680px){.wrap{width:calc(100% - 40px)}.topline{min-height:84px}.brand{font-size:14px;gap:10px}.brand small{font-size:12px;letter-spacing:0}.top-actions>a{display:none}.hero{grid-template-columns:1fr;padding:44px 0;gap:38px}.hero h1{font-size:clamp(54px,14vw,76px)}.intro{font-size:17px}.experiment-title{margin-top:25px}.overview{grid-template-columns:1fr;gap:28px;padding-bottom:35px}.overview article{display:grid;grid-template-columns:30px 1fr;column-gap:14px;padding:0}.overview h2{margin:0 0 8px}.overview p{grid-column:2;max-width:none}.step-number{padding-top:7px}.tools{grid-template-columns:1fr;gap:24px}.shelf-heading{display:block}.shelf-heading>span{display:block;margin-top:7px}.footer{flex-direction:column;gap:6px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{body{background:white;color:#111}.top-actions,.actions,.skip{display:none}.wrap{width:100%}.hero{padding:24px 0;gap:30px}.experiment{background:white;break-inside:avoid}.overview,.tools{break-inside:avoid}p,.eyebrow,.night,.phase-key,.experiment figcaption,.footer{color:#333!important}}
+</style>
 </head>
 <body>
-  <main>
-    <div class="topline">
-      <div class="brand"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A8 8 0 1 1 12 2Z"/></svg>Shayne’s Wellbeing Toolkit</div>
-      <span class="open">For boarding students</span>
-    </div>
-    <header>
-      <div class="eyebrow">Counselling · Leysin American School</div>
-      <h1>Wellbeing <em>toolkit.</em></h1>
-      <p class="intro">Practical tools for the parts of school life that get heavy. Pick one, try it, keep what helps.</p>
-    </header>
-    <section aria-labelledby="tools-title">
-      <div class="section-title"><h2 id="tools-title">Tools</h2><span>Free to use, no sign-in</span></div>
-      <div class="tools" id="tools"></div>
-    </section>
-    <footer><p>A school sign-in is only used where a tool keeps a record for you.</p><p>LS · Wellbeing</p></footer>
-  </main>
-  <script src="tools.js"></script>
-</body>
-</html>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="topline"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S.</span><span>Shayne’s Wellbeing Toolkit<small>LEYSIN AMERICAN SCHOOL</small></span></a><div class="top-actions"><a href="#how-it-works">How it works</a><button class="theme" id="themeToggle" aria-label="Switch to day view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button></div></header>
+<main id="main">
+<section class="hero" aria-labelledby="hero-title"><div class="hero-copy"><span class="eyebrow">01 / The Sleep Lab</span><h1 id="hero-title">Understand<br>your <em>sleep.</em></h1><p class="intro">Two weeks to notice your patterns, try a few changes, and see what helps.</p><div class="actions"><a class="primary" id="enterLab" href="sleep-lab.html#log"><span>Enter Sleep Lab</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a><a class="secondary" href="sleep-lab.html#learn">Explore the experiment</a></div><p class="local-note">Your log saves in this browser. Printing is available inside.</p></div>
+<figure class="experiment" aria-label="A fourteen-day experiment: seven baseline days, then seven days trying changes"><div class="experiment-top"><span>YOUR EXPERIMENT</span><span>14 DAYS</span></div><div class="experiment-title">One night at a time.</div><div class="fortnight" aria-hidden="true">
+<span class="night" style="--i:0">01</span><span class="night" style="--i:1">02</span><span class="night" style="--i:2">03</span><span class="night" style="--i:3">04</span><span class="night" style="--i:4">05</span><span class="night" style="--i:5">06</span><span class="night" style="--i:6">07</span><span class="night" style="--i:7">08</span><span class="night" style="--i:8">09</span><span class="night" style="--i:9">10</span><span class="night" style="--i:10">11</span><span class="night" style="--i:11">12</span><span class="night" style="--i:12">13</span><span class="night" style="--i:13">14</span>
+</div><div class="phase-key"><span><b>Week one</b>Notice your patterns</span><span><b>Week two</b>Try your changes</span></div><figcaption><strong>Your review connects the two.</strong> Your own entries help you choose what to try next.</figcaption></figure></section>
+<section class="overview" id="how-it-works" aria-label="How the experiment works"><article><span class="step-number">01</span><h2>Keep a short log.</h2><p>Record last night’s sleep each morning, digitally or on a printed sheet.</p></article><article><span class="step-number">02</span><h2>Choose what to try.</h2><p>Review your baseline and choose up to three changes that fit your routine.</p></article><article><span class="step-number">03</span><h2>See what changed.</h2><p>Compare the two weeks and keep a record to return to or discuss with counselling.</p></article></section>
+<section class="shelf" aria-labelledby="tools-title"><div class="shelf-heading"><h2 id="tools-title">Next in the toolkit.</h2><span>In development</span></div><div class="tools" id="tools" data-access="soon"></div><noscript><p>Coming next: First weeks away, Exam nerves, and Roommate treaty.</p></noscript></section>
+</main><footer class="footer"><span>Counselling · Leysin American School</span><span>Shayne’s Wellbeing Toolkit</span></footer>
+</div><script src="tools.js"></script>
+<script>
+(function(){var root=document.documentElement,toggle=document.getElementById('themeToggle');function label(){toggle.setAttribute('aria-label',root.dataset.theme==='day'?'Switch to night view':'Switch to day view');}label();toggle.addEventListener('click',function(){root.dataset.theme=root.dataset.theme==='day'?'night':'day';try{localStorage.setItem('sleeplab-theme',root.dataset.theme);}catch(e){}label();});try{var record=JSON.parse(localStorage.getItem('sleeplab')||'null');if(record&&Array.isArray(record.log)&&record.log.length)document.querySelector('#enterLab span').textContent='Continue my experiment';}catch(e){}})();
+</script>
+</body></html>

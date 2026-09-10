@@ -1,5 +1,13 @@
 # Shayne's Wellbeing Toolkit
 
+> **Design implementation branch:** the updated scope and next-phase architecture
+> are in [DELIVERY-PLAN.md](DELIVERY-PLAN.md) and [DESIGN-BRIEF.md](DESIGN-BRIEF.md).
+> This branch improves the local frontend and printing; it does not connect Google
+> or enforce school sign-in. The backend description below documents the legacy
+> prototype. Its JSONP, anonymity and sync claims are not production guarantees.
+> The current decision is one private school Sheet with server-owned account IDs.
+> Follow the delivery plan where older constraints below conflict.
+
 Static wellbeing tools for boarding-school students at Leysin American School,
 built and owned by the counselling team. Plain HTML, CSS and JavaScript served
 from GitHub Pages. No framework, no build step, no package manager.
@@ -329,3 +337,4 @@ Vercel also builds the repo and comments a preview URL on every pull request.
 - **The other three tools on the shelf are placeholders** — first weeks away,
   exam nerves, roommate treaty. They are `access: 'soon'` cards in `tools.js`
   with no page behind them.
+
