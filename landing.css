@@ -149,7 +149,6 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
 .journey h1 span{background:linear-gradient(110deg,#fff,#bac7ef);background-clip:text}
 .journey .button-primary{background:#eef1fa;color:#101521}
 .journey .button-quiet{background:#10152180;border-color:#ffffff35;color:#eef1fa}
-.journey-cow{position:absolute;left:70%;top:24%;width:clamp(105px,12vw,195px);height:auto;opacity:0;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 12px #0004)}
 .journey-cloud{position:absolute;max-width:none;width:130%;height:105%;object-fit:cover;opacity:.18;pointer-events:none}
 .cloud-near{left:-22%;bottom:-64%;transform:translate3d(0,0,0)}
 .cloud-far{right:-32%;bottom:-67%;transform:translate3d(0,0,0)}
@@ -163,7 +162,6 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
 .is-enhanced .journey-stage{position:sticky;top:0;min-height:0;height:100svh}
 .is-enhanced .hero-copy{opacity:var(--intro-opacity,1);transform:translate3d(0,var(--intro-y,0px),0)}
 .is-enhanced .journey-caption{opacity:var(--caption-opacity,0);transform:translate3d(0,var(--caption-y,12px),0)}
-.is-enhanced .journey-cow{left:0;top:0;opacity:var(--cow-opacity,0);transform:translate3d(var(--cow-x,0px),var(--cow-y,0px),0) translate(-50%,-50%) rotate(var(--cow-angle,0deg))}
 .is-enhanced .cloud-near{opacity:var(--cloud-opacity,.18);transform:translate3d(var(--near-x,0%),var(--near-y,0%),0) scale(var(--cloud-scale,1))}
 .is-enhanced .cloud-far{opacity:var(--cloud-opacity,.18);transform:translate3d(var(--far-x,0%),var(--far-y,0%),0) scale(var(--cloud-scale,1))}
 .is-enhanced .journey-exit{opacity:var(--exit-opacity,.1)}
@@ -189,7 +187,6 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
   .journey .eyebrow{font-size:10px;letter-spacing:.1em}
   .journey .hero-description{font-size:1rem}
   .journey h1{font-size:clamp(2.65rem,11vw,3.5rem)}
-  .journey-cow{width:112px}
   .journey-cloud{width:190%;height:110%}
   .cloud-near{left:-60%;bottom:-60%}
   .cloud-far{right:-70%;bottom:-62%}
@@ -202,7 +199,6 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
   .journey.is-enhanced{height:auto}
   .is-enhanced .journey-stage{position:relative;min-height:760px}
   .is-enhanced .hero-copy{opacity:1;transform:none}
-  .journey-caption,.journey-cow{display:none}
   .journey-cloud{transform:none!important;opacity:.18!important}
 }
 @media print{
@@ -215,3 +211,14 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
   .journey .eyebrow,.journey .hero-description{color:#333}
   .tool-dock{padding:0}
 }
+
+/* Daylight is the same alpine scene, with a sun placed over the source moon. */
+.theme-toggle .i-moon{display:none}
+[data-theme="day"] .theme-toggle .i-sun{display:none}
+[data-theme="day"] .theme-toggle .i-moon{display:block}
+.journey-sun{position:absolute;left:var(--sun-x,71.3%);top:var(--sun-y,35.5%);width:var(--sun-size,16.35vw);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 38% 35%,#fff9da,#ffd67a 75%);box-shadow:0 0 60px 18px #f9cb7255;opacity:0;transition:opacity .7s ease}
+.journey-landscape{transition:filter .7s ease}
+[data-theme="day"] .journey-landscape{filter:brightness(1.7) saturate(.7) sepia(.15)}
+[data-theme="day"] .journey-sun{opacity:1}
+[data-theme="day"] .journey-shade{background:linear-gradient(180deg,#172638d9,#17263877 40%,#c7dbee18 75%)}
+@media(prefers-reduced-motion:reduce){.journey-sun,.journey-landscape{transition:none}}

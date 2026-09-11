@@ -4,8 +4,12 @@
   var storageKey = 'sleep-lab-passage';
   var curtain, timer, destination, ready = false;
   var cloud = new Image();
-  cloud.onload = function () { ready = true; };
+  var cow = new Image();
+  function checkReady() { ready = cloud.complete && cloud.naturalWidth > 0 && cow.complete && cow.naturalWidth > 0; }
+  cloud.onload = checkReady;
+  cow.onload = checkReady;
   cloud.src = 'assets/moonlit-clouds.webp';
+  cow.src = 'assets/cow-leap.webp';
   function clearStamp() { try { sessionStorage.removeItem(storageKey); } catch (e) {} }
   function reset() {
     clearTimeout(timer);
@@ -18,6 +22,14 @@
     curtain = document.createElement('div');
     curtain.className = 'night-passage';
     curtain.setAttribute('aria-hidden', 'true');
+    var moon = document.createElement('div');
+    moon.className = 'passage-moon';
+    var leaper = document.createElement('img');
+    leaper.className = 'passage-cow';
+    leaper.src = cow.src;
+    leaper.alt = '';
+    curtain.appendChild(moon);
+    curtain.appendChild(leaper);
     document.body.appendChild(curtain);
   }
   function go() {
@@ -49,7 +61,7 @@
     requestAnimationFrame(function () { requestAnimationFrame(function () {
       if (curtain && destination) curtain.classList.add('covered');
     }); });
-    timer = setTimeout(go, 620);
+    timer = setTimeout(go, 1700);
   });
   window.addEventListener('pageshow', function (event) { if (event.persisted) reset(); });
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') reset(); });

@@ -4,12 +4,42 @@ Reviewed baseline: main at 9f13f48d77d214267279a027b698360a873e16c2.
 This is a source and asset review. It is not a production security certification
 or a claim that every device has passed visual acceptance.
 
+## September refinement update
+
+The latest pass keeps the approved visual direction, replaces the ambiguous hero
+with a toolkit-focused introduction, and moves the cow jump to Sleep Lab entry.
+Day mode adds a sun over the original moon, with the existing alpine illustration
+brightened through CSS; this is not a new daytime mountain illustration.
+
+The Lab now puts the core task first: a three-step overview, side-by-side log
+workspace on larger screens, a one-question review, and a comparison/chart
+workspace with history on demand. Small screens and enlarged text retain natural
+scrolling; there is no fixed-height clipping or promise of zero scrolling.
+
+A new one-page A4 PDF has been generated and visually inspected. Analog controls
+open an in-page preview and offer a real PDF download. Personal results have
+a preview before the existing print / Save as PDF flow.
+
+Resources link each suggestion to CDC or NHLBI guidance, include a contextual
+summary of the de Bruin et al. adolescent trial, and distinguish general
+habits, adapted CBT-I principles, and an optional journaling idea. Unverified
+claims and guaranteed outcomes were removed. This is not a systematic evidence
+review or a validated CBT-I programme. Adolescent clinical review is still needed.
+The 12-minute-per-waking estimate is now disclosed in results; replacing it
+with measured/estimated awake minutes and versioned migration remains open.
+
+Roommate Treaty is renamed Roommate Agreement. Its shared account workflow
+remains future work; no roommate responses or emails are collected.
+
+The finding table below describes the initial PR pass; where it refers to the
+cow on scroll or an always-night scene, this update supersedes that description.
+
 ## What we are building
 
 A school wellbeing toolkit with a cinematic alpine entrance and a practical,
 calm daily working surface. Sleep Lab is the first real tool: baseline logging,
 review, selected changes, comparison, printable tracker and personal report.
-Roommate Treaty, First Weeks Away and Exam Nerves remain upcoming.
+Roommate Agreement, First Weeks Away and Exam Nerves remain upcoming.
 
 The reference contributes near-black space, precise centered typography,
 luminous edges and deliberate pacing. The original identity remains the

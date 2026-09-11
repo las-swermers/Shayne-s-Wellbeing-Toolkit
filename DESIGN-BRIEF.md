@@ -1,3 +1,8 @@
+> Current direction: toolkit-focused hero with one Explore action; fog remains on
+> scroll, cow-over-moon moves to entering Sleep Lab. Day mode reveals a sun.
+> Compact working panels, optional detail, and PDF preview/download take priority.
+> See PROJECT-REVIEW.md for this revision and remaining acceptance checks.
+
 # Design brief — LAS wellbeing toolkit
 
 > Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
@@ -32,7 +37,7 @@ copy, testimonials, brand, or code.
 
 The hero introduces the whole toolkit. The alpine scene beneath it introduces
 Sleep Lab. A compact dock uses a sculpted sheep for sleep, a bunk-bed icon for
-Roommate Treaty, and restrained symbols for the other tools. Upcoming tools must
+Roommate Agreement, and restrained symbols for the other tools. Upcoming tools must
 be clearly marked and never masquerade as working links. Retain functional day
 and night themes.
 

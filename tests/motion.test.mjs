@@ -18,7 +18,7 @@ function scene(width,height=800) {
     removeAttribute:()=>values.clear()};
   const landscape={complete:true,naturalWidth:1774,addEventListener:()=>{}};
   const nodes={'.journey':journey,'.journey-stage':stage,'.hero-copy':intro,
-    '.journey-scroll':cue,'.journey-cow':{clientWidth:width<480?112:180},'.journey-landscape':landscape};
+    '.journey-scroll':cue,'.journey-landscape':landscape};
   const document={documentElement:{dataset:{}},activeElement:null,
     querySelector:s=>nodes[s]||null,getElementById:()=>null};
   vm.runInNewContext(source,{document,localStorage:{getItem:()=>null},
@@ -34,7 +34,7 @@ test('scroll scene produces finite positions across phone, tablet and desktop wi
     const s=scene(width);
     for(const p of [0,.25,.5,.75,1]){
       s.scroll(p);
-      for(const key of ['--cow-x','--cow-y','--cow-opacity','--cloud-opacity']){
+      for(const key of ['--sun-x','--sun-y','--sun-size','--cloud-opacity']){
         assert.ok(Number.isFinite(parseFloat(s.values.get(key))),width+' '+key);
       }
     }
@@ -50,7 +50,8 @@ test('focused intro links stay visible; reduced motion clears hidden states',()=
   s.motion.matches=true;s.events.motion();s.flush();
   assert.equal(s.classes.has('is-enhanced'),false);
   assert.equal(s.intro.inert,false);
-  assert.equal(s.values.size,0);
+  assert.equal(s.values.get('--intro-opacity'),1);
+  assert.ok(Number.isFinite(parseFloat(s.values.get('--sun-x'))));
 });
 test('short screens and failed images retain an unpinned readable scene',()=>{
   assert.equal(scene(900,500).classes.has('is-enhanced'),false);

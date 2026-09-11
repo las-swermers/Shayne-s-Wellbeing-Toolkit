@@ -6,7 +6,6 @@
   var stage = document.querySelector('.journey-stage');
   var intro = document.querySelector('.hero-copy');
   var cue = document.querySelector('.journey-scroll');
-  var cow = document.querySelector('.journey-cow');
   var landscape = document.querySelector('.journey-landscape');
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var shortScreen = window.matchMedia('(max-height: 600px)');
@@ -22,11 +21,6 @@
     try { localStorage.setItem('sleeplab-theme', root.dataset.theme); } catch (e) {}
     labelTheme();
   });
-  try {
-    var record = JSON.parse(localStorage.getItem('sleeplab') || 'null');
-    var enter = document.querySelector('#enterLab span');
-    if (enter && record && Array.isArray(record.log) && record.log.length) enter.textContent = 'Continue Sleep Lab';
-  } catch (e) {}
   function set(name, value) { stage.style.setProperty('--' + name, value); }
   function reset() {
     journey.classList.remove('is-enhanced');
@@ -38,12 +32,14 @@
   }
   function paint() {
     frame = 0;
-    if (!journey || !stage || !cow || !landscape) return;
-    if (motion.matches || shortScreen.matches || !landscape.complete || !landscape.naturalWidth) { reset(); return; }
-    journey.classList.add('is-enhanced');
+    if (!journey || !stage || !landscape) return;
+    if (!landscape.complete || !landscape.naturalWidth) { reset(); return; }
+    var staticScene = motion.matches || shortScreen.matches;
+    if (staticScene) reset();
+    if (!staticScene) journey.classList.add('is-enhanced');
     var box = journey.getBoundingClientRect();
     var width = stage.clientWidth, height = stage.clientHeight;
-    var progress = clamp(-box.top / Math.max(1, journey.offsetHeight-height));
+    var progress = staticScene ? 0 : clamp(-box.top / Math.max(1, journey.offsetHeight-height));
     var introFade = smooth(.06,.30,progress);
     // Never hide a focused link while someone is navigating with a keyboard.
     var focused = intro.contains(document.activeElement);
@@ -61,14 +57,8 @@
     var moonX = (width-1774*scale)*.70+1265*scale;
     var moonY = (height-887*scale)*.50+315*scale;
     var radius = 145*scale;
-    var leap = smooth(.20,.76,progress);
-    var span = Math.max(radius*1.7, cow.clientWidth*1.3);
-    var x = moonX+(leap*2-1)*span;
-    var apex = Math.max(cow.clientWidth*.45,moonY-radius-cow.clientWidth*.45);
-    var y = moonY-Math.sin(Math.PI*leap)*(moonY-apex);
-    set('cow-x',x+'px'); set('cow-y',y+'px');
-    set('cow-angle',(-12+leap*24)+'deg');
-    set('cow-opacity',smooth(.16,.25,progress)*(1-smooth(.72,.82,progress)));
+    set('sun-x',moonX+'px'); set('sun-y',moonY+'px');
+    set('sun-size',(radius*2)+'px');
     var clouds = smooth(.43,.98,progress);
     set('cloud-opacity',.18+clouds*.82);
     set('cloud-scale',1+clouds*.52);

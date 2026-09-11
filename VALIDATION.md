@@ -2,7 +2,25 @@
 
 Baseline: main 9f13f48d77d214267279a027b698360a873e16c2.
 
-## Passed
+## Current UX pass
+
+- All nine existing tests pass after updating the motion checks for sun geometry.
+- A jsdom 26.1.0 integration check executes the complete inline app and verifies
+  all five review steps, back/edit, choosing and committing a suggestion,
+  tracker/report preview controls, Resources navigation and school empty state.
+  Dialog methods are stubbed; this does not verify native focus trapping or layout.
+  Re-run scripts/check-ux.cjs with jsdom available on NODE_PATH.
+- HTML IDs are unique and all local asset links resolve. The three CSS files parse.
+- The downloadable PDF is exactly one A4 page (595.28 x 841.89 points).
+  Its 794 x 1123 rendering was visually inspected; table rules, headings, writing
+  areas and footer fit without clipping. PyMuPDF rendered it because the bundled
+  Poppler executable could not find its shared library.
+- Actual updated motion smoothness, responsive screen layout and native dialog
+  focus/print behavior still need browser/device acceptance. The previous
+  deployed preview attempt required Vercel login; the Google sign-in route
+  returned 502. No new live-browser pass is claimed.
+
+## Earlier checks passed
 
 - Node syntax parsing for both HTML files' inline scripts, landing.js and
   night-passage.js.
@@ -19,7 +37,8 @@ Baseline: main 9f13f48d77d214267279a027b698360a873e16c2.
   without a signed assertion returned 403 even with a forged email header.
 - HTML ID uniqueness and local link/asset resolution on both pages and redirect.
 - CSS stylesheet parsing with tinycss2.
-- All four WebP files decoded successfully with expected dimensions.
+- The four original WebP files decoded successfully with expected dimensions.
+  The new tracker preview was generated directly from the inspected PDF.
 - npm dependency lock generated and npm ci completed.
 
 Run regression tests from the repository root:

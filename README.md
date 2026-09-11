@@ -344,5 +344,5 @@ Vercel also builds the repo and comments a preview URL on every pull request.
 - **Nothing is connected yet.** `CONFIG.ENDPOINT` is blank in `main`. The Sheet
   and the deployment are a deliberate next step for counselling.
 - **The other three tools on the shelf are placeholders** — first weeks away,
-  exam nerves, roommate treaty. They are `access: 'soon'` cards in `tools.js`
+  exam nerves, roommate agreement. They are `access: 'soon'` cards in `tools.js`
   with no page behind them.

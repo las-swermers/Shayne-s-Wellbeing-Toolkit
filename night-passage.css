@@ -21,3 +21,20 @@
 @keyframes cloud-right{from{transform:translate(0,-4%) scale(1.35)}to{transform:translate(32%,18%) scale(1.1)}}
 @media(prefers-reduced-motion:reduce){.night-passage{display:none!important}}
 @media print{.night-passage{display:none!important}}
+/* The playful moment belongs to entering the experiment, not browsing the kit. */
+.night-passage{transition:opacity 180ms ease,background 180ms ease}
+.night-passage.covered{background:#0c1223}
+.night-passage::before,.night-passage::after{z-index:3;transition-delay:800ms}
+.passage-moon{position:absolute;width:clamp(90px,15vmin,170px);aspect-ratio:1;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 30% 28%,#fff9df,#d6def0 65%,#a6b1cf);box-shadow:0 0 70px #d9e7ff55;opacity:0}
+.passage-cow{position:absolute;width:clamp(100px,22vmin,230px);height:auto;left:50%;top:48%;opacity:0;filter:drop-shadow(0 10px 12px #0004)}
+.covered .passage-moon{animation:passage-moon 1450ms ease both}
+.covered .passage-cow{animation:moon-leap 1400ms cubic-bezier(.35,0,.65,1) both}
+.arriving .passage-moon,.arriving .passage-cow{display:none}
+@keyframes passage-moon{0%{opacity:0}12%,78%{opacity:1}100%{opacity:0}}
+@keyframes moon-leap{
+  0%{opacity:0;transform:translate(-180%,5%) rotate(-16deg)}
+  12%{opacity:1}
+  50%{opacity:1;transform:translate(-50%,-155%) rotate(0deg)}
+  85%{opacity:1}
+  100%{opacity:0;transform:translate(85%,5%) rotate(18deg)}
+}

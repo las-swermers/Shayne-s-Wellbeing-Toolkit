@@ -22,6 +22,8 @@ const assets = new Map([
   ['/tools/sleep-lab/index.html', ['tools/sleep-lab/index.html', 'text/html']],
   ...['landing.css', 'night-passage.css', 'lab-polish.css'].map(x => ['/'+x, [x, 'text/css']]),
   ...['landing.js', 'night-passage.js', 'tools.js'].map(x => ['/'+x, [x, 'text/javascript']]),
+  ['/downloads/sleep-lab-tracker.pdf', ['downloads/sleep-lab-tracker.pdf', 'application/pdf']],
+  ['/assets/tracker-preview.webp', ['assets/tracker-preview.webp', 'image/webp']],
   ...['alpine-night-clean', 'moonlit-clouds', 'cow-leap', 'sleep-sheep']
     .map(x => ['/assets/'+x+'.webp', ['assets/'+x+'.webp', 'image/webp']])
 ]);

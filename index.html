@@ -21,7 +21,7 @@
 <header class="site-header">
   <a class="brand" href="index.html"><span class="brand-symbol" aria-hidden="true">s.</span><span>Shayne’s<span class="brand-sub">Wellbeing toolkit</span></span></a>
   <nav aria-label="Main navigation"><a href="#toolkit">The toolkit</a><a href="#how-it-works">How it works</a></nav>
-  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to day view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to day view"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
 </header>
 <main id="main">
   <section class="journey" aria-labelledby="hero-title">
@@ -29,26 +29,26 @@
       <div class="journey-art" aria-hidden="true">
         <img class="journey-landscape" src="assets/alpine-night-clean.webp" alt="" width="1774" height="887" fetchpriority="high" decoding="async">
         <div class="journey-shade"></div>
-        <img class="journey-cow" src="assets/cow-leap.webp" alt="" width="1254" height="1254" decoding="async">
+        <div class="journey-sun"></div>
         <img class="journey-cloud cloud-near" src="assets/moonlit-clouds.webp" alt="" width="1536" height="1024" decoding="async">
         <img class="journey-cloud cloud-far" src="assets/moonlit-clouds.webp" alt="" width="1536" height="1024" decoding="async">
         <div class="journey-exit"></div>
       </div>
       <div class="hero-copy">
         <p class="eyebrow">Leysin American School · Wellbeing toolkit</p>
-        <h1 id="hero-title">A little space.<br><span>A better tomorrow.</span></h1>
-        <p class="hero-description">For better nights, shared rooms,<br class="desktop-break"> and the days in between.</p>
-        <div class="actions"><a class="button button-primary" id="enterLab" data-night-passage href="sleep-lab.html#log"><span>Enter Sleep Lab</span><span aria-hidden="true">↗</span></a><a class="button button-quiet" href="#toolkit">Explore the toolkit <span aria-hidden="true">↓</span></a></div>
+        <h1 id="hero-title">Tools for school.<br><span>Space for yourself.</span></h1>
+        <p class="hero-description">Practical tools for sleep, shared living,<br class="desktop-break"> and everyday life at LAS.</p>
+        <div class="actions"><a class="button button-primary" href="#toolkit">Explore the toolkit <span aria-hidden="true">↓</span></a></div>
       </div>
-      <div class="journey-caption" aria-hidden="true"><span>Follow the moon.</span><p>A small experiment.<br>A new perspective.</p></div>
+      <div class="journey-caption" aria-hidden="true"><span>Find your starting point.</span><p>A little curiosity.<br>Your next step.</p></div>
       <a class="journey-scroll" href="#toolkit"><span>Scroll into the toolkit</span><span aria-hidden="true">↓</span></a>
     </div>
   </section>
   <section class="toolkit section-wrap" id="toolkit" aria-labelledby="toolkit-title">
     <div class="section-heading"><div><p class="eyebrow">Find your starting point</p><h2 id="toolkit-title">Your everyday toolkit.</h2></div><p>Start with sleep.<br>More tools are on their way.</p></div>
     <div class="tool-dock">
-      <a class="tool-item available" href="sleep-lab.html#log" data-night-passage><span class="app-icon sheep-icon"><img src="assets/sleep-sheep.webp" width="128" height="128" alt="" loading="lazy" decoding="async"></span><h3>Sleep Lab</h3><p>Understand your nights.</p><span class="tool-status">Explore <span aria-hidden="true">↗</span></span></a>
-      <article class="tool-item"><span class="app-icon bed-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18m18-18v18M3 10h18M3 18h18M5 10V6h5v4m-5 8v-4h5v4M17 10v11M3 6h18M3 14h18"/></svg></span><h3>Roommate Treaty</h3><p>Make room for each other.</p><span class="tool-status">Coming soon</span></article>
+      <a class="tool-item available" href="sleep-lab.html#log" data-night-passage><span class="app-icon sheep-icon"><img src="assets/sleep-sheep.webp" width="128" height="128" alt="" loading="lazy" decoding="async"></span><h3>Sleep Lab</h3><p>Understand your nights.</p><span class="tool-status">Enter the sleep experiment <span aria-hidden="true">↗</span></span></a>
+      <article class="tool-item"><span class="app-icon bed-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18m18-18v18M3 10h18M3 18h18M5 10V6h5v4m-5 8v-4h5v4M17 10v11M3 6h18M3 14h18"/></svg></span><h3>Roommate Agreement</h3><p>Make room for each other.</p><span class="tool-status">Coming soon</span></article>
       <article class="tool-item"><span class="app-icon compass-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg></span><h3>First Weeks Away</h3><p>Find your feet.</p><span class="tool-status">Coming soon</span></article>
       <article class="tool-item"><span class="app-icon spark-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"/></svg></span><h3>Exam Nerves</h3><p>Take a breath. Take a step.</p><span class="tool-status">Coming soon</span></article>
     </div>
