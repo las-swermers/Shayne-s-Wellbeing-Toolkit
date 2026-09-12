@@ -33,8 +33,18 @@ summary of the de Bruin et al. adolescent trial, and distinguish general
 habits, adapted CBT-I principles, and an optional journaling idea. Unverified
 claims and guaranteed outcomes were removed. This is not a systematic evidence
 review or a validated CBT-I programme. Adolescent clinical review is still needed.
-The 12-minute-per-waking estimate is now disclosed in results; replacing it
-with measured/estimated awake minutes and versioned migration remains open.
+New and explicitly edited entries now use reported awake minutes with
+calculationVersion=awake-minutes-v1. Stored historical values remain unchanged
+and are labelled legacy-wakings-12; results disclose mixed methods. CSV carries
+the version, awake minutes, round and selected strategy IDs.
+
+New/uncommitted rounds use rolling-v1: baseline continues until the student
+commits their changes, and the first changes-night ends the following morning
+(after any already logged morning). Missed days do not create an artificial
+deadline. Previously committed rounds retain fixed-calendar-v1 and their
+original labels. Existing entry phase/ownership is never restamped on edit.
+History now offers Edit, validates duration totals, and uses the original
+round's plan. Paper and digital trackers both collect awake minutes.
 
 Roommate Treaty is renamed Roommate Agreement. Its shared account workflow
 remains future work; no roommate responses or emails are collected.
@@ -100,13 +110,9 @@ claim independent 3D terrain or separate ridge parallax. Clouds and cow are
 independent. Additional ridge artwork should only be commissioned if the
 reviewed composition needs it.
 
-The sheep is sculptural and the other dock icons are line drawings. This gives
-the available tool emphasis, but a final icon family should be commissioned
-before those other tools launch. The cow retains the existing illustrated
-character; its silhouette should be assessed at actual phone scale.
-
-The night scene deliberately stays moonlit when the surrounding interface is
-in day mode. It has explicit text/button colors for that contrast boundary.
+The current sheep and cow use line illustration alongside the other icons.
+The hero has separate day/night artwork. Their silhouettes, text contrast and
+cloud composition still need review at actual phone scale.
 
 The earlier assistant's live-view attempts did not establish a successful
 render of the site: GitHub Pages returned a missing-site page and the Vercel
@@ -118,13 +124,12 @@ not a completed visual walkthrough. This review records that limitation.
 These are separate from visual finish and must be resolved before real student
 records are synced.
 
-1. **Phase timing:** review unlocks after five baseline nights but phase labels
-   follow fixed calendar windows. Committing early/late can misdescribe what
-   the student is currently doing. Choose and persist fixed-study or rolling
-   intervention boundaries; do not silently relabel historical entries.
-2. **Sleep estimates:** asleep time subtracts 12 minutes per reported waking.
-   That is an estimate, not measured duration. A new input for minutes awake,
-   explicit estimate labels and versioned migration are still required.
+1. **Phase timing:** the local rolling timeline and preserved historical labels
+   are implemented. The future record API must validate and persist these same
+   boundaries; old committed calendar rounds remain explicitly labelled.
+2. **Sleep estimates:** reported awake minutes, versioned historical labels and
+   consistent paper/CSV fields are implemented locally. The future server must
+   recompute the versioned formula and reject impossible duration totals.
 3. **Account ownership:** the current local store is shared by users of the
    browser. The legacy merge automatically attaches it to whoever signs in.
    Replace this with per-account storage and an explicit import confirmation.
@@ -145,8 +150,9 @@ records are synced.
 8. **Class codes:** server-created codes, expiry/revocation, label confirmation
    and round-bound membership still need implementation. Teacher/block labels
    belong to a cohort; codes do not grant staff access.
-9. **History:** current-round charts and printed reports now align, but a
-   deliberate past-round selector and edit workflow are still required.
+9. **History:** edits now preserve the original round/phase and use its plan;
+   current-round charts, copied summaries and reports align. A deliberate
+   past-round comparison selector remains future work.
 10. **Operations/content:** school owners must confirm retention, deletion,
     support ownership, participation wording and educational recommendation
     wording. The tool must not present its suggestions as diagnoses.

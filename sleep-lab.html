@@ -589,12 +589,12 @@ input[type=range] { width:100%; accent-color:var(--accent); }
         <div class="field"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Use the date you woke up.</div></div>
         <div class="field"><label class="label" for="lOut">Lights out</label><input type="time" id="lOut" value="22:30"></div>
         <div class="field"><label class="label" for="lUp">Out of bed at</label><input type="time" id="lUp" value="07:00"></div>
-        <div class="field"><label class="label" for="lWakings">Times I woke up</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div>
+        <div class="field"><div class="night-waking-fields"><div><label class="label" for="lWakings">Wake-ups</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div><div><label class="label" for="lAwake">Minutes awake</label><input type="number" id="lAwake" min="0" max="1440" step="1" value="0" inputmode="numeric" aria-describedby="awakeHint"></div></div><div class="hint" id="awakeHint">Estimate total awake time after first falling asleep, including before getting up.</div></div>
         <div class="field"><label class="label" for="lLatency">Minutes to fall asleep <span class="slider-val" id="lLatencyVal">20 min</span></label><input type="range" id="lLatency" min="0" max="120" step="5" value="20"></div>
         <div class="field"><label class="label" for="lEnergy">Energy now, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
       </div>
       <div class="field" id="checkField"><label class="label">Changes I actually did</label><div class="chk-row" id="lChecks"></div></div>
-      <div class="btn-row"><button class="btn" id="saveLog">Save last night</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
+      <p class="hint" id="editNote" hidden></p><div class="btn-row"><button class="btn" id="saveLog">Save last night</button><button class="btn ghost" id="cancelEdit" hidden>Cancel edit</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
     </div>
 
     </div>
@@ -617,7 +617,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="notice" id="resultsNote" style="display:none;"></div>
     <p class="label">Current round</p>
     <div class="stat-row" id="stats"></div>
-    <p class="quiet-note">Sleep estimates currently allow 12 minutes awake per reported wake-up. They are approximate, not clinical measurements.</p><div class="results-grid"><div id="phaseCompare"></div>
+    <p class="quiet-note" id="estimateNote">Sleep duration uses your estimated awake minutes. These are self-reports, not clinical measurements.</p><div class="results-grid"><div id="phaseCompare"></div>
 
     <div class="viz">
       <div class="viz-head"><h3>Estimated sleep</h3><span class="label">Target band 8&ndash;10h</span></div>
@@ -749,7 +749,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 
 <dialog id="paperPreview" aria-labelledby="paperTitle">
   <div class="paper-toolbar"><div><span class="label">On paper</span><h2 id="paperTitle">Your fourteen-day tracker</h2></div><button class="btn ghost" id="closePaper" type="button">Close</button></div>
-  <div id="trackerPreview"><p class="hint">A blank A4 sheet. Download it, then fill it in by hand.</p><img src="assets/tracker-preview.webp" width="794" height="1123" alt="Preview of the one-page Sleep Lab tracker: two seven-day tables with morning date, lights out, time to fall asleep, night wake-ups, out of bed, energy and changes tried."></div>
+  <div id="trackerPreview"><p class="hint">A blank A4 sheet. Download it, then fill it in by hand.</p><img src="assets/tracker-preview.webp" width="794" height="1123" alt="Preview of the one-page Sleep Lab tracker: two seven-day tables with morning date, lights out, time to fall asleep, night wake-ups, awake minutes, out of bed, energy and changes tried."></div>
   <div id="reportPreview" hidden></div>
   <div class="paper-toolbar"><a class="btn" id="downloadTracker" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a><button class="btn" id="printPersonal" hidden>Print / Save as PDF</button><p class="hint" id="paperHint">One page · A4 · Black and white</p></div>
 </dialog>
@@ -884,19 +884,20 @@ function svgEl(t,a){ var e=document.createElementNS('http://www.w3.org/2000/svg'
 var FIELDS = ['fName','fHouse'];
 function saveAll(){
   var f={}; FIELDS.forEach(function(id){ var el=$(id); if(el) f[id]=el.value; });
-  Store.set('sleeplab', JSON.stringify({ v:2, cycles:state.cycles, fields:f, log:state.log, synced:state.synced }));
+  Store.set('sleeplab', JSON.stringify({ v:3, cycles:state.cycles, fields:f, log:state.log, synced:state.synced }));
 }
 function loadAll(){
   var raw=Store.get('sleeplab'); if(!raw) return;
   try {
     var d=JSON.parse(raw);
-    if(d.log) state.log=d.log;
-    if(d.cycles) state.cycles=d.cycles;
+    if(Array.isArray(d.log)) state.log=d.log;
+    if(Array.isArray(d.cycles)) state.cycles=d.cycles;
     /* v1 saved a single flat pick list with no cycles around it. */
     else if(d.picked) state.cycles=[{ n:1, start:'', picked:d.picked.filter(function(i){ return !!byId(i); }),
                                       answers:{}, committed:d.picked.length?'migrated':'' }];
     if(d.synced) state.synced=d.synced;
     if(d.fields) FIELDS.forEach(function(id){ var el=$(id); if(el && d.fields[id]!=null && d.fields[id]!=='') el.value=d.fields[id]; });
+    state.log.forEach(function(e){ if(!e.calculationVersion) e.calculationVersion='legacy-wakings-12'; });
   } catch(e){}
 }
 
@@ -1147,19 +1148,23 @@ var checkState={};
    or three changes. A student can run several across a term, so every night
    carries the cycle it belongs to and cycles never share a date range. */
 
-function newCycle(n, start){ return { n:n, start:start||'', picked:[], answers:{}, committed:'' }; }
+function newCycle(n, start){ return { n:n, start:start||'', picked:[], answers:{}, committed:'', timelineVersion:'rolling-v1', interventionStart:'' }; }
 
 /* Cycle 1 starts on the class date, or on the student's own first night. Later
    cycles start the day the student chose to run another round. */
 function ensureCycles(){
   if(!state.cycles.length) state.cycles=[newCycle(1,'')];
+  state.cycles.forEach(function(c){
+    if(!c.timelineVersion) c.timelineVersion=c.committed?'fixed-calendar-v1':'rolling-v1';
+  });
   var c1=state.cycles[0];
   if(!c1.start) c1.start = CONFIG.STUDY_START || (state.log.length ? state.log[0].date : '');
   return state.cycles;
 }
 function currentCycle(){ ensureCycles(); return state.cycles[state.cycles.length-1]; }
 function cycleLength(){ return CONFIG.BASELINE_DAYS + CONFIG.INTERVENTION_DAYS; }
-function daysBetween(a,b){ return Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00'))/86400000); }
+function daysBetween(a,b){ return Math.round((new Date(b+'T00:00:00Z') - new Date(a+'T00:00:00Z'))/86400000); }
+function nextMorning(date){ var d=new Date(date+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+1); return d.toISOString().slice(0,10); }
 
 /* Which cycle owns a date: the last one that started on or before it. */
 function cycleFor(dateStr){
@@ -1177,6 +1182,10 @@ function phaseFor(dateStr){
   var c=cycleFor(dateStr); if(!c) return null;
   var day=dayInCycle(dateStr,c);
   if(day<1) return null;
+  if(c.timelineVersion==='rolling-v1'){
+    if(!c.interventionStart || dateStr<c.interventionStart) return {phase:'baseline',day:day,of:CONFIG.BASELINE_DAYS,cycle:c.n};
+    return {phase:'intervention',day:daysBetween(c.interventionStart,dateStr)+1,of:CONFIG.INTERVENTION_DAYS,cycle:c.n};
+  }
   if(day<=CONFIG.BASELINE_DAYS) return { phase:'baseline', day:day, of:CONFIG.BASELINE_DAYS, cycle:c.n };
   var iday=day-CONFIG.BASELINE_DAYS;
   if(iday<=CONFIG.INTERVENTION_DAYS) return { phase:'intervention', day:iday, of:CONFIG.INTERVENTION_DAYS, cycle:c.n };
@@ -1202,12 +1211,12 @@ function stage(){
     : { id:'intervention', cycle:c, base:base, iv:iv, need:CONFIG.RESULTS_AFTER-iv };
 }
 
-/* Every entry is re-stamped whenever the log changes: the very first night is
-   saved before any start date exists to anchor it, and would otherwise sit
-   outside its own comparison forever. */
+/* Fill missing ownership once. Existing phases and round IDs are historical
+   facts: edits, review commits and later rounds must not silently reassign them. */
 function restamp(){
   ensureCycles();
   state.log.forEach(function(e){
+    if(e.cycle && e.phase) return;
     var p=phaseFor(e.date);
     e.phase = p ? p.phase : '';
     e.cycle = p ? p.cycle : (state.cycles[0] ? state.cycles[0].n : 1);
@@ -1217,9 +1226,9 @@ function restamp(){
 /* ═════════ STAGE & REVIEW UI ═════════ */
 function pips(cycle){
   var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS, out='';
-  var have={}; nightsIn(cycle.n).forEach(function(e){
-    var d=dayInCycle(e.date, cycle); if(d>=1) have[d]=e.phase;
-  });
+  var have={},base=nightsIn(cycle.n,'baseline').length,iv=nightsIn(cycle.n,'intervention').length;
+  for(var n=1;n<=Math.min(B,base);n++) have[n]='baseline';
+  for(var n=1;n<=Math.min(I,iv);n++) have[B+n]='intervention';
   for(var d=1; d<=B+I; d++){
     var cls='pip'+(have[d]?' done':'')+(have[d]==='intervention'?' iv':'')+(d===B+1?' gap':'');
     out+='<span class="'+cls+'"></span>';
@@ -1235,7 +1244,7 @@ function renderStage(){
     box.className='stage'+(ready?' ready':'');
     box.innerHTML='<div class="stage-top"><span class="stage-step">'+esc(step+round)+'</span></div>'+
       '<h3>'+title+'</h3><p>'+body+'</p>'+
-      (c.start ? pips(c)+'<span class="pips-key">Week one, then week two</span>' : '');
+      (c.start ? pips(c)+'<span class="pips-key">Recorded nights · baseline, then changes</span>' : '');
   };
 
   if(st.id==='start'){
@@ -1250,7 +1259,8 @@ function renderStage(){
   } else if(st.id==='intervention'){
     var names=c.picked.map(function(i){ var t=byId(i); return t?t.name:''; }).filter(Boolean);
     head('Step 3 of 4','Week two: run your changes.',
-      'You are running <strong>'+esc(names.join(', '))+'</strong>. Keep logging and tick off what you managed. '+
+      (c.interventionStart ? 'Your first changes-night is the night ending <strong>'+esc(c.interventionStart)+'</strong>. ' : '')+
+      'Your plan: <strong>'+esc(names.join(', '))+'</strong>. Keep logging and tick off what you managed. '+
       st.need+' more night'+(st.need>1?'s':'')+' until your comparison.');
   } else {
     head('Step 4 of 4','Your comparison is ready.',
@@ -1260,7 +1270,9 @@ function renderStage(){
 
   /* Ticking off changes only makes sense once there are changes to tick. */
   var cf=$('checkField'); if(cf) cf.style.display = (st.id==='intervention'||st.id==='results') && c.picked.length ? '' : 'none';
+  if(c.timelineVersion==='fixed-calendar-v1') box.insertAdjacentHTML('beforeend','<p class="hint">This older round keeps its original calendar dates. New rounds follow the date you commit your changes.</p>');
   renderReview(st);
+  renderChecks();
 }
 
 var reviewAnswers = {};
@@ -1348,7 +1360,11 @@ function renderReview(st){
   if(cb) cb.addEventListener('click', function(){
     var c2=currentCycle();
     if(!c2.picked.length) return;
-    c2.committed=new Date().toISOString().slice(0,10);
+    c2.committed=todayLocal();
+    if(c2.timelineVersion==='rolling-v1'){
+      var last=nightsIn(c2.n).reduce(function(d,e){return e.date>d?e.date:d;},c2.committed);
+      c2.interventionStart=nextMorning(last);
+    }
     saveAll(); renderStage(); renderChecks(); buildSheet(); pushCycle();
     $("stageBox").tabIndex=-1; $("stageBox").focus({preventScroll:true});
     window.scrollTo({ top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth' });
@@ -1357,13 +1373,16 @@ function renderReview(st){
 
 function renderChecks(){
   var w=$('lChecks');
-  var p=phaseFor($('lDate').value);
-  if(p && p.phase==='baseline'){
-    w.innerHTML='<span class="hint">Nothing to tick during baseline. That is the point — this week is the control you are measuring against.</span>';
+  var date=$('lDate').value, saved=state.log.find(function(e){return e.date===date;});
+  var p=saved && saved.phase ? saved : phaseFor(date);
+  var owner=p ? state.cycles.find(function(c){return c.n===p.cycle;}) : null;
+  var picked=owner && p.phase==='intervention' ? owner.picked : [];
+  $('checkField').style.display=picked.length?'':'none';
+  if(!picked.length){
+    w.innerHTML='<span class="hint">Changes are recorded only for nights in the changes phase.</span>';
     return;
   }
-  if(!currentCycle().picked.length){ w.innerHTML='<span class="hint">Add tools to your plan and they show up here.</span>'; return; }
-  w.innerHTML=currentCycle().picked.map(function(id){
+  w.innerHTML=picked.map(function(id){
     var s=byId(id);
     return '<button class="chk" type="button" data-chk="'+id+'" aria-pressed="'+(checkState[id]?'true':'false')+'">'+esc(s.name)+'</button>';
   }).join('');
@@ -1374,34 +1393,79 @@ function renderChecks(){
     });
   });
 }
-$('lDate').addEventListener('change', function(){ renderStage(); renderChecks(); });
+$('lDate').addEventListener('change', function(){ checkState={}; renderStage(); renderChecks(); });
+$('lWakings').addEventListener('change', function(){ if(+$('lWakings').value>0 && $('lAwake').value==='0') $('lAwake').value=''; });
 $('lLatency').addEventListener('input', function(e){ $('lLatencyVal').textContent=e.target.value+' min'; });
 $('lEnergy').addEventListener('input', function(e){ $('lEnergyVal').textContent=e.target.value; });
 
+/* Duration is a self-report estimate. Never infer awake duration from a count. */
+function sleepEstimate(out,up,lat,awake){
+  if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(out)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(up)) throw new Error('Fill in valid lights-out and out-of-bed times.');
+  if(!Number.isInteger(lat)||!Number.isInteger(awake)||lat<0||awake<0) throw new Error('Enter your estimated awake minutes as a whole number, including zero.');
+  var inBed=((toMin(up)-toMin(out))%1440+1440)%1440;
+  if(!inBed) throw new Error('Lights out and out of bed cannot be the same time.');
+  if(lat+awake>inBed) throw new Error('Time falling asleep plus awake time cannot exceed the time in bed.');
+  var asleep=inBed-lat-awake;
+  return {inBed:inBed,asleep:asleep,eff:Math.round(asleep/inBed*100)};
+}
+function estimateDescription(entries){
+  var old=entries.filter(function(e){return e.calculationVersion!=='awake-minutes-v1';}).length;
+  return 'Sleep duration is estimated from your own reports, not a clinical measurement.'+
+    (old ? ' '+old+' older record'+(old===1?' uses':'s use')+' the previous 12-minutes-per-wake-up assumption. Methods differ; update old estimates only if you can reasonably recall that night.' : ' Awake minutes come from your entries.');
+}
+var editingDate='';
+function finishEditing(){
+  editingDate=''; $('lDate').disabled=false; $('editNote').hidden=true;
+  $('cancelEdit').hidden=true; $('saveLog').textContent='Save last night';
+}
+function editNight(date){
+  var entry=state.log.find(function(e){return e.date===date;}); if(!entry) return;
+  editingDate=date; $('lDate').value=date; $('lDate').disabled=true;
+  $('lOut').value=entry.out; $('lUp').value=entry.up;
+  // The original 0..120 slider cannot represent a longer historic estimate.
+  $('lLatency').max=Math.max(120,entry.lat); $('lLatency').value=entry.lat;
+  $('lLatencyVal').textContent=entry.lat+' min';
+  $('lWakings').value=entry.wk; $('lEnergy').value=entry.energy; $('lEnergyVal').textContent=entry.energy;
+  $('lAwake').value=entry.calculationVersion==='awake-minutes-v1'?entry.awakeMinutes:'';
+  checkState={}; (entry.strategyIds||[]).forEach(function(id){checkState[id]=true;});
+  $('saveLog').textContent='Save changes'; $('cancelEdit').hidden=false; $('editNote').hidden=false;
+  $('editNote').textContent='Editing '+date+'. The original round and phase will stay the same.'+
+    (entry.calculationVersion!=='awake-minutes-v1'?' Add an awake-minute estimate to replace the old calculation.':'');
+  showTab('t-log'); renderChecks(); $('lAwake').focus({preventScroll:true});
+}
+$('cancelEdit').addEventListener('click',function(){
+  finishEditing(); checkState={}; $('lDate').value=todayLocal(); $('lAwake').value='0'; renderStage();
+});
 $('saveLog').addEventListener('click', function(){
   var date=$('lDate').value; if(!date){ flash('Pick a date first.'); return; }
   if(date > todayLocal()){ flash('Choose today or an earlier morning.'); return; }
-  var out=toMin($('lOut').value), up=toMin($('lUp').value), lat=+$('lLatency').value, wk=+$('lWakings').value;
-  if(out==null||up==null){ flash('Fill in lights out and out of bed.'); return; }
-  var inBed=((up-out)%1440+1440)%1440;
-  var asleep=Math.max(0, inBed-lat-wk*12);
-  var done=currentCycle().picked.filter(function(id){ return checkState[id]; });
-  var ph=phaseFor(date);
+  var lat=+$('lLatency').value, wk=+$('lWakings').value, awake=$('lAwake').value.trim(), metrics;
+  try{ metrics=sleepEstimate($('lOut').value,$('lUp').value,lat,awake===''?NaN:Number(awake)); }
+  catch(err){ flash(err.message); $('lAwake').focus({preventScroll:true}); return; }
+  var existing=state.log.find(function(e){return e.date===date;});
+  if(existing && editingDate!==date && !window.confirm('Replace the saved entry for '+date+'? Use Edit in your history to load its values first.')) return;
+  var ph=existing && existing.phase ? existing : phaseFor(date);
+  var c=ph ? state.cycles.find(function(c){return c.n===ph.cycle;}) : currentCycle();
+  if(!ph && c.start && date<c.start){ flash('This morning is before your round starts. Choose a morning in the round.'); return; }
+  var planned=ph && ph.phase==='intervention' ? c.picked : [];
+  var done=planned.filter(function(id){ return checkState[id]; });
   var entry={ date:date, out:$('lOut').value, up:$('lUp').value, lat:lat, wk:wk,
-              strategyIds:done.slice(), calculationVersion:'legacy-wakings-12',
-              inBed:inBed, asleep:asleep, eff:inBed?Math.round(asleep/inBed*100):0,
-              energy:+$('lEnergy').value, done:done.length, of:currentCycle().picked.length,
-              phase: ph?ph.phase:'' };
+              awakeMinutes:Number(awake), strategyIds:done.slice(), calculationVersion:'awake-minutes-v1',
+              inBed:metrics.inBed, asleep:metrics.asleep, eff:metrics.eff,
+              energy:+$('lEnergy').value, done:done.length, of:planned.length,
+              cycle:c.n, phase:ph?ph.phase:'baseline' };
   state.log=state.log.filter(function(e){ return e.date!==date; });
   state.log.push(entry);
   state.log.sort(function(a,b){ return a.date<b.date?-1:1; });
   delete state.synced[date];
+  var wasEditing=!!editingDate; finishEditing();
   checkState={}; renderChecks(); renderLog(); renderStage(); buildSheet(); saveAll();
   flash(Store.ok ? 'Saved on this device.' : 'Saved for this session. Download a copy before closing.');
   pushPending();
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
   var nextDate=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-  $('lDate').value=nextDate>todayLocal()?todayLocal():nextDate;
+  $('lDate').value=wasEditing?todayLocal():(nextDate>todayLocal()?todayLocal():nextDate);
+  $('lAwake').value='0'; $('lWakings').value='0'; renderChecks();
 });
 function flash(m){ say('copyMsg',m); }
 function rflash(m){ say('resultsMsg',m); }
@@ -1410,6 +1474,7 @@ function say(id,m){ var el=$(id); if(!el) return; el.textContent=m; setTimeout(f
 function renderLog(){
   restamp();
   var L=nightsIn(currentCycle().n);
+  if($('estimateNote')) $('estimateNote').textContent=estimateDescription(L);
   var rn=$('resultsNote');
   if(rn){
     var st=stage();
@@ -1468,16 +1533,21 @@ function renderLog(){
       state.log.slice().reverse().map(function(e){
         return '<tr><td>'+e.date+'</td><td>'+e.out+'</td><td>'+e.up+'</td><td>'+Math.floor(e.asleep/60)+'h'+pad(e.asleep%60)+'</td>'+
                '<td>'+e.eff+'%</td><td>'+e.energy+'/5</td><td>'+e.done+'/'+e.of+'</td>'+
-               '<td class="del"><button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
+               '<td class="del"><button class="rm" type="button" data-edit="'+e.date+'">Edit</button> <button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
       }).join('')
     : '<tr><td style="color:var(--ink-mute);padding:1rem 0;">Nothing logged yet.</td></tr>';
+  Array.prototype.forEach.call($('logTable').querySelectorAll('[data-edit]'), function(b){
+    b.addEventListener('click',function(){editNight(b.dataset.edit);});
+  });
   Array.prototype.forEach.call($('logTable').querySelectorAll('[data-del]'), function(b){
     b.addEventListener('click', function(){
       var gone=b.dataset.del;
+      if(!window.confirm('Delete the saved entry for '+gone+'?')) return;
       if(Account.on) Net.call(CONFIG.ENDPOINT, { route:'delete', date:gone });
       state.log=state.log.filter(function(e){ return e.date!==gone; });
       delete state.synced[gone];
-      renderLog(); saveAll(); renderAcct();
+      if(editingDate===gone) finishEditing();
+      renderLog(); renderStage(); saveAll(); renderAcct();
     });
   });
   renderLogChart();
@@ -1517,8 +1587,8 @@ function renderLogChart(){
 
 $('exportCsv').addEventListener('click', function(){
   if(!state.log.length){ rflash('Nothing to export yet.'); return; }
-  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase']];
-  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'']); });
+  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase','round','awake_minutes','calculation_version','strategy_ids']];
+  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'',e.cycle,e.awakeMinutes==null?'':e.awakeMinutes,e.calculationVersion||'legacy-wakings-12',(e.strategyIds||[]).join(';')]); });
   var csv=rows.map(function(r){ return r.join(','); }).join('\n');
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
@@ -1527,13 +1597,14 @@ $('exportCsv').addEventListener('click', function(){
 });
 $('copySummary').addEventListener('click', function(){
   if(!state.log.length){ rflash('Nothing to summarise yet.'); return; }
-  var L=state.log, hrs=L.reduce(function(a,e){ return a+e.asleep; },0)/L.length/60;
+  var L=nightsIn(currentCycle().n); if(!L.length){rflash('No nights in this round yet.');return;}
+  var hrs=L.reduce(function(a,e){ return a+e.asleep; },0)/L.length/60;
   var eff=L.reduce(function(a,e){ return a+e.eff; },0)/L.length;
   var en=L.reduce(function(a,e){ return a+e.energy; },0)/L.length;
   var txt=(($('fName').value||'Student')+' — '+L.length+' nights logged. '+
     'Average sleep '+Math.floor(hrs)+'h'+pad(Math.round((hrs%1)*60))+', '+
     'asleep '+Math.round(eff)+'% of time in bed, day rating '+en.toFixed(1)+'/5. '+
-    'Tools: '+currentCycle().picked.map(function(i){ return byId(i).name; }).join('; ')+'.');
+    'Tools: '+currentCycle().picked.map(function(i){ return byId(i).name; }).join('; ')+'. '+estimateDescription(L));
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(txt).then(function(){ rflash('Copied. Paste it into a message or a form.'); },
       function(){ rflash(txt); });
@@ -1541,10 +1612,11 @@ $('copySummary').addEventListener('click', function(){
 });
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
-  if(!window.confirm('Delete all nights from this browser? Download a CSV first if you want a copy.')) return;
+  if(!window.confirm('Delete all nights and reset your rounds in this browser? Download a CSV first if you want a copy.')) return;
   if(Account.on && window.confirm('Also delete these nights from your record in the private Sheet?'))
     state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
-  state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); rflash('Log deleted.');
+  state.log=[]; state.synced={}; state.cycles=[newCycle(1,'')]; reviewAnswers={}; reviewStep=0; checkState={};
+  finishEditing(); renderLog(); renderStage(); buildSheet(); saveAll(); renderAcct(); rflash('Log deleted.');
 });
 
 /* ═════════ RENDERING · TOOLS, PICKER, SHEET ═════════ */
@@ -1560,13 +1632,17 @@ function renderTools(){
 function fmtD(d){ return d.toLocaleDateString(undefined,{day:'numeric',month:'short'}); }
 function addDays(d,n){ var x=new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
 function buildSheet(){
-  var start = currentCycle().start;
+  var cycle=currentCycle(), start = cycle.start;
   var s0 = start ? new Date(start+'T00:00:00') : null;
   var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS;
   $('sName').textContent  = ($('fName')  && $('fName').value.trim())  || '';
   $('sHouse').textContent = ($('fHouse') && $('fHouse').value.trim()) || '';
   $('sBase').textContent = s0 ? fmtD(s0)+' – '+fmtD(addDays(s0,B-1)) : '';
   $('sInt').textContent  = s0 ? fmtD(addDays(s0,B))+' – '+fmtD(addDays(s0,B+I-1)) : '';
+  if(cycle.timelineVersion==='rolling-v1'){
+    $('sBase').textContent=s0?'From '+fmtD(s0):'';
+    $('sInt').textContent=cycle.interventionStart?'From '+fmtD(new Date(cycle.interventionStart+'T00:00:00')):'After your review';
+  }
 
   $('sCommit').innerHTML = currentCycle().picked.length
     ? currentCycle().picked.map(function(id){
@@ -1578,11 +1654,11 @@ function buildSheet(){
 
   var rows='<tr><th class="rh">Morning</th>';
   for(var d=0; d<B+I; d++){
-    var lbl = s0 ? fmtD(addDays(s0,d)).replace(' ','\u00a0') : (d+1);
+    var lbl = s0 && cycle.timelineVersion!=='rolling-v1' ? fmtD(addDays(s0,d)).replace(' ','\u00a0') : (d+1);
     rows += '<th'+(d===B?' class="split"':'')+'>'+lbl+'</th>';
   }
   rows+='</tr>';
-  [['Lights out',''],['Minutes to sleep',''],['Times I woke',''],['Out of bed',''],['Day felt 1–5',''],['Changes done',''] ].forEach(function(r){
+  [['Lights out',''],['Minutes to sleep',''],['Times I woke',''],['Awake minutes',''],['Out of bed',''],['Day felt 1–5',''],['Changes done',''] ].forEach(function(r){
     rows += '<tr><td class="rh">'+r[0]+'</td>';
     for(var d=0; d<B+I; d++) rows += '<td'+(d===B?' class="split"':'')+'></td>';
     rows += '</tr>';
@@ -1618,7 +1694,7 @@ $('printResults').addEventListener('click', function(){
   }else out+='<p>The comparison is not ready yet. Keep this record of what you have logged so far.</p>';
   out+='<h2>Recorded nights</h2><table><thead><tr><th>Morning</th><th>Phase</th><th>Lights out</th><th>Out of bed</th><th>Estimated sleep</th><th>Day</th></tr></thead><tbody>';
   out+=entries.length?entries.map(function(e){return '<tr><td>'+esc(e.date)+'</td><td>'+esc(e.phase||'—')+'</td><td>'+esc(e.out)+'</td><td>'+esc(e.up)+'</td><td>'+Math.floor(e.asleep/60)+'h '+pad(e.asleep%60)+'m</td><td>'+e.energy+'/5</td></tr>';}).join(''):'<tr><td colspan="6">No nights recorded in this round.</td></tr>';
-  out+='</tbody></table><p class="report-note">Sleep duration is estimated from your entries. The current calculation assumes 12 minutes awake per waking. A difference between weeks does not establish what caused it.</p>';
+  out+='</tbody></table><p class="report-note">'+esc(estimateDescription(entries))+' A difference between weeks does not establish what caused it.</p>';
   report.innerHTML=out; $('reportPreview').innerHTML=out; openPaper('results');
 });
 window.addEventListener('afterprint',function(){delete document.body.dataset.printMode;});
@@ -1635,6 +1711,7 @@ $('newCycle').addEventListener('click', function(){
     next=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   }
   state.cycles.push(newCycle(state.cycles.length+1, next));
+  finishEditing(); checkState={};
   reviewAnswers={}; reviewStep=0;
   renderLog(); renderStage(); renderChecks(); buildSheet(); saveAll();
   showTab('t-log');
@@ -1660,7 +1737,7 @@ $('printPersonal').addEventListener('click',function(){ document.body.dataset.pr
    Sheet last confirmed it, which is what lets two devices disagree sensibly:
    a night the student has edited since the last confirmation wins, anything
    else defers to the Sheet. */
-function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of,e.phase||'',e.cycle||1].join('|'); }
+function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of,e.phase||'',e.cycle||1,e.awakeMinutes,e.calculationVersion,(e.strategyIds||[]).join(';')].join('|'); }
 
 function acctSay(msg){ var el=$('acctSync'); if(el) el.textContent=msg||''; }
 
@@ -1879,6 +1956,7 @@ function todayLocal(){
   $('lDate').value=iso;
   $('lDate').max=iso;
 })();
+window.addEventListener('focus',function(){ $('lDate').max=todayLocal(); });
 loadAll();
 if(!Store.ok){
   $('storeNote').style.display='block';

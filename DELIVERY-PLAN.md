@@ -13,6 +13,12 @@
 
 
 Status: design implementation branch; Google connection and access enforcement are not deployed.
+Local record update: new/uncommitted rounds use rolling-v1, beginning changes
+with the morning after commitment; missed days can extend each phase.
+Previously committed rounds keep fixed-calendar-v1. Historical entry labels
+and estimates are retained. New/edited estimates use awake-minutes-v1.
+This supersedes fixed-window and implicit waking-duration instructions below.
+The same validation still needs implementation in the future record API.
 Baseline reviewed: `main` at `6981425909df2f8fd2ca00b93c08e693d99c108a`.
 
 ## 1. Confirmed product decisions

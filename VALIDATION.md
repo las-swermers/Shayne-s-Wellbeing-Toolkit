@@ -4,6 +4,20 @@ Baseline: main 9f13f48d77d214267279a027b698360a873e16c2.
 
 ## Current UX pass
 
+- Sixteen automated tests pass, including duration validation, preserved
+  historical methods/rounds, rolling boundaries and calendar arithmetic.
+- scripts/check-records.cjs executes migration, review commitment, invalid
+  edit rejection, valid edit, five changes nights, new-round creation,
+  original-plan editing and reload against the complete inline application.
+- The paper tracker now collects awake minutes; the updated A4 rendering was
+  inspected with all columns and footer legible.
+- The preceding art pass added exact-copy, local-link, CSS/URL and SVG checks
+  in scripts/check-art.cjs, plus day-image readiness coverage.
+- PR #9's previous illustrated deployment succeeded on Vercel. Rendered
+  website/device acceptance is still pending.
+
+## Earlier UX pass (historical record)
+
 - All nine existing tests pass after updating the motion checks for sun geometry.
 - A jsdom 26.1.0 integration check executes the complete inline app and verifies
   all five review steps, back/edit, choosing and committing a suggestion,

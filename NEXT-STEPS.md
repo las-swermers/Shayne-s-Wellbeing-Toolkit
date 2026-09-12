@@ -15,8 +15,8 @@ current server remains a read-only connectivity foundation, not record sync.
 
 Implement per-account storage and explicit import of device-only logs, durable
 operation IDs, acknowledged deletion, serialized writes, and cross-device tests.
-Finish the phase-boundary and awake-duration calculation corrections recorded
-in PROJECT-REVIEW.md before collecting student records. Configure staff-created
+Carry the local rolling phase boundaries and versioned awake-minute calculations
+in PROJECT-REVIEW.md into server validation before collecting records. Configure staff-created
 class codes separately from authorization. Release aggregates only through the
 protected server with distinct-student and complementary suppression controls.
 

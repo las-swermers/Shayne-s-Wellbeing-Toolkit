@@ -19,6 +19,9 @@
   --scene-sky:#a8dce1;--amber:#936021;--teal:#356d61;--coral:#ab543d;--indigo:#527b8a;
 }
 body::before{display:none}
+.night-waking-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.night-waking-fields>div{min-width:0}
+.night-waking-fields input,.night-waking-fields select{width:100%}
 .journey,.journey-art{background:var(--scene-sky)}
 .journey-art .journey-landscape{position:absolute;inset:0;display:block;object-position:70% 50%;filter:none;transition:opacity 550ms ease}
 .journey-art .landscape-night{opacity:1}

@@ -151,8 +151,8 @@ This remaining work is code, not a Console switch:
 - Versioned Participants, Rounds, Entries, Cohorts and Operations schemas.
 - Ownership from the verified session, never a browser-supplied account ID.
 - Per-account browser storage, explicit local-log import and shared-device rules.
-- Server validation and recomputed metrics, including the awake-duration and
-  phase-boundary corrections in PROJECT-REVIEW.md.
+- Server validation and recomputed metrics matching the local awake-minutes-v1
+  calculation and rolling-v1 boundaries described in PROJECT-REVIEW.md.
 - Durable acknowledged operation IDs, serialized writes, conflict handling and
   deletion tombstones. One workbook does not provide transaction guarantees.
 - Staff-created class codes, confirmed membership and privacy-protected group

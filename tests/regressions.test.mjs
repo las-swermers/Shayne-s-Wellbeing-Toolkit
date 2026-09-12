@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 
 const html = readFileSync(new URL('../sleep-lab.html',import.meta.url),'utf8');
 const render = html.slice(html.indexOf('function renderLog(){'),html.indexOf('function renderLogChart(){'));
+const estimates=html.slice(html.indexOf('function sleepEstimate('),html.indexOf("var editingDate="));
 function results(log, committed='2026-09-08') {
   const nodes = new Map();
   const $ = id => {
@@ -17,7 +18,7 @@ function results(log, committed='2026-09-08') {
     restamp:()=>{},stage:()=>({id:'intervention'}),renderLogChart:()=>{},
     pad:n=>String(n).padStart(2,'0')
   };
-  vm.runInNewContext(render+';renderLog();',context);
+  vm.runInNewContext(estimates+render+';renderLog();',context);
   return $;
 }
 function nights(cycle, count, phase, hours) {
