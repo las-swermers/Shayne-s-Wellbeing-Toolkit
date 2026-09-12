@@ -110,9 +110,10 @@ claim independent 3D terrain or separate ridge parallax. Clouds and cow are
 independent. Additional ridge artwork should only be commissioned if the
 reviewed composition needs it.
 
-The current sheep and cow use line illustration alongside the other icons.
-The hero has separate day/night artwork. Their silhouettes, text contrast and
-cloud composition still need review at actual phone scale.
+The tool dock now uses four small illustrated alpine scenes instead of unrelated
+glyph styles. The Sleep Lab transition puts cream clouds behind the moon and
+outlined cow, preserving the jump's readability. Their silhouettes, text
+contrast and cloud composition still need review at actual phone scale.
 
 The earlier assistant's live-view attempts did not establish a successful
 render of the site: GitHub Pages returned a missing-site page and the Vercel

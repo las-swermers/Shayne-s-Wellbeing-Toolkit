@@ -40,6 +40,8 @@ Sources checked in this pass:
 Follow RESOURCE-ROADMAP.md. Start with a feelings explorer or values card sort
 that does not need personal cloud storage. Bring one existing resource and its
 learning goal; review reuse permissions and remove real student answers first.
+Set up Google identity and the private Sheet before any activity saves personal
+responses, creates a class code, or shares a Roommate Agreement.
 
 ## 5. Roommate Agreement
 

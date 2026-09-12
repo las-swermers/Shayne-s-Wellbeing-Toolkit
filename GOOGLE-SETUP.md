@@ -163,6 +163,11 @@ Only after review should the runtime receive workbook Editor access and the
 required write scope. A live pilot requires the complete acceptance gates in
 DELIVERY-PLAN.md, not just connected:true.
 
+Build the next tools only after this foundation is accepted. Static activities
+that never save responses can be prototyped now; personal results, class
+membership, Roommate Agreement sharing and any saved quiz require verified
+accounts, ownership rules and the reviewed record API first.
+
 ## Information needed next
 
 The project ID and number, region, service name/URL, runtime service-account

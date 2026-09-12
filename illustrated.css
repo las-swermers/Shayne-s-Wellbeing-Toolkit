@@ -55,14 +55,15 @@ body::before{display:none}
 .is-enhanced .cloud-near,.is-enhanced .cloud-far{opacity:var(--cloud-opacity,.75)}
 .journey-exit{background:linear-gradient(0deg,var(--page),transparent 46%)}
 .button,.app-icon,.experiment-panel,.tool-dock,.record-links a{box-shadow:none;border-radius:8px}
-.app-icon,.bed-icon,.compass-icon,.spark-icon,.sheep-icon{background:var(--surface);color:var(--text);border:1.3px solid var(--line);width:80px;height:80px}
-.app-icon svg{width:40px;height:40px;stroke-width:1.5}
-.sheep-icon svg{width:50px;height:50px;stroke-width:2.4}
+.app-icon{background:var(--surface);color:var(--text);border:1.3px solid var(--line);width:80px;height:80px}
+.scene-icon{padding:0;overflow:hidden;border-radius:18px}
+.scene-icon img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.tool-item:hover .scene-icon img{transform:scale(1.08)}
 .tool-item:hover .app-icon{box-shadow:none;transform:translateY(-5px)}
 .experiment-panel{background:var(--surface);border:1px solid var(--line)}
 .nights i{border-radius:2px}
 .button:hover{box-shadow:none}
-.night-passage::before,.night-passage::after{background-image:url('assets/cloud-line-night.svg')}
+.night-passage::before,.night-passage::after{background-image:url('assets/cloud-line-day.svg')}
 .night-passage.covered{background:#10333f}
 .passage-moon{background:#faf3df;box-shadow:none;border:2px solid #769699}
 .passage-cow{filter:none}

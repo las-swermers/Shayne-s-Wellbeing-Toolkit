@@ -5,7 +5,7 @@
 }
 .night-passage::before,.night-passage::after {
   content:""; position:absolute; inset:-35% -45%;
-  background:url('assets/cloud-line-night.svg') center 78% / cover no-repeat;
+  background:url('assets/cloud-line-day.svg') center 78% / cover no-repeat;
   transition:transform 650ms cubic-bezier(.22,1,.36,1);
 }
 .night-passage::before{transform:translate(-32%,22%) scale(1.15)}
@@ -24,9 +24,10 @@
 /* The playful moment belongs to entering the experiment, not browsing the kit. */
 .night-passage{transition:opacity 180ms ease,background 180ms ease}
 .night-passage.covered{background:#0c1223}
-.night-passage::before,.night-passage::after{z-index:3;transition-delay:800ms}
+.night-passage::before,.night-passage::after{z-index:0;transition-delay:800ms}
 .passage-moon{position:absolute;width:clamp(90px,15vmin,170px);aspect-ratio:1;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 30% 28%,#fff9df,#d6def0 65%,#a6b1cf);box-shadow:0 0 70px #d9e7ff55;opacity:0}
-.passage-cow{position:absolute;width:clamp(100px,22vmin,230px);height:auto;left:50%;top:48%;opacity:0;filter:drop-shadow(0 10px 12px #0004)}
+.passage-moon{z-index:1}
+.passage-cow{position:absolute;width:clamp(100px,22vmin,230px);height:auto;left:50%;top:48%;opacity:0;filter:drop-shadow(0 10px 12px #0004);z-index:2}
 .covered .passage-moon{animation:passage-moon 1450ms ease both}
 .covered .passage-cow{animation:moon-leap 1400ms cubic-bezier(.35,0,.65,1) both}
 .arriving .passage-moon,.arriving .passage-cow{display:none}

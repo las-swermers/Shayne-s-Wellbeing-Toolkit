@@ -20,8 +20,15 @@ with a crescent, and add a few subtle stars. No extra typography or UI.
 cloud-line-day.svg and cloud-line-night.svg are original code-native scalloped
 cloud layers with matching geometry and fine contour lines. cow-line.svg is an
 original outlined leaping cow used in the Sleep Lab entrance. The sheep icon is
-now inline SVG alongside the other tool icons, rather than a sculptural bitmap.
+now a small illustrated alpine scene alongside the other tool scenes, rather
+than a sculptural bitmap. icon-sleep.svg, icon-roommate.svg,
+icon-first-weeks.svg and icon-exam.svg use the same flat mountain, lake,
+cream-snow and contour vocabulary at the toolkit-card scale.
 These vectors are intentionally editable and do not use a third-party icon pack.
+
+The Sleep Lab entrance uses the cream cloud layer as a readable backdrop, with
+the moon above the clouds and the outlined cow above the moon. The cloud layers
+sit behind the animated subjects so the jump remains legible on small screens.
 
 The artwork and updated one-page PDF were inspected. Automated interaction checks
 are not a substitute for rendered mobile/desktop and motion acceptance.
