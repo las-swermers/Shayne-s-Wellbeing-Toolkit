@@ -1,0 +1,8 @@
+.git
+**/node_modules
+**/.env
+**/.env.*
+**/*.png
+**/test
+apps-script
+*.md

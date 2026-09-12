@@ -3,7 +3,7 @@ const tools = [
   { id: 'sleep-lab', name: 'Sleep Lab', cat: 'Experiment', blurb: 'How sleep works, a two-week experiment, and how the whole school is sleeping.', href: 'sleep-lab.html', access: 'open', icon: 'moon' },
   { id: 'first-weeks-away', name: 'First weeks away', cat: 'Settling in', blurb: 'Getting through the first stretch of term.', href: '#', access: 'soon', icon: 'compass' },
   { id: 'exam-nerves', name: 'Exam nerves', cat: 'Study', blurb: 'What to do with nerves before and during exams.', href: '#', access: 'soon', icon: 'spark' },
-  { id: 'roommate-treaty', name: 'Roommate treaty', cat: 'Living together', blurb: 'Sorting out a shared room before it becomes a problem.', href: '#', access: 'soon', icon: 'home' }
+  { id: 'roommate-agreement', name: 'Roommate Agreement', cat: 'Living together', blurb: 'Sorting out a shared room before it becomes a problem.', href: '#', access: 'soon', icon: 'home' }
 ];
 const icons = {
   moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 15.2A8.7 8.7 0 0 1 8.8 3.3 9 9 0 1 0 20.7 15.2Z"/></svg>',
@@ -12,8 +12,9 @@ const icons = {
   home: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2.5 11h2.7v9h5.2v-5.3h3.2V20h5.2v-9h2.7L12 3Z"/></svg>'
 };
 const shelf = document.querySelector('#tools');
-shelf.innerHTML = tools.filter(tool => !shelf.dataset.access || tool.access === shelf.dataset.access).map(tool => {
+if (shelf) shelf.innerHTML = tools.filter(tool => !shelf.dataset.access || tool.access === shelf.dataset.access).map(tool => {
   const soon = tool.access === 'soon';
   const content = `<span class="tool-icon">${icons[tool.icon]}</span><span><h3>${tool.name}</h3><p>${tool.blurb}</p>${soon ? '<span class="tag">Coming soon</span>' : ''}</span><span class="arrow" aria-hidden="true">${soon ? '·' : '→'}</span>`;
   return soon ? `<div class="tool soon" aria-label="${tool.name}, coming soon">${content}</div>` : `<a class="tool" href="${tool.href}">${content}</a>`;
 }).join('');
+

@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="dark light" />
-<title>The Sleep Lab — A Toolkit for Boarders</title>
+<title>Sleep Lab — Shayne's Wellbeing Toolkit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══ NIGHT (default) ═══ */
 :root, :root[data-theme="night"] {
@@ -199,8 +199,11 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 .tool .te { font-family:var(--mono); font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); white-space:nowrap; }
 
 /* ═══ REVEAL ═══ */
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in { opacity:1; transform:none; }
+.reveal { opacity:1; transform:none; }
+@media (prefers-reduced-motion:no-preference){
+  .reveal.in { animation:lab-arrive 420ms var(--ease) both; }
+  @keyframes lab-arrive { from { opacity:.65; transform:translateY(10px); } to { opacity:1; transform:none; } }
+}
 @media (prefers-reduced-motion:reduce){ .reveal { opacity:1; transform:none; transition:none; } }
 
 /* ═══ STAGE ═══ */
@@ -510,6 +513,8 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 }
 </style>
 <link rel="stylesheet" href="night-passage.css">
+<link rel="stylesheet" href="lab-polish.css">
+<link rel="stylesheet" href="illustrated.css">
 <script src="night-passage.js" defer></script>
 </head>
 <body>
@@ -520,7 +525,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="masthead-top">
       <div class="wordmark">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <strong>The Sleep Lab</strong><span class="counselling"> · Counselling</span>
+        <strong>The Sleep Lab</strong><span class="counselling"> · Shayne's toolkit</span>
       </div>
       <div class="mast-actions"><a class="back-link" href="index.html">Toolkit</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Switch between night and day view">
@@ -532,7 +537,8 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       <button class="tab" role="tab" id="t-learn"   aria-controls="p-learn"   aria-selected="true"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4V4Zm16 0h-4a3 3 0 0 0-3 3m0 14a4 4 0 0 1 4-3h3V4"/></svg><span class="n">01</span>How it works</button>
       <button class="tab" role="tab" id="t-log"     aria-controls="p-log"     aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17H6V4Zm3-2h6v4H9V2Zm0 8h6m-6 4h6"/></svg><span class="n">02</span>My log</button>
       <button class="tab" role="tab" id="t-results" aria-controls="p-results" aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v17h17M8 16v-4m5 4V7m5 9V4"/></svg><span class="n">03</span>My results</button>
-      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>The school</button>
+      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>Group view</button>
+      <button class="tab" role="tab" id="t-resources" aria-controls="p-resources" aria-selected="false">Resources</button>
       <button class="tab" role="tab" id="t-help"    aria-controls="p-help"    aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v.01M9 8a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20"/></svg><span class="n">05</span>More help</button>
     </div>
   </div>
@@ -543,61 +549,17 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ 01 · HOW IT WORKS ══════ -->
 <section class="panel active" id="p-learn" role="tabpanel" aria-labelledby="t-learn" tabindex="0">
   <div class="inner">
-    <span class="label">01 · How it works</span>
-    <h1>Two weeks. <em>One question.</em></h1>
-    <p class="lede" style="margin-top:1rem;">Measure a week of your ordinary sleep. Change two or three things. Measure a second week. Then look at whether it moved.</p>
-
-    <div class="btn-row"><button class="btn" id="startNow">Start logging</button><button class="btn ghost" id="printIntro">Print tracking sheet</button></div>
+    <div class="head"><span class="label">The sleep experiment</span><h1>Notice. Try. Reflect.</h1><p class="lede">A short morning check-in. Two weeks to learn about your sleep.</p></div>
     <div class="steps">
-      <div class="step"><span class="step-n">Week 1</span><h3>Measure only</h3><p>Log every morning and change nothing on purpose. This is your baseline — without it there is nothing to compare against.</p></div>
-      <div class="step"><span class="step-n">Review</span><h3>See what your week says</h3><p>After five nights the Lab reads your log, asks five questions, and suggests the changes your own data points at. You pick three.</p></div>
-      <div class="step"><span class="step-n">Week 2</span><h3>Run and measure</h3><p>Keep logging and tick off what you managed. Then your two weeks go side by side.</p></div>
+      <div class="step"><span class="step-n">01 / Week one</span><h3>Notice your routine</h3><p>Log your usual sleep each morning. Estimates are fine.</p></div>
+      <div class="step"><span class="step-n">02 / Review</span><h3>Choose a small change</h3><p>After five nights, review your patterns and choose up to three habits.</p></div>
+      <div class="step"><span class="step-n">03 / Week two</span><h3>See what you notice</h3><p>Keep logging as you try your changes. Compare your two weeks.</p></div>
     </div>
-
-    <div class="facts">
-      <div class="fact"><span class="fact-n">8–10</span><div class="fact-b">Hours a 13–18 year old needs on a regular night.</div></div>
-      <div class="fact"><span class="fact-n">1–2</span><div class="fact-b">Hours later your melatonin releases now, compared to age eleven.</div></div>
-      <div class="fact"><span class="fact-n">5–6</span><div class="fact-b">Hours to clear half a dose of caffeine. A 4pm energy drink is still working at 10pm.</div></div>
-      <div class="fact"><span class="fact-n">+40</span><div class="fact-b">Minutes more sleep boarders get than day students, in one Australian study.</div></div>
+    <div class="learn-actions">
+      <div class="work-card"><h3>Keep it digital</h3><p>Your entries currently stay in this browser.</p><button class="btn" id="startNow">Log last night</button></div>
+      <div class="work-card"><h3>Prefer pen and paper?</h3><p>One A4 sheet, with room for all fourteen mornings.</p><div class="btn-row"><button class="btn ghost" id="printIntro">Preview tracker</button><a class="btn ghost" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a></div></div>
     </div>
-
-    <p class="prose">Around puberty the body clock shifts one to two hours later. You are running a body that wants to fall asleep late, inside a building that starts at seven.</p>
-
-<!-- VIZ 1 — two-process -->
-    <div class="viz">
-      <div class="viz-head">
-        <h3>Sleep pressure, across one day</h3>
-        <span class="label">Tap a scenario</span>
-      </div>
-      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:.9rem;max-width:none;">Adenosine builds up every hour you are awake — the rising line. You fall asleep when it crosses your body’s sleep window. Draining the line early moves that crossing later.</p>
-      <div class="seg" role="group" aria-label="Scenario" id="pressureSeg">
-        <button type="button" data-sc="normal" aria-pressed="true">A normal day</button>
-        <button type="button" data-sc="nap" aria-pressed="false">Nap after dinner</button>
-        <button type="button" data-sc="liein" aria-pressed="false">Saturday lie-in</button>
-        <button type="button" data-sc="allnighter" aria-pressed="false">All-nighter</button>
-      </div>
-      <div style="margin-top:1rem;"><svg id="pressureSvg" viewBox="0 0 720 260" role="img" aria-label="Graph of sleep pressure over 24 hours"></svg></div>
-      <div class="legend">
-        <span><i style="background:var(--amber)"></i>Sleep pressure</span>
-        <span><i style="background:var(--indigo);opacity:.55"></i>Your body's sleep window</span>
-        <span><i style="background:var(--coral)"></i>Where sleep actually starts</span>
-      </div>
-      <p class="viz-note" id="pressureNote"></p>
-    </div>
-
-    <hr class="rule">
-
-    <div class="head" style="margin-bottom:1rem;">
-      <span class="label">Reference</span>
-      <h2>The ten <em>changes</em>.</h2>
-      <p class="prose">Each has evidence behind it and works in a boarding house. You do not have to choose from these yourself — after week one the Lab suggests the ones that match what you logged.</p>
-    </div>
-    <div class="tool-list" id="toolList"></div>
-
-    <div class="btn-row no-print">
-      <button class="btn" id="goLog">Start logging</button>
-      <button class="btn ghost" id="printBtn">Print the tracking sheet</button>
-    </div>
+    <p class="quiet-note">This is a wellbeing experiment, not a test or a diagnosis. <a href="#resources">Explore the research</a> or <a href="#help">find support</a>.</p>
   </div>
 </section>
 
@@ -609,42 +571,38 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="acct off" id="acct">
       <span class="acct-dot" aria-hidden="true"></span>
       <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
-      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with school Google</button>
+      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with Google</button>
       <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
       <span class="acct-sync" id="acctSync" role="status" aria-live="polite"></span>
     </div>
     <div class="notice" id="storeNote" style="display:none;"></div>
 
     <!-- where the student is, right now -->
-    <div class="stage" id="stageBox"></div>
+    <div class="log-workspace"><aside class="log-context"><div class="stage" id="stageBox"></div><button class="btn ghost" id="printBtn2">Preview paper tracker</button><button class="btn ghost" id="goResults">See my results</button></aside>
 
     <!-- the week-one review: unlocks once the baseline has enough nights -->
-    <div id="reviewBox" style="display:none;"></div>
+
 
     <div class="log-form">
       <span class="label">Log last night</span>
       <div class="lf-grid">
-        <div class="field"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Always the morning. Monday night&rsquo;s sleep is logged as Tuesday.</div></div>
+        <div class="field"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Use the date you woke up.</div></div>
         <div class="field"><label class="label" for="lOut">Lights out</label><input type="time" id="lOut" value="22:30"></div>
         <div class="field"><label class="label" for="lUp">Out of bed at</label><input type="time" id="lUp" value="07:00"></div>
-        <div class="field"><label class="label" for="lWakings">Times I woke up</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div>
+        <div class="field"><div class="night-waking-fields"><div><label class="label" for="lWakings">Wake-ups</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div><div><label class="label" for="lAwake">Minutes awake</label><input type="number" id="lAwake" min="0" max="1440" step="1" value="0" inputmode="numeric" aria-describedby="awakeHint"></div></div><div class="hint" id="awakeHint">Estimate total awake time after first falling asleep, including before getting up.</div></div>
         <div class="field"><label class="label" for="lLatency">Minutes to fall asleep <span class="slider-val" id="lLatencyVal">20 min</span></label><input type="range" id="lLatency" min="0" max="120" step="5" value="20"></div>
-        <div class="field"><label class="label" for="lEnergy">How today felt, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
+        <div class="field"><label class="label" for="lEnergy">Energy now, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
       </div>
       <div class="field" id="checkField"><label class="label">Changes I actually did</label><div class="chk-row" id="lChecks"></div></div>
-      <div class="btn-row"><button class="btn" id="saveLog">Save last night</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
+      <p class="hint" id="editNote" hidden></p><div class="btn-row"><button class="btn" id="saveLog">Save last night</button><button class="btn ghost" id="cancelEdit" hidden>Cancel edit</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
     </div>
 
-    <details class="print-options"><summary>Personalise your printed tracking sheet</summary>
-    <div class="lf-grid">
-      <div class="field"><label class="label" for="fName">Name, for the printed sheet</label><input type="text" id="fName" placeholder="Optional"></div>
-      <div class="field"><label class="label" for="fHouse">House or year</label><input type="text" id="fHouse" placeholder="Optional"></div>
     </div>
-    </details>
-    <div class="btn-row no-print">
-      <button class="btn ghost" id="printBtn2">Print my tracking sheet</button>
-      <button class="btn ghost" id="goResults">See my results</button>
-    </div>
+    <details class="review-drawer" id="reviewDrawer" hidden><summary>Review my week <span>Five quick questions</span></summary><div id="reviewBox" style="display:none;"></div></details>
+    <details class="print-options"><summary>Personalise my printed record</summary><div class="lf-grid">
+      <div class="field"><label class="label" for="fName">Name (optional)</label><input type="text" id="fName"></div>
+      <div class="field"><label class="label" for="fHouse">House / year (optional)</label><input type="text" id="fHouse"></div>
+    </div><p class="hint">These details appear in your personal report. The downloadable tracker is blank.</p></details>
   </div>
 </section>
 
@@ -653,15 +611,16 @@ input[type=range] { width:100%; accent-color:var(--accent); }
   <div class="inner wide">
     <div class="head">
       <span class="label">03 · My results</span>
-      <h2>Your two weeks, <em>side by side</em>.</h2>
+      <h2>Your sleep, at a glance.</h2>
     </div>
 
     <div class="notice" id="resultsNote" style="display:none;"></div>
+    <p class="label">Current round</p>
     <div class="stat-row" id="stats"></div>
-    <div id="phaseCompare" style="margin-bottom:1.5rem;"></div>
+    <p class="quiet-note" id="estimateNote">Sleep duration uses your estimated awake minutes. These are self-reports, not clinical measurements.</p><div class="results-grid"><div id="phaseCompare"></div>
 
     <div class="viz">
-      <div class="viz-head"><h3>Hours slept</h3><span class="label">Target band 8&ndash;10h</span></div>
+      <div class="viz-head"><h3>Estimated sleep</h3><span class="label">Target band 8&ndash;10h</span></div>
       <svg id="logSvg" viewBox="0 0 720 230" role="img" aria-label="Chart of hours slept per night"></svg>
       <div class="legend">
         <span><i style="background:var(--amber)"></i>Hours asleep</span>
@@ -670,14 +629,15 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       </div>
     </div>
 
-    <span class="label">Every night logged</span>
-    <div class="table-scroll" tabindex="0" role="region" aria-label="Logged nights, scroll to see all columns"><table class="log-table" id="logTable"></table></div>
+    </div>
+    <details class="history-drawer"><summary>View all recorded nights</summary>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Logged nights, scroll to see all columns"><table class="log-table" id="logTable"></table></div></details>
     <div class="btn-row">
-      <button class="btn ghost" id="printResults">Print my results</button>
+      <button class="btn ghost" id="printResults">Preview my report</button>
       <button class="btn ghost" id="exportCsv">Download as CSV</button>
-      <button class="btn ghost" id="copySummary">Copy summary</button>
+      <details class="more-actions"><summary>More options</summary><button class="btn ghost" id="copySummary">Copy summary</button>
       <button class="btn ghost" id="newCycle">Start another round</button>
-      <button class="btn ghost" id="clearLog">Delete my log</button>
+      <button class="btn ghost" id="clearLog">Delete my log</button></details>
     </div>
     <p class="hint" id="resultsMsg" style="min-height:1.2rem;"></p>
   </div>
@@ -687,21 +647,21 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <section class="panel" id="p-class" role="tabpanel" aria-labelledby="t-class" tabindex="0">
   <div class="inner wide">
     <div class="head">
-      <span class="label">03 · The school</span>
-      <h2>How the school <em>is sleeping</em>.</h2>
-      <p class="prose">Every night logged in the Lab lands here with the name stripped off. Nobody can be picked out of the totals, including you.</p>
+      <span class="label">04 · Group view</span>
+      <h2>Our shared picture.</h2>
+      <p class="prose">Protected group summaries will appear here once Google sign-in and account syncing are connected.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
-    <div class="stat-row" id="classStats"></div>
+    <div id="schoolData" hidden><div class="stat-row" id="classStats"></div>
 
     <div class="viz">
       <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Week one vs week two</span></div>
       <div id="classPhase"></div>
-      <p class="viz-note">Whole-school averages. No control group, no blinding.</p>
+      <p class="viz-note">Group averages can show patterns, not what caused them.</p>
     </div>
 
-    <div class="class-grid">
+    <details class="history-drawer"><summary>Explore sleep patterns</summary><div class="class-grid">
       <div class="viz">
         <div class="viz-head"><h3>How long we sleep</h3><span class="label">Nights, by length</span></div>
         <div class="bars" id="classHours"></div>
@@ -714,39 +674,48 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       </div>
     </div>
 
-    <p class="hint" id="classFoot" style="margin-top:1.2rem;"></p>
+    </details><p class="hint" id="classFoot" style="margin-top:1.2rem;"></p></div>
+    <p class="quiet-note">Your personal entries currently stay on this device. Class codes are being prepared.</p>
   </div>
 </section>
 
 <!-- ══════ 04 · MORE HELP ══════ -->
+<section class="panel" id="p-resources" role="tabpanel" aria-labelledby="t-resources" tabindex="0">
+  <div class="inner"><div class="head"><span class="label">Resources</span><h2>Understand your options.</h2><p class="prose">Every habit below links to its background. Evidence for a full treatment does not prove that one habit will work for everyone.</p></div>
+    <details class="resource-note"><summary>How this relates to CBT-I</summary><p>CBT-I is a structured treatment for insomnia that combines several approaches. This learning tool draws on sleep education and selected behavioural ideas; it is not a CBT-I treatment programme. It does not prescribe sleep restriction or reduced time in bed. Ask the health centre about appropriate support for ongoing sleep difficulties.</p><a href="https://www.nhlbi.nih.gov/health/insomnia/treatment" target="_blank" rel="noopener noreferrer">NHLBI: understanding CBT-I and treatment ↗</a></details>
+    <details class="resource-note"><summary>What does adolescent research show?</summary><p>In a 2015 trial with 116 adolescents with insomnia, six weeks of therapist-guided CBT-I improved sleep outcomes compared with a waiting list. That supports the structured treatment studied; it does not validate this two-week school experiment or each habit on its own.</p><a href="https://doi.org/10.5665/sleep.5240" target="_blank" rel="noopener noreferrer">de Bruin and colleagues · Adolescent CBT-I trial ↗</a></details>
+    <p class="quiet-note">Teens aged 13–17 generally need 8–10 hours of sleep. <a href="https://www.cdc.gov/sleep/about/index.html" target="_blank" rel="noopener noreferrer">CDC: sleep needs and habits ↗</a></p>
+    <div class="tool-list" id="toolList"></div>
+    <details class="resource-note"><summary>Explore sleep pressure</summary><!-- VIZ 1 — two-process -->
+    <div class="viz">
+      <div class="viz-head">
+        <h3>Sleep pressure, across one day</h3>
+        <span class="label">Tap a scenario</span>
+      </div>
+      <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:.9rem;max-width:none;">An illustration of sleep pressure and daily timing, not a prediction of your sleep. The curves are examples, not measurements.</p>
+      <div class="seg" role="group" aria-label="Scenario" id="pressureSeg">
+        <button type="button" data-sc="normal" aria-pressed="true">A normal day</button>
+        <button type="button" data-sc="nap" aria-pressed="false">Nap after dinner</button>
+        <button type="button" data-sc="liein" aria-pressed="false">Saturday lie-in</button>
+        
+      </div>
+      <div style="margin-top:1rem;"><svg id="pressureSvg" viewBox="0 0 720 260" role="img" aria-label="Graph of sleep pressure over 24 hours"></svg></div>
+      <div class="legend">
+        <span><i style="background:var(--amber)"></i>Sleep pressure</span>
+        <span><i style="background:var(--indigo);opacity:.55"></i>Your body's sleep window</span>
+        <span><i style="background:var(--coral)"></i>Illustrative sleep onset</span>
+      </div>
+      <p class="viz-note" id="pressureNote"></p>
+    </div>
+
+</details>
+    <div class="btn-row"><button class="btn" id="goLog">Back to my log</button><button class="btn ghost" id="printBtn">Preview tracker</button></div>
+  </div>
+</section>
 <section class="panel" id="p-help" role="tabpanel" aria-labelledby="t-help" tabindex="0">
-  <div class="inner">
-    <div class="head">
-      <span class="label">04 · More help</span>
-      <h2>When to <em>talk to someone.</em></h2>
-      <p class="prose">Self-help covers the ordinary version of bad sleep, which is most of it. Some things need a person, and going early is easier than going late.</p>
-    </div>
-    <h3 style="margin-bottom:.7rem;">Come and talk if any of these are true</h3>
-    <ul class="help-list">
-      <li>Falling asleep takes more than half an hour most nights, and has done for three weeks or more.</li>
-      <li>You wake in the night and cannot get back several nights a week.</li>
-      <li>You dread going to bed, or the hours before lights out are the worst part of your day.</li>
-      <li>You sleep a full night and are still exhausted all day, every day.</li>
-      <li>You snore heavily, wake gasping, or someone has told you that you stop breathing.</li>
-      <li>Nightmares or flashbacks are waking you regularly.</li>
-      <li>Your legs feel restless or crawling in the evening.</li>
-      <li>You are using anything — supplements, medication, alcohol, vapes — to get to sleep or stay awake.</li>
-      <li>Your mood, appetite or interest in things has changed alongside the sleep.</li>
-    </ul>
-    <hr class="rule">
-    <div class="prose">
-      <h3 style="margin-bottom:.55rem;">What happens if you come in</h3>
-      <p>The treatment with the best evidence for teenagers is <em>CBT for insomnia</em>  — the structured version of what this toolkit borrows from. A few sessions, no medication, and it works better than sleep education alone. You can ask for it by name.</p>
-      <h3 style="margin:1.6rem 0 .55rem;">On melatonin and supplements</h3>
-      <p>Melatonin shifts your body clock; it does not sedate you. It only helps at the right hour and dose for your clock, and the large supermarket doses are usually wrong. Talk to the health centre before ordering anything. If you are already taking something, say so — we need to know, and you are not in trouble.</p>
-      <h3 style="margin:1.6rem 0 .55rem;">If it is not really about sleep</h3>
-      <p>Sleep is often the first thing to go when something else is wrong: homesickness, a relationship, results, something at home you are carrying alone at eleven at night. When the problem is a <em>thing</em> and not a habit, these tools will only get you so far. Come and talk about the thing.</p>
-    </div>
+  <div class="inner"><div class="head"><span class="label">Support</span><h2>You can ask at any point.</h2><p class="prose">Talk to Shayne, your counsellor or a healthcare professional if sleep is difficult or affects your day. You do not need to finish the experiment first.</p></div>
+    <div class="learn-actions"><div class="work-card"><h3>When to get help</h3><p>Ongoing difficulty sleeping, strong daytime sleepiness, or worry around bedtime are worth discussing. Tell the health centre about loud snoring or waking short of breath.</p></div><div class="work-card"><h3>What to bring</h3><p>Your log can help start the conversation. A clinician can assess what is going on and whether treatment such as CBT-I would help. Ask the health centre before using sleep medicines or supplements.</p></div></div>
+    <details class="resource-note"><summary>Where is my information saved?</summary><p>For now, entries are saved in this browser, not your Google account or a shared Sheet. Someone using the same browser profile could see them. Download a CSV to keep a copy. Google sign-in and protected group reporting are not yet active. This is Shayne's independent toolkit, not a school-sponsored service.</p></details>
   </div>
 </section>
 
@@ -778,7 +747,13 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 
 <section class="print-only" id="personalReport" aria-label="Personal sleep record"></section>
 
-<footer class="footer no-print">The Sleep Lab · Counselling · <span style="font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ink-soft);font-style:italic;">Leysin American School</span></footer>
+<dialog id="paperPreview" aria-labelledby="paperTitle">
+  <div class="paper-toolbar"><div><span class="label">On paper</span><h2 id="paperTitle">Your fourteen-day tracker</h2></div><button class="btn ghost" id="closePaper" type="button">Close</button></div>
+  <div id="trackerPreview"><p class="hint">A blank A4 sheet. Download it, then fill it in by hand.</p><img src="assets/tracker-preview.webp" width="794" height="1123" alt="Preview of the one-page Sleep Lab tracker: two seven-day tables with morning date, lights out, time to fall asleep, night wake-ups, awake minutes, out of bed, energy and changes tried."></div>
+  <div id="reportPreview" hidden></div>
+  <div class="paper-toolbar"><a class="btn" id="downloadTracker" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a><button class="btn" id="printPersonal" hidden>Print / Save as PDF</button><p class="hint" id="paperHint">One page · A4 · Black and white</p></div>
+</dialog>
+<footer class="footer no-print">Sleep Lab · Shayne's Wellbeing Toolkit · Independent student resources</footer>
 <script>
 (function () {
 'use strict';
@@ -790,7 +765,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
    Setup: apps-script/SETUP.md */
 var CONFIG = {
   ENDPOINT:    '',        // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
-  SCHOOL_NAME: 'school',  // shown on the sign-in strip
+  SCHOOL_NAME: 'approved',  // account-access label, not a sponsorship claim
 
   /* The class fortnight. Set STUDY_START to the first baseline morning and
      everyone runs the same two weeks. Leave it blank and each student's
@@ -876,37 +851,22 @@ var Account = {
 /* ═════════ DATA ═════════
    Ten changes, chosen for the strength of the evidence behind them and for
    working inside a boarding house. A student runs two or three in week two. */
+var SOURCES = {
+  routine:{url:'https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits',label:'NHLBI · Healthy sleep habits'},
+  habits:{url:'https://www.cdc.gov/sleep/about/index.html',label:'CDC · Sleep habits'},
+  cbti:{url:'https://www.nhlbi.nih.gov/health/insomnia/treatment',label:'NHLBI · CBT-I and sleep habits'}
+};
 var STRATS = [
-  { id:'light-am', name:'Ten minutes of morning light', effort:'Tiny',
-    why:'Light in the first hour awake is the strongest way to shift your body clock earlier.',
-    how:'Get outside within an hour of waking. Overcast still counts — a window is much weaker than a doorway.' },
-  { id:'wake-anchor', name:'Same wake time every day', effort:'Hard',
-    why:'Wake time anchors the whole clock. Your bedtime follows it on its own within a week or two.',
-    how:'Pick a time you can hold seven days a week, weekends within about an hour. Get up at it even after a bad night.' },
-  { id:'weekend', name:'Hold the weekend within an hour', effort:'Hard',
-    why:'Sleeping until noon on Saturday drags your clock two hours later and makes Sunday night the worst of the week.',
-    how:'Take the extra sleep as an afternoon nap instead of a lie-in.' },
-  { id:'twenty-min', name:'The twenty-minute rule', effort:'Hard',
-    why:'Lying awake and frustrated teaches your brain that bed means frustration. The most effective change here, and the one that feels most wrong.',
-    how:'Awake and irritated for what feels like twenty minutes? Get up. Somewhere dim, something dull, no screens. Go back when you feel sleepy.' },
-  { id:'bed-for-sleep', name:'Keep the bed for sleep', effort:'Hard',
-    why:'Working, scrolling and worrying in bed teach your brain that bed is where those things happen.',
-    how:'Study at a desk or in the common room. If there is nowhere else, sit on top of the covers facing the other way.' },
-  { id:'phone-park', name:'Park the phone across the room', effort:'Medium',
-    why:'Distance works better than willpower. Reaching for it at 2am should cost you getting out of bed.',
-    how:'Charge it on the far side of the room or in the house box. A cheap alarm clock solves the “but it is my alarm” problem.' },
-  { id:'caffeine', name:'Caffeine curfew at lunchtime', effort:'Medium',
-    why:'Half of it is still in you five to six hours later, blocking the receptors that let you feel sleepy.',
-    how:'Nothing caffeinated after about two. Energy drinks are the usual culprit; nicotine counts too.' },
-  { id:'runway', name:'Build a thirty-minute runway', effort:'Medium',
-    why:'The same actions in the same order become a cue that sleep is next.',
-    how:'Pick three things — shower, teeth, ten pages — and keep the order every night, even when the work is not finished.' },
-  { id:'brain-dump', name:'Empty your head onto paper', effort:'Tiny',
-    why:'Writing tomorrow down before bed helps people fall asleep faster. The list holds it so you do not have to.',
-    how:'Five minutes before the runway starts, not in bed. Deadlines, the awkward conversation, what you forgot to say.' },
-  { id:'cool-dark', name:'Cool and dark', effort:'Tiny',
-    why:'Your core temperature has to fall for sleep to start, and a warm room blocks it.',
-    how:'Around eighteen degrees — cooler than feels cosy getting in. Eye mask if the room never really goes dark.' }
+  {id:'light-am',name:'Make time for daylight',effort:'Small step',source:'routine',basis:'General sleep guidance',why:'Daytime activity and a regular routine can support sleep.',how:'Try a short outdoor break in your morning routine. This is not light-box treatment.'},
+  {id:'wake-anchor',name:'Keep a steady sleep schedule',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Regular bed and wake times support a consistent routine.',how:'Choose a realistic schedule that leaves enough time for sleep. Do not cut sleep short to improve a score.'},
+  {id:'weekend',name:'Keep weekends consistent',effort:'Routine',source:'routine',basis:'General sleep guidance',why:'Large schedule changes can make a regular routine harder.',how:'Aim for similar bed and wake times across the week, while allowing enough sleep. Talk to the health centre if you are regularly exhausted.'},
+  {id:'twenty-min',name:'Reset when bed feels frustrating',effort:'Small step',source:'cbti',basis:'Adapted CBT-I principle',why:'Stimulus control aims to reconnect bed with sleep. It is one part of CBT-I.',how:'If lying awake feels frustrating, try a quiet, dimly lit activity and return when sleepy. Choose a safe space; ask a trusted adult if you are unsure. No clock-watching or timed rule is needed.'},
+  {id:'bed-for-sleep',name:'Give studying its own space',effort:'Small step',source:'cbti',basis:'Adapted CBT-I principle',why:'Separating wakeful activities from bed draws on stimulus control.',how:'Use a desk or shared study space when you can, so bed can be a place to rest.'},
+  {id:'phone-park',name:'Give screens a bedtime',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Reducing device use before bed is a recommended sleep habit.',how:'Try putting your phone aside at least 30 minutes before bed. Agree a practical place with your houseparent if needed.'},
+  {id:'caffeine',name:'Skip afternoon caffeine',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Caffeine can interfere with sleep.',how:'Choose a caffeine-free drink in the afternoon and evening.'},
+  {id:'runway',name:'Make room to wind down',effort:'Routine',source:'routine',basis:'General sleep guidance',why:'A relaxing routine may make the transition to bedtime easier.',how:'Try a quiet activity before bed: reading, calm music or a shower. Choose something you enjoy.'},
+  {id:'brain-dump',name:'Write down tomorrow',effort:'Small step',source:'cbti',basis:'Optional wind-down idea',why:'This is one way to try a calmer routine. The linked guidance supports relaxation generally, not this exact writing exercise.',how:'If it helps, jot down tomorrow’s tasks before bed. Stop if writing makes you more worried.'},
+  {id:'cool-dark',name:'Make your room restful',effort:'Small step',source:'routine',basis:'General sleep guidance',why:'A quiet, comfortable room can support sleep.',how:'Keep the room comfortably cool and dark. Agree light and noise preferences with your roommate.'}
 ];
 
 /* ═════════ STATE ═════════ */
@@ -924,19 +884,20 @@ function svgEl(t,a){ var e=document.createElementNS('http://www.w3.org/2000/svg'
 var FIELDS = ['fName','fHouse'];
 function saveAll(){
   var f={}; FIELDS.forEach(function(id){ var el=$(id); if(el) f[id]=el.value; });
-  Store.set('sleeplab', JSON.stringify({ v:2, cycles:state.cycles, fields:f, log:state.log, synced:state.synced }));
+  Store.set('sleeplab', JSON.stringify({ v:3, cycles:state.cycles, fields:f, log:state.log, synced:state.synced }));
 }
 function loadAll(){
   var raw=Store.get('sleeplab'); if(!raw) return;
   try {
     var d=JSON.parse(raw);
-    if(d.log) state.log=d.log;
-    if(d.cycles) state.cycles=d.cycles;
+    if(Array.isArray(d.log)) state.log=d.log;
+    if(Array.isArray(d.cycles)) state.cycles=d.cycles;
     /* v1 saved a single flat pick list with no cycles around it. */
     else if(d.picked) state.cycles=[{ n:1, start:'', picked:d.picked.filter(function(i){ return !!byId(i); }),
                                       answers:{}, committed:d.picked.length?'migrated':'' }];
     if(d.synced) state.synced=d.synced;
     if(d.fields) FIELDS.forEach(function(id){ var el=$(id); if(el && d.fields[id]!=null && d.fields[id]!=='') el.value=d.fields[id]; });
+    state.log.forEach(function(e){ if(!e.calculationVersion) e.calculationVersion='legacy-wakings-12'; });
   } catch(e){}
 }
 
@@ -1187,19 +1148,23 @@ var checkState={};
    or three changes. A student can run several across a term, so every night
    carries the cycle it belongs to and cycles never share a date range. */
 
-function newCycle(n, start){ return { n:n, start:start||'', picked:[], answers:{}, committed:'' }; }
+function newCycle(n, start){ return { n:n, start:start||'', picked:[], answers:{}, committed:'', timelineVersion:'rolling-v1', interventionStart:'' }; }
 
 /* Cycle 1 starts on the class date, or on the student's own first night. Later
    cycles start the day the student chose to run another round. */
 function ensureCycles(){
   if(!state.cycles.length) state.cycles=[newCycle(1,'')];
+  state.cycles.forEach(function(c){
+    if(!c.timelineVersion) c.timelineVersion=c.committed?'fixed-calendar-v1':'rolling-v1';
+  });
   var c1=state.cycles[0];
   if(!c1.start) c1.start = CONFIG.STUDY_START || (state.log.length ? state.log[0].date : '');
   return state.cycles;
 }
 function currentCycle(){ ensureCycles(); return state.cycles[state.cycles.length-1]; }
 function cycleLength(){ return CONFIG.BASELINE_DAYS + CONFIG.INTERVENTION_DAYS; }
-function daysBetween(a,b){ return Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00'))/86400000); }
+function daysBetween(a,b){ return Math.round((new Date(b+'T00:00:00Z') - new Date(a+'T00:00:00Z'))/86400000); }
+function nextMorning(date){ var d=new Date(date+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+1); return d.toISOString().slice(0,10); }
 
 /* Which cycle owns a date: the last one that started on or before it. */
 function cycleFor(dateStr){
@@ -1217,6 +1182,10 @@ function phaseFor(dateStr){
   var c=cycleFor(dateStr); if(!c) return null;
   var day=dayInCycle(dateStr,c);
   if(day<1) return null;
+  if(c.timelineVersion==='rolling-v1'){
+    if(!c.interventionStart || dateStr<c.interventionStart) return {phase:'baseline',day:day,of:CONFIG.BASELINE_DAYS,cycle:c.n};
+    return {phase:'intervention',day:daysBetween(c.interventionStart,dateStr)+1,of:CONFIG.INTERVENTION_DAYS,cycle:c.n};
+  }
   if(day<=CONFIG.BASELINE_DAYS) return { phase:'baseline', day:day, of:CONFIG.BASELINE_DAYS, cycle:c.n };
   var iday=day-CONFIG.BASELINE_DAYS;
   if(iday<=CONFIG.INTERVENTION_DAYS) return { phase:'intervention', day:iday, of:CONFIG.INTERVENTION_DAYS, cycle:c.n };
@@ -1242,12 +1211,12 @@ function stage(){
     : { id:'intervention', cycle:c, base:base, iv:iv, need:CONFIG.RESULTS_AFTER-iv };
 }
 
-/* Every entry is re-stamped whenever the log changes: the very first night is
-   saved before any start date exists to anchor it, and would otherwise sit
-   outside its own comparison forever. */
+/* Fill missing ownership once. Existing phases and round IDs are historical
+   facts: edits, review commits and later rounds must not silently reassign them. */
 function restamp(){
   ensureCycles();
   state.log.forEach(function(e){
+    if(e.cycle && e.phase) return;
     var p=phaseFor(e.date);
     e.phase = p ? p.phase : '';
     e.cycle = p ? p.cycle : (state.cycles[0] ? state.cycles[0].n : 1);
@@ -1257,9 +1226,9 @@ function restamp(){
 /* ═════════ STAGE & REVIEW UI ═════════ */
 function pips(cycle){
   var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS, out='';
-  var have={}; nightsIn(cycle.n).forEach(function(e){
-    var d=dayInCycle(e.date, cycle); if(d>=1) have[d]=e.phase;
-  });
+  var have={},base=nightsIn(cycle.n,'baseline').length,iv=nightsIn(cycle.n,'intervention').length;
+  for(var n=1;n<=Math.min(B,base);n++) have[n]='baseline';
+  for(var n=1;n<=Math.min(I,iv);n++) have[B+n]='intervention';
   for(var d=1; d<=B+I; d++){
     var cls='pip'+(have[d]?' done':'')+(have[d]==='intervention'?' iv':'')+(d===B+1?' gap':'');
     out+='<span class="'+cls+'"></span>';
@@ -1275,22 +1244,23 @@ function renderStage(){
     box.className='stage'+(ready?' ready':'');
     box.innerHTML='<div class="stage-top"><span class="stage-step">'+esc(step+round)+'</span></div>'+
       '<h3>'+title+'</h3><p>'+body+'</p>'+
-      (c.start ? pips(c)+'<span class="pips-key">Week one, then week two</span>' : '');
+      (c.start ? pips(c)+'<span class="pips-key">Recorded nights · baseline, then changes</span>' : '');
   };
 
   if(st.id==='start'){
     head('Step 1 of 4','Start with one night.',
-      'Log this morning below. Seven days of ordinary sleep comes first — your review unlocks once you have '+CONFIG.REVIEW_AFTER+' of them.');
+      'Log your usual sleep. Your review opens after '+CONFIG.REVIEW_AFTER+' nights.');
   } else if(st.id==='baseline'){
     head('Step 1 of 4','Week one: measure only.',
-      'Change nothing on purpose. <strong>'+st.need+' more night'+(st.need>1?'s':'')+'</strong> and your review unlocks — it reads what you have logged and suggests what to try.');
+      'Keep noticing your routine. <strong>'+st.need+' more night'+(st.need>1?'s':'')+'</strong> until your review.');
   } else if(st.id==='review'){
     head('Step 2 of 4','Your review is ready.',
-      'You have '+st.base+' nights of baseline. Answer five quick questions and the Lab will tell you what your own data points at.', true);
+      'You have '+st.base+' nights of baseline. Open “Review my week” below to explore possible changes.', true);
   } else if(st.id==='intervention'){
     var names=c.picked.map(function(i){ var t=byId(i); return t?t.name:''; }).filter(Boolean);
     head('Step 3 of 4','Week two: run your changes.',
-      'You are running <strong>'+esc(names.join(', '))+'</strong>. Keep logging and tick off what you managed. '+
+      (c.interventionStart ? 'Your first changes-night is the night ending <strong>'+esc(c.interventionStart)+'</strong>. ' : '')+
+      'Your plan: <strong>'+esc(names.join(', '))+'</strong>. Keep logging and tick off what you managed. '+
       st.need+' more night'+(st.need>1?'s':'')+' until your comparison.');
   } else {
     head('Step 4 of 4','Your comparison is ready.',
@@ -1300,12 +1270,16 @@ function renderStage(){
 
   /* Ticking off changes only makes sense once there are changes to tick. */
   var cf=$('checkField'); if(cf) cf.style.display = (st.id==='intervention'||st.id==='results') && c.picked.length ? '' : 'none';
+  if(c.timelineVersion==='fixed-calendar-v1') box.insertAdjacentHTML('beforeend','<p class="hint">This older round keeps its original calendar dates. New rounds follow the date you commit your changes.</p>');
   renderReview(st);
+  renderChecks();
 }
 
 var reviewAnswers = {};
+var reviewStep = 0;
 function renderReview(st){
   var box=$('reviewBox'); if(!box) return;
+  var drawer=$('reviewDrawer'); if(drawer) drawer.hidden=st.id!=='review';
   if(st.id!=='review'){ box.style.display='none'; return; }
   box.style.display='';
   var c=st.cycle, sig=signals(c.n);
@@ -1314,14 +1288,15 @@ function renderReview(st){
   var read='';
   if(sig){
     read = '<span class="label">What your week already says</span><div class="readout">'+
-      '<div><span class="label">Average sleep</span><span class="rv">'+Math.floor(sig.hours)+'h'+pad(Math.round((sig.hours%1)*60))+'</span></div>'+
+      '<div><span class="label">Estimated sleep</span><span class="rv">'+Math.floor(sig.hours)+'h'+pad(Math.round((sig.hours%1)*60))+'</span></div>'+
       '<div><span class="label">To fall asleep</span><span class="rv">'+Math.round(sig.latency)+'m</span></div>'+
       '<div><span class="label">Wake-ups a night</span><span class="rv">'+sig.wakings.toFixed(1)+'</span></div>'+
       '<div><span class="label">Wake time swing</span><span class="rv">'+Math.round(sig.wakeSwing)+'m</span></div>'+
       '<div><span class="label">Day felt</span><span class="rv">'+sig.energy.toFixed(1)+'</span></div></div>';
   }
 
-  var qs = REVIEW_Q.map(function(q){
+  var qs = REVIEW_Q.map(function(q,index){
+    if(index!==reviewStep) return "";
     return '<div class="rq"><h4>'+esc(q.q)+'</h4><div class="rq-opts">'+
       q.a.map(function(o){
         return '<button type="button" data-q="'+q.id+'" data-k="'+o.k+'" aria-pressed="'+
@@ -1331,16 +1306,16 @@ function renderReview(st){
 
   var answered = REVIEW_Q.filter(function(q){ return reviewAnswers[q.id]; }).length;
   var recs='';
-  if(answered===REVIEW_Q.length){
+  if(answered===REVIEW_Q.length && reviewStep===REVIEW_Q.length){
     var picks=recommend(sig, reviewAnswers);
-    recs = '<hr class="rule"><span class="label">Your three changes for week two</span>'+
-      '<p class="hint" style="margin:.4rem 0 .9rem;">Ranked by what your own week points at. Pick '+CONFIG.MAX_TOOLS+'.</p>'+
+    recs = '<hr class="rule"><span class="label">Choose your changes</span>'+
+      '<p class="hint" style="margin:.4rem 0 .9rem;">Suggestions based on your answers. Choose up to '+CONFIG.MAX_TOOLS+'.</p>'+
       picks.map(function(r){
         var on = c.picked.indexOf(r.id)!==-1;
         return '<button class="rec" type="button" aria-pressed="'+(on?'true':'false')+'" data-rec="'+r.id+'">'+
           '<span class="box" aria-hidden="true"></span><span><h4>'+esc(r.tool.name)+'</h4>'+
           (r.why?'<div class="rw">'+esc(r.why)+'</div>':'')+
-          '<div class="rh">'+esc(r.tool.how)+'</div></span></button>';
+          '<div class="rh">'+esc(r.tool.how)+'</div></span></button><a class="rec-source" href="'+SOURCES[r.tool.source].url+'" target="_blank" rel="noopener noreferrer">'+esc(r.tool.basis)+' · Learn more ↗</a>';
       }).join('')+
       '<div class="btn-row"><button class="btn" id="commitBtn"'+(c.picked.length?'':' disabled')+'>Start week two with these</button>'+
       '<span class="acct-sync" id="commitMsg">'+(c.picked.length?c.picked.length+' of '+CONFIG.MAX_TOOLS+' chosen':'Choose at least one')+'</span></div>';
@@ -1350,7 +1325,16 @@ function renderReview(st){
      carries the question on its own rather than repeating the step. */
   box.innerHTML='<div class="review">'+
     '<h3 style="font-size:1.45rem;margin:0 0 .9rem;">What should you change?</h3>'+
-    read+'<span class="label">Five things your log cannot see</span>'+qs+recs+'</div>';
+    '<details class="review-data"><summary>What my log shows</summary>'+read+'</details>'+
+    '<p class="review-progress">'+(reviewStep<REVIEW_Q.length?'Question '+(reviewStep+1)+' of '+REVIEW_Q.length:'Choose what you want to try')+'</p>'+qs+
+    '<div class="review-nav"><button class="btn ghost" id="reviewBack"'+(reviewStep===0?' disabled':'')+'>Back</button>'+
+    (reviewStep<REVIEW_Q.length?'<button class="btn" id="reviewNext"'+(!reviewAnswers[REVIEW_Q[reviewStep].id]?' disabled':'')+'>'+(reviewStep===REVIEW_Q.length-1?'See suggestions':'Next question')+'</button>':'')+'</div>'+recs+'</div>';
+  function moveReview(delta){
+    reviewStep=Math.max(0,Math.min(REVIEW_Q.length,reviewStep+delta));renderReview(st);
+    var heading=box.querySelector('.review-progress');heading.tabIndex=-1;heading.focus({preventScroll:true});
+  }
+  $('reviewBack').addEventListener('click',function(){moveReview(-1);});
+  var nextButton=$('reviewNext');if(nextButton)nextButton.addEventListener('click',function(){moveReview(1);});
 
   Array.prototype.forEach.call(box.querySelectorAll('[data-q]'), function(b){
     b.addEventListener('click', function(){
@@ -1376,21 +1360,29 @@ function renderReview(st){
   if(cb) cb.addEventListener('click', function(){
     var c2=currentCycle();
     if(!c2.picked.length) return;
-    c2.committed=new Date().toISOString().slice(0,10);
+    c2.committed=todayLocal();
+    if(c2.timelineVersion==='rolling-v1'){
+      var last=nightsIn(c2.n).reduce(function(d,e){return e.date>d?e.date:d;},c2.committed);
+      c2.interventionStart=nextMorning(last);
+    }
     saveAll(); renderStage(); renderChecks(); buildSheet(); pushCycle();
+    $("stageBox").tabIndex=-1; $("stageBox").focus({preventScroll:true});
     window.scrollTo({ top:0, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth' });
   });
 }
 
 function renderChecks(){
   var w=$('lChecks');
-  var p=phaseFor($('lDate').value);
-  if(p && p.phase==='baseline'){
-    w.innerHTML='<span class="hint">Nothing to tick during baseline. That is the point — this week is the control you are measuring against.</span>';
+  var date=$('lDate').value, saved=state.log.find(function(e){return e.date===date;});
+  var p=saved && saved.phase ? saved : phaseFor(date);
+  var owner=p ? state.cycles.find(function(c){return c.n===p.cycle;}) : null;
+  var picked=owner && p.phase==='intervention' ? owner.picked : [];
+  $('checkField').style.display=picked.length?'':'none';
+  if(!picked.length){
+    w.innerHTML='<span class="hint">Changes are recorded only for nights in the changes phase.</span>';
     return;
   }
-  if(!currentCycle().picked.length){ w.innerHTML='<span class="hint">Add tools to your plan and they show up here.</span>'; return; }
-  w.innerHTML=currentCycle().picked.map(function(id){
+  w.innerHTML=picked.map(function(id){
     var s=byId(id);
     return '<button class="chk" type="button" data-chk="'+id+'" aria-pressed="'+(checkState[id]?'true':'false')+'">'+esc(s.name)+'</button>';
   }).join('');
@@ -1401,31 +1393,79 @@ function renderChecks(){
     });
   });
 }
-$('lDate').addEventListener('change', function(){ renderStage(); renderChecks(); });
+$('lDate').addEventListener('change', function(){ checkState={}; renderStage(); renderChecks(); });
+$('lWakings').addEventListener('change', function(){ if(+$('lWakings').value>0 && $('lAwake').value==='0') $('lAwake').value=''; });
 $('lLatency').addEventListener('input', function(e){ $('lLatencyVal').textContent=e.target.value+' min'; });
 $('lEnergy').addEventListener('input', function(e){ $('lEnergyVal').textContent=e.target.value; });
 
+/* Duration is a self-report estimate. Never infer awake duration from a count. */
+function sleepEstimate(out,up,lat,awake){
+  if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(out)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(up)) throw new Error('Fill in valid lights-out and out-of-bed times.');
+  if(!Number.isInteger(lat)||!Number.isInteger(awake)||lat<0||awake<0) throw new Error('Enter your estimated awake minutes as a whole number, including zero.');
+  var inBed=((toMin(up)-toMin(out))%1440+1440)%1440;
+  if(!inBed) throw new Error('Lights out and out of bed cannot be the same time.');
+  if(lat+awake>inBed) throw new Error('Time falling asleep plus awake time cannot exceed the time in bed.');
+  var asleep=inBed-lat-awake;
+  return {inBed:inBed,asleep:asleep,eff:Math.round(asleep/inBed*100)};
+}
+function estimateDescription(entries){
+  var old=entries.filter(function(e){return e.calculationVersion!=='awake-minutes-v1';}).length;
+  return 'Sleep duration is estimated from your own reports, not a clinical measurement.'+
+    (old ? ' '+old+' older record'+(old===1?' uses':'s use')+' the previous 12-minutes-per-wake-up assumption. Methods differ; update old estimates only if you can reasonably recall that night.' : ' Awake minutes come from your entries.');
+}
+var editingDate='';
+function finishEditing(){
+  editingDate=''; $('lDate').disabled=false; $('editNote').hidden=true;
+  $('cancelEdit').hidden=true; $('saveLog').textContent='Save last night';
+}
+function editNight(date){
+  var entry=state.log.find(function(e){return e.date===date;}); if(!entry) return;
+  editingDate=date; $('lDate').value=date; $('lDate').disabled=true;
+  $('lOut').value=entry.out; $('lUp').value=entry.up;
+  // The original 0..120 slider cannot represent a longer historic estimate.
+  $('lLatency').max=Math.max(120,entry.lat); $('lLatency').value=entry.lat;
+  $('lLatencyVal').textContent=entry.lat+' min';
+  $('lWakings').value=entry.wk; $('lEnergy').value=entry.energy; $('lEnergyVal').textContent=entry.energy;
+  $('lAwake').value=entry.calculationVersion==='awake-minutes-v1'?entry.awakeMinutes:'';
+  checkState={}; (entry.strategyIds||[]).forEach(function(id){checkState[id]=true;});
+  $('saveLog').textContent='Save changes'; $('cancelEdit').hidden=false; $('editNote').hidden=false;
+  $('editNote').textContent='Editing '+date+'. The original round and phase will stay the same.'+
+    (entry.calculationVersion!=='awake-minutes-v1'?' Add an awake-minute estimate to replace the old calculation.':'');
+  showTab('t-log'); renderChecks(); $('lAwake').focus({preventScroll:true});
+}
+$('cancelEdit').addEventListener('click',function(){
+  finishEditing(); checkState={}; $('lDate').value=todayLocal(); $('lAwake').value='0'; renderStage();
+});
 $('saveLog').addEventListener('click', function(){
   var date=$('lDate').value; if(!date){ flash('Pick a date first.'); return; }
-  var out=toMin($('lOut').value), up=toMin($('lUp').value), lat=+$('lLatency').value, wk=+$('lWakings').value;
-  if(out==null||up==null){ flash('Fill in lights out and out of bed.'); return; }
-  var inBed=((up-out)%1440+1440)%1440;
-  var asleep=Math.max(0, inBed-lat-wk*12);
-  var done=currentCycle().picked.filter(function(id){ return checkState[id]; });
-  var ph=phaseFor(date);
+  if(date > todayLocal()){ flash('Choose today or an earlier morning.'); return; }
+  var lat=+$('lLatency').value, wk=+$('lWakings').value, awake=$('lAwake').value.trim(), metrics;
+  try{ metrics=sleepEstimate($('lOut').value,$('lUp').value,lat,awake===''?NaN:Number(awake)); }
+  catch(err){ flash(err.message); $('lAwake').focus({preventScroll:true}); return; }
+  var existing=state.log.find(function(e){return e.date===date;});
+  if(existing && editingDate!==date && !window.confirm('Replace the saved entry for '+date+'? Use Edit in your history to load its values first.')) return;
+  var ph=existing && existing.phase ? existing : phaseFor(date);
+  var c=ph ? state.cycles.find(function(c){return c.n===ph.cycle;}) : currentCycle();
+  if(!ph && c.start && date<c.start){ flash('This morning is before your round starts. Choose a morning in the round.'); return; }
+  var planned=ph && ph.phase==='intervention' ? c.picked : [];
+  var done=planned.filter(function(id){ return checkState[id]; });
   var entry={ date:date, out:$('lOut').value, up:$('lUp').value, lat:lat, wk:wk,
-              inBed:inBed, asleep:asleep, eff:inBed?Math.round(asleep/inBed*100):0,
-              energy:+$('lEnergy').value, done:done.length, of:currentCycle().picked.length,
-              phase: ph?ph.phase:'' };
+              awakeMinutes:Number(awake), strategyIds:done.slice(), calculationVersion:'awake-minutes-v1',
+              inBed:metrics.inBed, asleep:metrics.asleep, eff:metrics.eff,
+              energy:+$('lEnergy').value, done:done.length, of:planned.length,
+              cycle:c.n, phase:ph?ph.phase:'baseline' };
   state.log=state.log.filter(function(e){ return e.date!==date; });
   state.log.push(entry);
   state.log.sort(function(a,b){ return a.date<b.date?-1:1; });
   delete state.synced[date];
+  var wasEditing=!!editingDate; finishEditing();
   checkState={}; renderChecks(); renderLog(); renderStage(); buildSheet(); saveAll();
   flash(Store.ok ? 'Saved on this device.' : 'Saved for this session. Download a copy before closing.');
   pushPending();
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
-  $('lDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  var nextDate=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  $('lDate').value=wasEditing?todayLocal():(nextDate>todayLocal()?todayLocal():nextDate);
+  $('lAwake').value='0'; $('lWakings').value='0'; renderChecks();
 });
 function flash(m){ say('copyMsg',m); }
 function rflash(m){ say('resultsMsg',m); }
@@ -1433,13 +1473,14 @@ function say(id,m){ var el=$(id); if(!el) return; el.textContent=m; setTimeout(f
 
 function renderLog(){
   restamp();
-  var L=state.log;
+  var L=nightsIn(currentCycle().n);
+  if($('estimateNote')) $('estimateNote').textContent=estimateDescription(L);
   var rn=$('resultsNote');
   if(rn){
     var st=stage();
     if(st.id==='start' || st.id==='baseline'){
       rn.style.display='block';
-      rn.innerHTML='<strong>Week one is still running.</strong> Your comparison appears once you have finished the baseline, chosen your changes, and logged '+CONFIG.RESULTS_AFTER+' nights of week two. Everything you have logged so far is below.';
+      rn.innerHTML='<strong>Week one is still running.</strong> Choose your changes after baseline, then log '+CONFIG.RESULTS_AFTER+' week-two nights to compare.';
     } else if(st.id==='review'){
       rn.style.display='block';
       rn.innerHTML='<strong>Your review is ready.</strong> Answer the five questions on <button class="btn ghost" id="rnGo" style="padding:.3rem .7rem;">My log</button> to pick your changes and start week two.';
@@ -1453,7 +1494,7 @@ function renderLog(){
   var adh=L.length? L.reduce(function(a,e){ return a+(e.of?e.done/e.of:0); },0)/L.length*100 : 0;
   $('stats').innerHTML =
     '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+L.length+'</span></div>'+
-    '<div class="stat"><span class="label">Average sleep</span><span class="sv">'+(L.length?(Math.floor(hrs)+'h'+pad(Math.round((hrs%1)*60))):'—')+'</span></div>'+
+    '<div class="stat"><span class="label">Estimated sleep</span><span class="sv">'+(L.length?(Math.floor(hrs)+'h'+pad(Math.round((hrs%1)*60))):'—')+'</span></div>'+
     '<div class="stat"><span class="label">Asleep while in bed</span><span class="sv">'+(L.length?Math.round(eff)+'%':'—')+'</span></div>'+
     '<div class="stat"><span class="label">Day felt, avg</span><span class="sv">'+(L.length?en.toFixed(1):'—')+'</span></div>'+
     '<div class="stat"><span class="label">Tools kept</span><span class="sv">'+(L.length?Math.round(adh)+'%':'—')+'</span></div>';
@@ -1463,7 +1504,7 @@ function renderLog(){
   if(cmp){
     var base=L.filter(function(e){ return e.phase==='baseline'; });
     var iv=L.filter(function(e){ return e.phase==='intervention'; });
-    if(base.length>=3 && iv.length>=3){
+    if(currentCycle().committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
       var m=function(arr,f){ return arr.reduce(function(a,e){ return a+f(e); },0)/arr.length; };
       var rows=[
         ['Hours asleep', m(base,function(e){return e.asleep/60;}), m(iv,function(e){return e.asleep/60;}), 'h', 1, true],
@@ -1480,28 +1521,33 @@ function renderLog(){
           return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
                  '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
         }).join('')+'</table>'+
-        '<p class="hint" style="margin-top:.6rem;">A change here does not prove the tools caused it: no control group, you knew which phase you were in, and people who start measuring anything drift toward the middle. Write those limitations up.</p>';
+        '<p class="hint" style="margin-top:.6rem;">These weeks can show a pattern, but cannot prove what caused a change.</p>';
     } else {
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Week one vs week two</span><p class="hint" style="margin-top:.5rem;">Needs three nights in each week. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
+      cmp.innerHTML='<span class="label">Current round · week one vs week two</span><p class="hint" style="margin-top:.5rem;">Complete your review and log '+CONFIG.REVIEW_AFTER+' baseline nights and '+CONFIG.RESULTS_AFTER+' week-two nights. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
     }
   }
 
-  $('logTable').innerHTML = L.length
+  $('logTable').innerHTML = state.log.length
     ? '<tr><th>Date</th><th>Lights out</th><th>Up</th><th>Asleep</th><th>Efficiency</th><th>Day</th><th>Tools</th><th></th></tr>'+
-      L.slice().reverse().map(function(e){
+      state.log.slice().reverse().map(function(e){
         return '<tr><td>'+e.date+'</td><td>'+e.out+'</td><td>'+e.up+'</td><td>'+Math.floor(e.asleep/60)+'h'+pad(e.asleep%60)+'</td>'+
                '<td>'+e.eff+'%</td><td>'+e.energy+'/5</td><td>'+e.done+'/'+e.of+'</td>'+
-               '<td class="del"><button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
+               '<td class="del"><button class="rm" type="button" data-edit="'+e.date+'">Edit</button> <button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
       }).join('')
     : '<tr><td style="color:var(--ink-mute);padding:1rem 0;">Nothing logged yet.</td></tr>';
+  Array.prototype.forEach.call($('logTable').querySelectorAll('[data-edit]'), function(b){
+    b.addEventListener('click',function(){editNight(b.dataset.edit);});
+  });
   Array.prototype.forEach.call($('logTable').querySelectorAll('[data-del]'), function(b){
     b.addEventListener('click', function(){
       var gone=b.dataset.del;
+      if(!window.confirm('Delete the saved entry for '+gone+'?')) return;
       if(Account.on) Net.call(CONFIG.ENDPOINT, { route:'delete', date:gone });
       state.log=state.log.filter(function(e){ return e.date!==gone; });
       delete state.synced[gone];
-      renderLog(); saveAll(); renderAcct();
+      if(editingDate===gone) finishEditing();
+      renderLog(); renderStage(); saveAll(); renderAcct();
     });
   });
   renderLogChart();
@@ -1509,7 +1555,7 @@ function renderLog(){
 
 function renderLogChart(){
   var svg=$('logSvg'); if(!svg) return; svg.innerHTML='';
-  var L=state.log.slice(-14), Lp=48,R=706,T=20,B=180;
+  var L=nightsIn(currentCycle().n).slice(-14), Lp=48,R=706,T=20,B=180;
   var mute=cssv('--ink-mute'), hair=cssv('--hairline-soft');
   var Y=function(h){ return B-Math.min(h,12)/12*(B-T); };
   svg.appendChild(svgEl('rect',{x:Lp,y:Y(10),width:R-Lp,height:Y(8)-Y(10),fill:cssv('--indigo'),opacity:'0.18'}));
@@ -1541,8 +1587,8 @@ function renderLogChart(){
 
 $('exportCsv').addEventListener('click', function(){
   if(!state.log.length){ rflash('Nothing to export yet.'); return; }
-  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase']];
-  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'']); });
+  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase','round','awake_minutes','calculation_version','strategy_ids']];
+  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'',e.cycle,e.awakeMinutes==null?'':e.awakeMinutes,e.calculationVersion||'legacy-wakings-12',(e.strategyIds||[]).join(';')]); });
   var csv=rows.map(function(r){ return r.join(','); }).join('\n');
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
@@ -1551,13 +1597,14 @@ $('exportCsv').addEventListener('click', function(){
 });
 $('copySummary').addEventListener('click', function(){
   if(!state.log.length){ rflash('Nothing to summarise yet.'); return; }
-  var L=state.log, hrs=L.reduce(function(a,e){ return a+e.asleep; },0)/L.length/60;
+  var L=nightsIn(currentCycle().n); if(!L.length){rflash('No nights in this round yet.');return;}
+  var hrs=L.reduce(function(a,e){ return a+e.asleep; },0)/L.length/60;
   var eff=L.reduce(function(a,e){ return a+e.eff; },0)/L.length;
   var en=L.reduce(function(a,e){ return a+e.energy; },0)/L.length;
   var txt=(($('fName').value||'Student')+' — '+L.length+' nights logged. '+
     'Average sleep '+Math.floor(hrs)+'h'+pad(Math.round((hrs%1)*60))+', '+
     'asleep '+Math.round(eff)+'% of time in bed, day rating '+en.toFixed(1)+'/5. '+
-    'Tools: '+currentCycle().picked.map(function(i){ return byId(i).name; }).join('; ')+'.');
+    'Tools: '+currentCycle().picked.map(function(i){ return byId(i).name; }).join('; ')+'. '+estimateDescription(L));
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(txt).then(function(){ rflash('Copied. Paste it into a message or a form.'); },
       function(){ rflash(txt); });
@@ -1565,19 +1612,19 @@ $('copySummary').addEventListener('click', function(){
 });
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
-  if(Account.on && window.confirm('Also delete these nights from your record in the school Sheet?'))
+  if(!window.confirm('Delete all nights and reset your rounds in this browser? Download a CSV first if you want a copy.')) return;
+  if(Account.on && window.confirm('Also delete these nights from your record in the private Sheet?'))
     state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
-  state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); rflash('Log deleted.');
+  state.log=[]; state.synced={}; state.cycles=[newCycle(1,'')]; reviewAnswers={}; reviewStep=0; checkState={};
+  finishEditing(); renderLog(); renderStage(); buildSheet(); saveAll(); renderAcct(); rflash('Log deleted.');
 });
 
 /* ═════════ RENDERING · TOOLS, PICKER, SHEET ═════════ */
 function renderTools(){
   var el=$('toolList'); if(!el) return;
   el.innerHTML = STRATS.map(function(t,i){
-    return '<div class="tool"><span class="tool-i">'+pad(i+1)+'</span>'+
-      '<div><h4>'+esc(t.name)+'</h4><div class="tw">'+esc(t.why)+'</div>'+
-      '<div class="th">'+esc(t.how)+'</div></div>'+
-      '<span class="te">'+esc(t.effort)+'</span></div>';
+    var source=SOURCES[t.source];
+    return '<details class="resource-card" id="resource-'+t.id+'"><summary><span class="tool-i">'+pad(i+1)+'</span><span>'+esc(t.name)+'</span><span class="te">'+esc(t.effort)+'</span></summary><div class="resource-body"><p>'+esc(t.how)+'</p><p class="hint">'+esc(t.why)+'</p><a href="'+source.url+'" target="_blank" rel="noopener noreferrer">'+esc(t.basis)+' · '+esc(source.label)+' ↗</a></div></details>';
   }).join('');
 }
 
@@ -1585,13 +1632,17 @@ function renderTools(){
 function fmtD(d){ return d.toLocaleDateString(undefined,{day:'numeric',month:'short'}); }
 function addDays(d,n){ var x=new Date(d.getTime()); x.setDate(x.getDate()+n); return x; }
 function buildSheet(){
-  var start = currentCycle().start;
+  var cycle=currentCycle(), start = cycle.start;
   var s0 = start ? new Date(start+'T00:00:00') : null;
   var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS;
   $('sName').textContent  = ($('fName')  && $('fName').value.trim())  || '';
   $('sHouse').textContent = ($('fHouse') && $('fHouse').value.trim()) || '';
   $('sBase').textContent = s0 ? fmtD(s0)+' – '+fmtD(addDays(s0,B-1)) : '';
   $('sInt').textContent  = s0 ? fmtD(addDays(s0,B))+' – '+fmtD(addDays(s0,B+I-1)) : '';
+  if(cycle.timelineVersion==='rolling-v1'){
+    $('sBase').textContent=s0?'From '+fmtD(s0):'';
+    $('sInt').textContent=cycle.interventionStart?'From '+fmtD(new Date(cycle.interventionStart+'T00:00:00')):'After your review';
+  }
 
   $('sCommit').innerHTML = currentCycle().picked.length
     ? currentCycle().picked.map(function(id){
@@ -1603,11 +1654,11 @@ function buildSheet(){
 
   var rows='<tr><th class="rh">Morning</th>';
   for(var d=0; d<B+I; d++){
-    var lbl = s0 ? fmtD(addDays(s0,d)).replace(' ','\u00a0') : (d+1);
+    var lbl = s0 && cycle.timelineVersion!=='rolling-v1' ? fmtD(addDays(s0,d)).replace(' ','\u00a0') : (d+1);
     rows += '<th'+(d===B?' class="split"':'')+'>'+lbl+'</th>';
   }
   rows+='</tr>';
-  [['Lights out',''],['Minutes to sleep',''],['Times I woke',''],['Out of bed',''],['Day felt 1–5',''],['Changes done',''] ].forEach(function(r){
+  [['Lights out',''],['Minutes to sleep',''],['Times I woke',''],['Awake minutes',''],['Out of bed',''],['Day felt 1–5',''],['Changes done',''] ].forEach(function(r){
     rows += '<tr><td class="rh">'+r[0]+'</td>';
     for(var d=0; d<B+I; d++) rows += '<td'+(d===B?' class="split"':'')+'></td>';
     rows += '</tr>';
@@ -1630,7 +1681,7 @@ $('printResults').addEventListener('click', function(){
   var report=$('personalReport');
   var person=$('fName').value.trim();
   var picked=c.picked.map(function(id){var tool=byId(id);return tool?esc(tool.name):'';}).filter(Boolean);
-  var out='<header class="report-head"><span>The Sleep Lab · Leysin American School</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
+  var out='<header class="report-head"><span>Sleep Lab · Shayne&#8217;s Wellbeing Toolkit</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
   out+='<h2>Changes chosen</h2><p>'+(picked.length?picked.join(' · '):'No changes chosen for this round yet.')+'</p>';
   out+='<h2>My two weeks</h2><p>'+base.length+' baseline entries · '+iv.length+' intervention entries</p>';
   if(c.committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
@@ -1643,8 +1694,8 @@ $('printResults').addEventListener('click', function(){
   }else out+='<p>The comparison is not ready yet. Keep this record of what you have logged so far.</p>';
   out+='<h2>Recorded nights</h2><table><thead><tr><th>Morning</th><th>Phase</th><th>Lights out</th><th>Out of bed</th><th>Estimated sleep</th><th>Day</th></tr></thead><tbody>';
   out+=entries.length?entries.map(function(e){return '<tr><td>'+esc(e.date)+'</td><td>'+esc(e.phase||'—')+'</td><td>'+esc(e.out)+'</td><td>'+esc(e.up)+'</td><td>'+Math.floor(e.asleep/60)+'h '+pad(e.asleep%60)+'m</td><td>'+e.energy+'/5</td></tr>';}).join(''):'<tr><td colspan="6">No nights recorded in this round.</td></tr>';
-  out+='</tbody></table><p class="report-note">Sleep duration is estimated from your entries. The current calculation assumes 12 minutes awake per waking. A difference between weeks does not establish what caused it.</p>';
-  report.innerHTML=out; document.body.dataset.printMode='results'; window.print();
+  out+='</tbody></table><p class="report-note">'+esc(estimateDescription(entries))+' A difference between weeks does not establish what caused it.</p>';
+  report.innerHTML=out; $('reportPreview').innerHTML=out; openPaper('results');
 });
 window.addEventListener('afterprint',function(){delete document.body.dataset.printMode;});
 $('newCycle').addEventListener('click', function(){
@@ -1660,12 +1711,23 @@ $('newCycle').addEventListener('click', function(){
     next=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   }
   state.cycles.push(newCycle(state.cycles.length+1, next));
-  reviewAnswers={};
+  finishEditing(); checkState={};
+  reviewAnswers={}; reviewStep=0;
   renderLog(); renderStage(); renderChecks(); buildSheet(); saveAll();
   showTab('t-log');
 });
+function openPaper(mode){
+  var personal=mode==='results';
+  $('trackerPreview').hidden=personal; $('reportPreview').hidden=!personal;
+  $('downloadTracker').hidden=personal; $('printPersonal').hidden=!personal;
+  $('paperTitle').textContent=personal?'My sleep record':'Your fourteen-day tracker';
+  $('paperHint').textContent=personal?'Choose Save as PDF in your print settings to keep a digital copy.':'One page · A4 · Black and white';
+  $('paperPreview').showModal();
+}
+$('closePaper').addEventListener('click',function(){ $('paperPreview').close(); });
+$('printPersonal').addEventListener('click',function(){ document.body.dataset.printMode='results'; $('paperPreview').close(); window.print(); });
 ['printBtn','printBtn2','printIntro'].forEach(function(id){
-  var b=$(id); if(b) b.addEventListener('click', function(){ delete document.body.dataset.printMode; buildSheet(); window.print(); });
+  var b=$(id); if(b) b.addEventListener('click', function(){ openPaper('tracker'); });
 });
 ['fName','fHouse'].forEach(function(id){
   var el=$(id); if(el) el.addEventListener('input', function(){ saveAll(); buildSheet(); });
@@ -1675,7 +1737,7 @@ $('newCycle').addEventListener('click', function(){
    Sheet last confirmed it, which is what lets two devices disagree sensibly:
    a night the student has edited since the last confirmation wins, anything
    else defers to the Sheet. */
-function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of,e.phase||'',e.cycle||1].join('|'); }
+function sigOf(e){ return [e.out,e.up,e.lat,e.wk,e.energy,e.done,e.of,e.phase||'',e.cycle||1,e.awakeMinutes,e.calculationVersion,(e.strategyIds||[]).join(';')].join('|'); }
 
 function acctSay(msg){ var el=$('acctSync'); if(el) el.textContent=msg||''; }
 
@@ -1718,7 +1780,7 @@ function syncPull(opts){
     Account.on=false;
     Account.lastError = err.message==='forbidden'
       ? 'That account is not on the Sleep Lab roster yet. Ask counselling to add you.'
-      : (opts && opts.loud ? 'Could not reach the school Sleep Lab. Your log is safe on this device.' : '');
+      : (opts && opts.loud ? 'Could not reach the toolkit. Your log is safe on this device.' : '');
     renderAcct();
   });
 }
@@ -1814,6 +1876,7 @@ function bars(el, rows, klass){
 }
 
 function classOffline(msg){
+  $('schoolData').hidden=true;
   $('classStats').innerHTML='';
   ['classHours','classWeek'].forEach(function(id){
     var el=$(id); if(el) el.innerHTML='<div class="class-empty">'+esc(msg)+'</div>';
@@ -1832,10 +1895,11 @@ function renderClass(d){
     return;
   }
   $('classNote').style.display='none';
+  $('schoolData').hidden=false;
   $('classStats').innerHTML =
     '<div class="stat"><span class="label">Students taking part</span><span class="sv">'+d.students+'</span></div>'+
     '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+d.nights+'</span></div>'+
-    '<div class="stat"><span class="label">Average sleep</span><span class="sv">'+d.avgHours.toFixed(1)+'h</span></div>'+
+    '<div class="stat"><span class="label">Estimated sleep</span><span class="sv">'+d.avgHours.toFixed(1)+'h</span></div>'+
     '<div class="stat"><span class="label">Getting 8h or more</span><span class="sv">'+d.pctEnough+'%</span></div>'+
     '<div class="stat"><span class="label">Day felt, avg</span><span class="sv">'+d.avgEnergy.toFixed(1)+'</span></div>';
 
@@ -1869,24 +1933,30 @@ function loadClass(force){
   if(!CONFIG.ENDPOINT){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='School insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
-    classOffline('Waiting on the school connection.');
+    $('classNote').textContent='Group insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
+    classOffline('Waiting on the account connection.');
     return;
   }
   classLoaded=true;
   Net.call(CONFIG.ENDPOINT, { route:'class' }, renderClass, function(){
     $('classNote').style.display='block';
-    $('classNote').textContent='Could not reach the school dashboard. Your own log is unaffected.';
+    $('classNote').textContent='Could not reach the group view. Your own log is unaffected.';
     classOffline('Dashboard unavailable.');
     classLoaded=false;
   });
 }
 
 /* ═════════ INIT ═════════ */
+function todayLocal(){
+  var t=new Date();
+  return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
+}
 (function(){
   var t=new Date(), iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
   $('lDate').value=iso;
+  $('lDate').max=iso;
 })();
+window.addEventListener('focus',function(){ $('lDate').max=todayLocal(); });
 loadAll();
 if(!Store.ok){
   $('storeNote').style.display='block';
@@ -1897,10 +1967,10 @@ armReveals(document.querySelector('.panel.active'));
 renderAcct(); syncPull();
 drawPressure(); buildSheet();
 var initialTab=location.hash.slice(1);
-if(!['learn','log','results','class','help'].includes(initialTab)) initialTab=state.log.length?'log':'learn';
+if(!['learn','log','results','class','resources','help'].includes(initialTab)) initialTab=state.log.length?'log':'learn';
 showTab('t-'+initialTab);
 $('themeToggle').setAttribute('aria-label',document.documentElement.dataset.theme==='day'?'Switch to night view':'Switch to day view');
-window.addEventListener('hashchange',function(){ var key=location.hash.slice(1); if(['learn','log','results','class','help'].includes(key))showTab('t-'+key); });
+window.addEventListener('hashchange',function(){ var key=location.hash.slice(1); if(['learn','log','results','class','resources','help'].includes(key))showTab('t-'+key); });
 })();
 </script>
 </body>

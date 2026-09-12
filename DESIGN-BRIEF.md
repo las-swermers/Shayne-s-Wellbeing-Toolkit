@@ -1,4 +1,27 @@
-# Design brief — LAS wellbeing toolkit
+> Current direction: independent Shayne branding and the exact requested everyday-life
+> headline; one Find what you need action. Paired geometric day/night landscapes,
+> outlined clouds on scroll, and a line-illustrated cow at Sleep Lab entry.
+> Compact working panels, optional detail, and PDF preview/download take priority.
+> See PROJECT-REVIEW.md for this revision and remaining acceptance checks.
+
+# Design brief — Shayne's Wellbeing Toolkit
+
+## Current art direction
+
+The user's minimal mountain and outlined-cloud references supersede the earlier
+sculptural/photographic finish below. Preserve the alpine composition and cinematic
+choreography, using simple silhouettes, fine outlines, cream/teal/sage palettes,
+restrained borders and matching icons throughout the landing page, Lab and forms.
+Day mode has a genuinely daytime scene; night mode has its matching moonlit scene.
+Do not brighten a night image or place a second sun over a baked-in moon.
+The toolkit is independent, not LAS sponsored; las.ch remains the initial access gate.
+
+> Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
+> implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
+> documents the optional IAP/Sheet connectivity foundation. These current-status
+> documents take precedence over older implementation-status statements below.
+> The design preview remains local-only; student record sync is not deployed.
+
 
 This brief reflects the current user request: high-end visual design and purposeful
 motion, a sleek informational landing page, a clear entrance to the working tool,
@@ -25,7 +48,7 @@ copy, testimonials, brand, or code.
 
 The hero introduces the whole toolkit. The alpine scene beneath it introduces
 Sleep Lab. A compact dock uses a sculpted sheep for sleep, a bunk-bed icon for
-Roommate Treaty, and restrained symbols for the other tools. Upcoming tools must
+Roommate Agreement, and restrained symbols for the other tools. Upcoming tools must
 be clearly marked and never masquerade as working links. Retain functional day
 and night themes.
 

@@ -1,5 +1,12 @@
 # Shayne's Wellbeing Toolkit
 
+> Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
+> implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
+> documents the optional IAP/Sheet connectivity foundation. These current-status
+> documents take precedence over older implementation-status statements below.
+> The design preview remains local-only; student record sync is not deployed.
+
+
 > **Design implementation branch:** the updated scope and next-phase architecture
 > are in [DELIVERY-PLAN.md](DELIVERY-PLAN.md) and [DESIGN-BRIEF.md](DESIGN-BRIEF.md).
 > This branch improves the local frontend and printing; it does not connect Google
@@ -10,9 +17,11 @@
 > personal mode, and teacher/block labels belong to the cohort rather than each log.
 > Follow the delivery plan where older constraints below conflict.
 
-Static wellbeing tools for boarding-school students at Leysin American School,
-built and owned by the counselling team. Plain HTML, CSS and JavaScript served
-from GitHub Pages. No framework, no build step, no package manager.
+Independent wellbeing tools by Shayne for his students; not LAS sponsored.
+The public design preview is plain HTML, CSS and JavaScript on Vercel.
+The optional Google server has its own Node dependencies and container.
+Initial approved-account access still targets las.ch; that is an access policy,
+not the toolkit's brand. See [RESOURCE-ROADMAP.md](RESOURCE-ROADMAP.md) for expansion.
 
 The shelf (`index.html`) is a catalogue. The one finished tool on it is the
 **Sleep Lab**, and that is what most of this document is about.
@@ -26,9 +35,9 @@ dataset that comes out of it.
 
 A student measures a week of their ordinary sleep, gets a review that reads
 their own data back to them and recommends changes, runs those changes for a
-second week, and then sees the two weeks side by side. Everyone's data, with
-names stripped, feeds a school-wide comparison that anyone at the school can
-look at.
+second week, and then sees the two weeks side by side. A protected group view
+is planned, but is not live. Removing names alone does not make data anonymous;
+release requires verified participation and reviewed aggregate suppression.
 
 ```
   Week one          Review              Week two           Results
@@ -337,5 +346,5 @@ Vercel also builds the repo and comments a preview URL on every pull request.
 - **Nothing is connected yet.** `CONFIG.ENDPOINT` is blank in `main`. The Sheet
   and the deployment are a deliberate next step for counselling.
 - **The other three tools on the shelf are placeholders** — first weeks away,
-  exam nerves, roommate treaty. They are `access: 'soon'` cards in `tools.js`
+  exam nerves, roommate agreement. They are `access: 'soon'` cards in `tools.js`
   with no page behind them.
