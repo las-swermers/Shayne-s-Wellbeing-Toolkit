@@ -2,6 +2,21 @@
   'use strict';
   var root = document.documentElement;
   var toggle = document.getElementById('themeToggle');
+  var menu = document.getElementById('headerMenu');
+  if(menu){
+    menu.addEventListener('click',function(event){
+      if(event.target.closest('a')) menu.open=false;
+    });
+    document.addEventListener('click',function(event){
+      if(menu.open && !menu.contains(event.target)) menu.open=false;
+    });
+    document.addEventListener('keydown',function(event){
+      if(event.key==='Escape' && menu.open){menu.open=false;menu.querySelector('summary').focus();}
+    });
+    document.addEventListener('focusin',function(event){
+      if(menu.open && !menu.contains(event.target)) menu.open=false;
+    });
+  }
   var journey = document.querySelector('.journey');
   var stage = document.querySelector('.journey-stage');
   var intro = document.querySelector('.hero-copy');
@@ -9,6 +24,18 @@
   var landscape = document.querySelector('.journey-landscape');
   var dayLandscape = document.querySelector('.landscape-day');
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var band=document.getElementById('wellbeingBand');
+  if(band){
+    var track=band.querySelector('.wellbeing-track'),group=track.querySelector('.wellbeing-group');
+    var duplicate=group.cloneNode(true);duplicate.setAttribute('aria-hidden','true');duplicate.inert=true;
+    track.appendChild(duplicate);band.classList.add('is-moving');
+    var pause=document.getElementById('pauseWellbeing');pause.hidden=false;
+    pause.addEventListener('click',function(){
+      var paused=pause.getAttribute('aria-pressed')!=='true';
+      pause.setAttribute('aria-pressed',String(paused));band.classList.toggle('is-paused',paused);
+      pause.textContent=paused?'Resume motion':'Pause motion';
+    });
+  }
   var shortScreen = window.matchMedia('(max-height: 600px)');
   var frame = 0;
   var clamp = function (n) { return Math.max(0, Math.min(1, n)); };

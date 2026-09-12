@@ -1,6 +1,19 @@
 # Artwork used in the toolkit
 
-## Current geometric illustration pass — September 12, 2026
+## Current tool illustrations and entrance — September 12, 2026
+
+The active toolkit cards use transparent editorial illustrations: a sleeping
+sheep, bunk bed, backpack and open notebook. They share the alpine scene's
+cream, sage, teal and ochre palette, with simplified contours and paper texture.
+The entrance uses cow-jump-v2.webp on a scene-relative arc over a separate moon,
+with the existing cream cloud layers behind it and a final cloud wipe.
+The older SVG landscape-card icons and cow-line.svg are retained as history.
+See [ILLUSTRATION-PROMPTS.md](ILLUSTRATION-PROMPTS.md) for paths and prompts.
+
+The wellbeing ribbon uses small code-native line symbols with concept labels;
+these support the editorial card illustrations without repeating full scenes.
+
+## Previous geometric illustration pass — September 12, 2026
 
 The current landing page uses alpine-line-day.webp and alpine-line-night.webp,
 paired 1774 × 887 illustrations generated from the user's alpine composition and

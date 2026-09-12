@@ -2,7 +2,18 @@
 
 Baseline: main 9f13f48d77d214267279a027b698360a873e16c2.
 
-## Current UX pass
+## Current landing refinement
+
+- scripts/check-landing.cjs passes DOM interaction checks for menu closure and
+  focus, the eight-concept ribbon, hidden/inert duplicates, pause/resume,
+  cow clearance at the jump apex, Escape cancellation, focus restoration,
+  skip-once navigation, Back recovery, reduced motion and missing-image fallback.
+- Five transparent WebP assets decode successfully. The card images are
+  384 × 384 and the cow is 768 × 512. Generated subjects were visually inspected.
+- Rendered layout, actual animation timing and mobile visual acceptance remain
+  pending. DOM checks and computed arc geometry do not establish those results.
+
+## Previous UX pass
 
 - Sixteen automated tests pass, including duration validation, preserved
   historical methods/rounds, rolling boundaries and calendar arithmetic.

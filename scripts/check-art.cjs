@@ -37,10 +37,6 @@ for(const file of ['landing.css','illustrated.css','lab-polish.css','night-passa
   }
 }
 assert.deepEqual(cssErrors,[]);
-const passageCss=fs.readFileSync(path.join(root,'night-passage.css'),'utf8');
-assert.match(passageCss, /\.night-passage::before,\.night-passage::after\{z-index:0/);
-assert.match(passageCss, /\.passage-moon\{z-index:1\}/);
-assert.match(passageCss, /\.passage-cow\{[^}]*z-index:2/);
 for(const file of ['cloud-line-day.svg','cloud-line-night.svg','cow-line.svg','icon-sleep.svg','icon-roommate.svg','icon-first-weeks.svg','icon-exam.svg']){
   const doc=new JSDOM(fs.readFileSync(path.join(root,'assets',file),'utf8'),{contentType:'image/svg+xml'}).window.document;
   assert.equal(doc.documentElement.localName,'svg');

@@ -28,7 +28,8 @@ const assets = new Map([
     .map(x => ['/assets/'+x+'.svg', ['assets/'+x+'.svg', 'image/svg+xml']]),
   ...['icon-sleep', 'icon-roommate', 'icon-first-weeks', 'icon-exam']
     .map(x => ['/assets/'+x+'.svg', ['assets/'+x+'.svg', 'image/svg+xml']]),
-  ...['alpine-night-clean', 'moonlit-clouds', 'cow-leap', 'sleep-sheep', 'alpine-line-day', 'alpine-line-night']
+  ...['alpine-night-clean', 'moonlit-clouds', 'cow-leap', 'sleep-sheep', 'alpine-line-day', 'alpine-line-night',
+      'icon-sleep-v2', 'icon-roommate-v2', 'icon-arrival-v2', 'icon-exam-v2', 'cow-jump-v2']
     .map(x => ['/assets/'+x+'.webp', ['assets/'+x+'.webp', 'image/webp']])
 ]);
 function json(res, status, data) {

@@ -56,17 +56,13 @@ body::before{display:none}
 .journey-exit{background:linear-gradient(0deg,var(--page),transparent 46%)}
 .button,.app-icon,.experiment-panel,.tool-dock,.record-links a{box-shadow:none;border-radius:8px}
 .app-icon{background:var(--surface);color:var(--text);border:1.3px solid var(--line);width:80px;height:80px}
-.scene-icon{padding:0;overflow:hidden;border-radius:18px}
-.scene-icon img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1)}
-.tool-item:hover .scene-icon img{transform:scale(1.08)}
-.tool-item:hover .app-icon{box-shadow:none;transform:translateY(-5px)}
+.app-icon.scene-icon{width:124px;height:124px;padding:4px;overflow:visible;border:0;border-radius:0;background:none;box-shadow:none}
+.scene-icon img{width:100%;height:100%;display:block;object-fit:contain}
+.available:hover .scene-icon,.available:focus-visible .scene-icon{transform:translateY(-4px);box-shadow:none}
+.tool-item:not(.available):hover .scene-icon{transform:none}
 .experiment-panel{background:var(--surface);border:1px solid var(--line)}
 .nights i{border-radius:2px}
 .button:hover{box-shadow:none}
-.night-passage::before,.night-passage::after{background-image:url('assets/cloud-line-day.svg')}
-.night-passage.covered{background:#10333f}
-.passage-moon{background:#faf3df;box-shadow:none;border:2px solid #769699}
-.passage-cow{filter:none}
 @media screen{
   .stage,.review,.log-form,.viz,.work-card,#phaseCompare,.readout,.steps{border-radius:8px;box-shadow:none;background:var(--surface)}
   .field input,.field select,.field textarea,.btn,.tab,.rec,.rq-opts button,.seg,#paperPreview{border-radius:6px;box-shadow:none}
@@ -88,6 +84,50 @@ body::before{display:none}
   .app-icon{width:70px;height:70px}.journey-art .journey-landscape{object-position:68% 50%}
 }
 @media(prefers-reduced-motion:reduce){.journey-art .journey-landscape{transition:none}}
+.header-actions{display:flex;align-items:center;gap:14px;margin-left:auto}
+.wellbeing-band{padding-top:0;padding-bottom:64px}
+.wellbeing-band-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}
+.wellbeing-band-heading .eyebrow{font-size:10px;letter-spacing:.12em}
+.wellbeing-band-heading button{font:inherit;font-size:12px;color:var(--muted);background:none;border:1px solid var(--hairline-soft);border-radius:6px;padding:8px 12px;min-height:36px}
+.wellbeing-window{overflow:hidden}
+.wellbeing-group{display:flex;flex-wrap:wrap;gap:32px;list-style:none;padding:0;margin:0}
+.wellbeing-group li{display:flex;align-items:center;gap:12px;white-space:nowrap;color:var(--muted);font-size:15px;font-weight:500}
+.concept-icon{display:grid;place-items:center;width:42px;height:42px;color:var(--text);background:var(--surface);border-radius:50%}
+.concept-icon svg{width:26px;height:26px}
+.is-moving .wellbeing-window{mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.is-moving .wellbeing-track{display:flex;width:max-content;animation:wellbeing-loop 45s linear infinite}
+.is-moving .wellbeing-group{flex-wrap:nowrap;flex-shrink:0;gap:48px;padding-right:48px}
+.is-moving.is-paused .wellbeing-track,.is-moving .wellbeing-window:hover .wellbeing-track{animation-play-state:paused}
+@keyframes wellbeing-loop{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){
+  .is-moving .wellbeing-track{animation:none;width:auto}
+  .is-moving .wellbeing-group{flex-wrap:wrap;gap:20px;padding-right:0}
+  .wellbeing-group[aria-hidden="true"],#pauseWellbeing{display:none}
+  .is-moving .wellbeing-window{mask-image:none;-webkit-mask-image:none}
+}
+@media print{
+  .is-moving .wellbeing-track{animation:none;width:auto}
+  .is-moving .wellbeing-group{flex-wrap:wrap}
+  .wellbeing-group[aria-hidden="true"],#pauseWellbeing,.header-actions{display:none}
+}
+.header-menu{position:relative;color:#faf3df}
+.header-menu summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;cursor:pointer;list-style:none;border-radius:8px;font-size:14px}
+.header-menu summary::-webkit-details-marker{display:none}
+.header-menu summary svg{width:16px;height:16px;transition:transform 180ms ease}
+.header-menu[open] summary svg{transform:rotate(180deg)}
+.header-menu summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.site-header .header-menu nav{position:absolute;right:0;top:calc(100% + 10px);display:grid;gap:3px;min-width:190px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);box-shadow:0 12px 32px #051e2926}
+.site-header .header-menu nav a{display:block;padding:12px 14px;border-radius:6px;white-space:nowrap}
+.site-header .header-menu nav a:hover{background:var(--paper-deep);text-decoration:none}
+:root[data-theme="day"] .header-menu{color:#203f46}
+:root[data-theme="day"] .site-header .header-menu nav{color:var(--text)}
+@media(max-width:480px){
+  .site-header{padding:18px 20px}.header-actions{gap:5px}
+  .header-menu summary{padding:0 6px;font-size:13px}
+  .site-header .brand-symbol{width:24px}.site-header .brand-sub{font-size:10px}
+  .app-icon.scene-icon{width:104px;height:104px}
+}
+@media(prefers-reduced-motion:reduce){.scene-icon,.header-menu summary svg{transition:none!important}.available:hover .scene-icon{transform:none}}
 @media print{
   :root,:root[data-theme="night"],:root[data-theme="day"]{--paper:#fff;--paper-warm:#fff;--ink:#111;--ink-soft:#333;--ink-mute:#444;--hairline:#777;--accent:#111}
   .hero-copy h1,.journey .hero-copy,.journey .hero-description,.journey .eyebrow{color:#111!important}

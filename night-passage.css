@@ -1,41 +1,32 @@
-.night-passage {
-  position:fixed; inset:0; z-index:10000; pointer-events:none;
-  opacity:0; background:rgba(12,18,35,0);
-  transition:opacity 560ms cubic-bezier(.22,1,.36,1),background 560ms ease;
-}
-.night-passage::before,.night-passage::after {
-  content:""; position:absolute; inset:-35% -45%;
-  background:url('assets/cloud-line-day.svg') center 78% / cover no-repeat;
-  transition:transform 650ms cubic-bezier(.22,1,.36,1);
-}
-.night-passage::before{transform:translate(-32%,22%) scale(1.15)}
-.night-passage::after{transform:translate(32%,18%) scale(1.1);opacity:.85}
-.night-passage.covered{opacity:1;background:rgba(12,18,35,.9)}
-.night-passage.covered::before{transform:translate(0,-8%) scale(1.3)}
-.night-passage.covered::after{transform:translate(0,-4%) scale(1.35)}
-.night-passage.arriving{animation:cloud-arrival 800ms cubic-bezier(.22,1,.36,1) both}
-.night-passage.arriving::before{animation:cloud-left 800ms cubic-bezier(.22,1,.36,1) both}
-.night-passage.arriving::after{animation:cloud-right 800ms cubic-bezier(.22,1,.36,1) both}
-@keyframes cloud-arrival{from{opacity:1;background:rgba(12,18,35,.9)}to{opacity:0;background:transparent}}
-@keyframes cloud-left{from{transform:translate(0,-8%) scale(1.3)}to{transform:translate(-32%,22%) scale(1.15)}}
-@keyframes cloud-right{from{transform:translate(0,-4%) scale(1.35)}to{transform:translate(32%,18%) scale(1.1)}}
+/* One coordinated scene: cloud backdrop, moon, flight, then a cloud exit. */
+.night-passage{position:fixed;inset:0;z-index:10000;overflow:hidden;isolation:isolate;opacity:0;background:#10333f;pointer-events:none;transition:opacity 180ms ease}
+.night-passage.covered{opacity:1;pointer-events:auto}
+.passage-cloud{position:absolute;z-index:0;pointer-events:none;background:url('assets/cloud-line-day.svg') center bottom/100% 100% no-repeat;width:105%;height:72%;opacity:.75}
+.passage-cloud.back-left{left:-32%;bottom:-30%;transform:translateX(-8%)}
+.passage-cloud.back-right{right:-32%;bottom:-36%;transform:translateX(8%);opacity:.42}
+.covered .back-left{animation:drift-left 2600ms ease-out both}
+.covered .back-right{animation:drift-right 2600ms ease-out both}
+.passage-scene{position:absolute;z-index:1;width:min(88vw,86vh,640px);aspect-ratio:1.5;left:50%;top:46%;transform:translate(-50%,-50%)}
+.passage-moon{position:absolute;left:50%;top:61%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#f5dfa3;box-shadow:inset -10px -5px 0 #e8c982;border:1px solid #fbedc4;opacity:0}
+.passage-moon::before,.passage-moon::after{content:"";position:absolute;border-radius:50%;background:#c3a46f28}
+.passage-moon::before{width:21%;height:21%;left:20%;top:29%}
+.passage-moon::after{width:12%;height:12%;left:47%;top:63%}
+.covered .passage-moon{animation:moon-appear 500ms 80ms ease both}
+.passage-cow{position:absolute;left:0;top:0;width:32%;height:auto;opacity:0;transform-origin:50% 65%;will-change:transform}
+.passage-stars{position:absolute;inset:0;opacity:.6;background:radial-gradient(circle at 18% 23%,#fff2c9 0 1px,transparent 2px),radial-gradient(circle at 79% 29%,#fff2c9 0 1.5px,transparent 2px),radial-gradient(circle at 66% 16%,#fff2c9 0 1px,transparent 2px),radial-gradient(circle at 28% 55%,#fff2c9 0 1px,transparent 2px)}
+.passage-veil{position:absolute;z-index:3;inset:-50% -35%;background:url('assets/cloud-line-day.svg') center/100% 100% no-repeat;transform:translateY(90%);pointer-events:none}
+.covered .passage-veil{animation:cloud-close 600ms 1900ms cubic-bezier(.22,1,.36,1) both}
+.passage-caption{position:absolute;z-index:4;left:20px;right:20px;bottom:max(8vh,50px);display:flex;align-items:center;justify-content:center;gap:20px;color:#faf3df;font:500 13px/1.4 Manrope,sans-serif;letter-spacing:.035em}
+.passage-skip{font:inherit;border:1px solid #bfd0d0;border-radius:6px;background:#10333f;color:#faf3df;padding:9px 14px;cursor:pointer}
+.passage-skip:focus-visible{outline:2px solid #faf3df;outline-offset:4px}
+.arriving{opacity:1;animation:passage-arrive 650ms ease-out both}
+.arriving .passage-scene,.arriving .passage-caption{display:none}
+.arriving .passage-veil{transform:translateY(-6%);animation:veil-arrive 650ms ease-out both}
+@keyframes drift-left{to{transform:translateX(7%)}}
+@keyframes drift-right{to{transform:translateX(-7%)}}
+@keyframes moon-appear{from{opacity:0;scale:.9}to{opacity:1;scale:1}}
+@keyframes cloud-close{to{transform:translateY(-6%)}}
+@keyframes passage-arrive{to{opacity:0}}
+@keyframes veil-arrive{to{transform:translateY(-70%)}}
 @media(prefers-reduced-motion:reduce){.night-passage{display:none!important}}
 @media print{.night-passage{display:none!important}}
-/* The playful moment belongs to entering the experiment, not browsing the kit. */
-.night-passage{transition:opacity 180ms ease,background 180ms ease}
-.night-passage.covered{background:#0c1223}
-.night-passage::before,.night-passage::after{z-index:0;transition-delay:800ms}
-.passage-moon{position:absolute;width:clamp(90px,15vmin,170px);aspect-ratio:1;left:50%;top:48%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 30% 28%,#fff9df,#d6def0 65%,#a6b1cf);box-shadow:0 0 70px #d9e7ff55;opacity:0}
-.passage-moon{z-index:1}
-.passage-cow{position:absolute;width:clamp(100px,22vmin,230px);height:auto;left:50%;top:48%;opacity:0;filter:drop-shadow(0 10px 12px #0004);z-index:2}
-.covered .passage-moon{animation:passage-moon 1450ms ease both}
-.covered .passage-cow{animation:moon-leap 1400ms cubic-bezier(.35,0,.65,1) both}
-.arriving .passage-moon,.arriving .passage-cow{display:none}
-@keyframes passage-moon{0%{opacity:0}12%,78%{opacity:1}100%{opacity:0}}
-@keyframes moon-leap{
-  0%{opacity:0;transform:translate(-180%,5%) rotate(-16deg)}
-  12%{opacity:1}
-  50%{opacity:1;transform:translate(-50%,-155%) rotate(0deg)}
-  85%{opacity:1}
-  100%{opacity:0;transform:translate(85%,5%) rotate(18deg)}
-}

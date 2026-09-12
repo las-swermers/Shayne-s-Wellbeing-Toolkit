@@ -6,6 +6,16 @@ or a claim that every device has passed visual acceptance.
 
 ## September refinement update
 
+The latest landing follow-up replaces ambiguous landscape-card symbols with
+recognizable illustrated subjects: sheep, bunk bed, backpack and notebook.
+The cow is now a separate illustrated sprite following one continuous parabola
+over the moon, with clouds behind and a closing cloud wipe. Skip, Escape,
+focus restoration and reduced-motion fallbacks keep the entrance optional.
+Header links now sit in a right-side Menu beside the theme control. Beneath the
+toolkit, eight wellbeing concepts move right to left in a continuous ribbon,
+with pause/resume and a static reduced-motion layout. These updates supersede
+the earlier vector-card and outlined-cow descriptions below.
+
 The latest pass keeps the approved visual direction, replaces the ambiguous hero
 with a toolkit-focused introduction, and moves the cow jump to Sleep Lab entry.
 The latest art pass replaces the original textured scene with paired geometric
