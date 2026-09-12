@@ -1,3 +1,5 @@
+> Sleep Lab update: [SLEEP-EVIDENCE-REVIEW.md](SLEEP-EVIDENCE-REVIEW.md) records the current flexible-diary behaviour, research limits and remaining work. Its phase terminology supersedes the fixed-week wording below for self-paced rounds.
+
 # Shayne's Sleep Lab — design first, then one private Sheet
 
 > Current ownership: an independent toolkit for Shayne's students, not LAS sponsored.

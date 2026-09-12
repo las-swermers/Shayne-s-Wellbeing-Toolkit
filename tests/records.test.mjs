@@ -52,3 +52,31 @@ test('mixed historical methods are disclosed, never silently recalculated',()=>{
   assert.match(m.estimateDescription([{}, {calculationVersion:'awake-minutes-v1'}]),/1 older record uses/);
   assert.doesNotMatch(m.estimateDescription([{calculationVersion:'awake-minutes-v1'}]),/12-minutes/);
 });
+
+test('paper dates extend only the first rolling round without moving intervention or later rounds',()=>{
+  const m=model();const first=m.newCycle(1,'2026-09-10');
+  Object.assign(first,{committed:'2026-09-15',interventionStart:'2026-09-16'});
+  m.state.cycles=[first,m.newCycle(2,'2026-10-01')];
+  const plan=m.entryPhase('2026-09-01');
+  assert.equal(plan.cycle.n,1);assert.equal(plan.phase.phase,'baseline');assert.equal(plan.extend,true);
+  assert.equal(first.start,'2026-09-10'); // Calendar rendering must not mutate dates.
+  first.start='2026-09-01';
+  assert.equal(m.phaseFor('2026-09-16').phase,'intervention');
+  assert.equal(m.entryPhase('2026-10-02').cycle.n,2);
+  m.CONFIG.STUDY_START='2026-09-01';assert.equal(m.entryPhase('2026-08-31'),null);
+  m.CONFIG.STUDY_START='';first.timelineVersion='fixed-calendar-v1';assert.equal(m.entryPhase('2026-08-31'),null);
+});
+test('late diary transcription is allowed but a new older memory cannot claim to be a recent check-in',()=>{
+  const m=model();
+  assert.equal(m.validEntrySource('paper','2026-08-01','2026-09-12'),true);
+  assert.equal(m.validEntrySource('recalled','2026-08-01','2026-09-12'),true);
+  assert.equal(m.validEntrySource('morning','2026-08-01','2026-09-12'),false);
+  assert.equal(m.validEntrySource('morning','2026-09-11','2026-09-12'),true);
+  assert.equal(m.validEntrySource('unknown','2026-09-11','2026-09-12'),false);
+  assert.equal(m.validEntrySource('unknown','2026-09-11','2026-09-12',{}),true);
+});
+test('coverage reports gaps and provenance rather than calling five sparse entries a week',()=>{
+  const m=model();const entries=[1,3,6,10,14].map(day=>({date:'2026-09-'+String(day).padStart(2,'0'),entrySource:day===14?'recalled':'paper'}));
+  assert.match(m.coverageText(entries),/5 entries across 14 calendar days/);
+  assert.match(m.coverageText(entries),/4 from a morning diary; 1 remembered later/);
+});

@@ -159,3 +159,44 @@
   .work-card{padding:18px}
 }
 @media print{#paperPreview{display:none!important}}
+
+/* Calendar and baseline review share the alpine palette and quiet work surface. */
+@media screen {
+  .log-heading,.dialog-toolbar,.calendar-toolbar { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+  .log-heading { margin-bottom:16px;flex-wrap:wrap; }
+  .log-heading>.label { font:500 22px var(--sans);letter-spacing:-.03em;text-transform:none; }
+  .entry-source { margin-top:16px; }
+  #reviewDialog,#calendarDialog { margin:auto;width:min(820px,calc(100% - 24px));max-height:90svh;padding:24px;border:1px solid var(--hairline);border-radius:20px;background:var(--paper);color:var(--ink);overflow:auto; }
+  #calendarDialog { width:min(480px,calc(100% - 24px)); }
+  #reviewDialog::backdrop,#calendarDialog::backdrop { background:#061d25b8;backdrop-filter:blur(8px); }
+  .dialog-toolbar { position:sticky;top:-24px;background:var(--paper);padding:12px 0;z-index:2; }
+  .dialog-toolbar h2 { font:500 clamp(20px,3vw,26px) var(--sans);letter-spacing:-.04em; }
+  #reviewBox .review { margin:0;padding:8px 0;border:0;background:transparent;box-shadow:none; }
+  #reviewBox .readout { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px; }
+  #reviewBox .readout>div { padding:12px;background:var(--paper-warm);border-radius:12px; }
+  #reviewBox .rec { width:100%;text-align:left; }
+  .calendar-toolbar { margin:16px 0; }.calendar-toolbar h3 { font-size:18px; }
+  .calendar-week,.calendar-days { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center; }
+  .calendar-week { margin-bottom:8px;color:var(--ink-soft);font-size:12px; }
+  .calendar-day { min-height:48px;min-width:0;border:1px solid transparent;border-radius:9px;color:var(--ink);background:transparent;font:inherit;cursor:pointer; }
+  .calendar-day small { display:block;min-height:12px;font-size:9px;color:var(--ink-soft); }
+  .calendar-day.recorded { background:var(--paper-warm);border-color:var(--hairline); }
+  .calendar-day[aria-current] { border-color:var(--accent); }
+  .calendar-day:hover:enabled { background:var(--card-bg); }.calendar-day:disabled { opacity:.25;cursor:default; }
+  .calendar-day:focus-visible { outline:2px solid var(--accent);outline-offset:1px; }
+  #calendarDays+p { margin-top:16px; }
+  #stageBox #openReview { display:block;margin-top:14px; }
+}
+@media screen and (max-width:600px) {
+  #reviewDialog,#calendarDialog { padding:16px; }.dialog-toolbar { top:-16px; }
+  #reviewBox .readout { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #reviewBox .rec { grid-template-columns:20px minmax(0,1fr); }
+}
+@media print { #reviewDialog,#calendarDialog { display:none!important; } }
+@media screen {
+  .suggestion-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px; }
+  .suggestion-card { min-width:0;display:flex;flex-direction:column; }
+  .suggestion-card .rec { flex:1;align-items:start; }
+  .suggestion-card .rec-source { margin:0 4px;font-size:11px; }
+}
+@media screen and (max-width:600px) { .suggestion-grid { grid-template-columns:1fr; } }

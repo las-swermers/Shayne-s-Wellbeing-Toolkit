@@ -19,6 +19,7 @@ function open(saved){
 }
 let dom=open(initial),w=dom.window,d=w.document;
 const $=id=>d.getElementById(id),saved=()=>JSON.parse(w.localStorage.getItem('sleeplab'));
+$('openReview').click();$('startRoutineQuiz').click();
 for(let i=0;i<5;i++){d.querySelector('[data-q]').click();$('reviewNext').click();}
 d.querySelector('[data-rec]').click();$('commitBtn').click();
 assert.equal(saved().cycles[0].interventionStart,'2026-09-06');
