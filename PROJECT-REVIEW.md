@@ -13,7 +13,8 @@ over the moon, with clouds behind and a closing cloud wipe. Skip, Escape,
 focus restoration and reduced-motion fallbacks keep the entrance optional.
 Header links now sit in a right-side Menu beside the theme control. Beneath the
 toolkit, eight wellbeing concepts move right to left in a continuous ribbon,
-with pause/resume and a static reduced-motion layout. These updates supersede
+with hover pause and a static reduced-motion layout. The visible pause button
+was removed after the user's visual acceptance. These updates supersede
 the earlier vector-card and outlined-cow descriptions below.
 
 The latest pass keeps the approved visual direction, replaces the ambiguous hero

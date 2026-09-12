@@ -29,12 +29,6 @@
     var track=band.querySelector('.wellbeing-track'),group=track.querySelector('.wellbeing-group');
     var duplicate=group.cloneNode(true);duplicate.setAttribute('aria-hidden','true');duplicate.inert=true;
     track.appendChild(duplicate);band.classList.add('is-moving');
-    var pause=document.getElementById('pauseWellbeing');pause.hidden=false;
-    pause.addEventListener('click',function(){
-      var paused=pause.getAttribute('aria-pressed')!=='true';
-      pause.setAttribute('aria-pressed',String(paused));band.classList.toggle('is-paused',paused);
-      pause.textContent=paused?'Resume motion':'Pause motion';
-    });
   }
   var shortScreen = window.matchMedia('(max-height: 600px)');
   var frame = 0;

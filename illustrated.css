@@ -88,7 +88,6 @@ body::before{display:none}
 .wellbeing-band{padding-top:0;padding-bottom:64px}
 .wellbeing-band-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}
 .wellbeing-band-heading .eyebrow{font-size:10px;letter-spacing:.12em}
-.wellbeing-band-heading button{font:inherit;font-size:12px;color:var(--muted);background:none;border:1px solid var(--hairline-soft);border-radius:6px;padding:8px 12px;min-height:36px}
 .wellbeing-window{overflow:hidden}
 .wellbeing-group{display:flex;flex-wrap:wrap;gap:32px;list-style:none;padding:0;margin:0}
 .wellbeing-group li{display:flex;align-items:center;gap:12px;white-space:nowrap;color:var(--muted);font-size:15px;font-weight:500}
@@ -97,18 +96,18 @@ body::before{display:none}
 .is-moving .wellbeing-window{mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
 .is-moving .wellbeing-track{display:flex;width:max-content;animation:wellbeing-loop 45s linear infinite}
 .is-moving .wellbeing-group{flex-wrap:nowrap;flex-shrink:0;gap:48px;padding-right:48px}
-.is-moving.is-paused .wellbeing-track,.is-moving .wellbeing-window:hover .wellbeing-track{animation-play-state:paused}
+.is-moving .wellbeing-window:hover .wellbeing-track{animation-play-state:paused}
 @keyframes wellbeing-loop{to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){
   .is-moving .wellbeing-track{animation:none;width:auto}
   .is-moving .wellbeing-group{flex-wrap:wrap;gap:20px;padding-right:0}
-  .wellbeing-group[aria-hidden="true"],#pauseWellbeing{display:none}
+  .wellbeing-group[aria-hidden="true"]{display:none}
   .is-moving .wellbeing-window{mask-image:none;-webkit-mask-image:none}
 }
 @media print{
   .is-moving .wellbeing-track{animation:none;width:auto}
   .is-moving .wellbeing-group{flex-wrap:wrap}
-  .wellbeing-group[aria-hidden="true"],#pauseWellbeing,.header-actions{display:none}
+  .wellbeing-group[aria-hidden="true"],.header-actions{display:none}
 }
 .header-menu{position:relative;color:#faf3df}
 .header-menu summary{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;cursor:pointer;list-style:none;border-radius:8px;font-size:14px}

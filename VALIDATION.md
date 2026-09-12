@@ -5,7 +5,7 @@ Baseline: main 9f13f48d77d214267279a027b698360a873e16c2.
 ## Current landing refinement
 
 - scripts/check-landing.cjs passes DOM interaction checks for menu closure and
-  focus, the eight-concept ribbon, hidden/inert duplicates, pause/resume,
+  focus, the eight-concept ribbon, hidden/inert duplicates,
   cow clearance at the jump apex, Escape cancellation, focus restoration,
   skip-once navigation, Back recovery, reduced motion and missing-image fallback.
 - Five transparent WebP assets decode successfully. The card images are
