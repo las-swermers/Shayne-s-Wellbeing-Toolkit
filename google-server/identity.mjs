@@ -14,7 +14,7 @@ export function schoolIdentity(payload, secret) {
   return {
     accountId: 'v1_' + createHmac('sha256', secret)
       .update(IAP_ISSUER + '\0' + payload.sub).digest('hex'),
-    school: 'LAS'
+    toolkit: "Shayne's Wellbeing Toolkit"
   };
 }
 

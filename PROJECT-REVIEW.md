@@ -1,4 +1,4 @@
-# LAS wellbeing toolkit — review and refinement
+# Shayne's Wellbeing Toolkit — review and refinement
 
 Reviewed baseline: main at 9f13f48d77d214267279a027b698360a873e16c2.
 This is a source and asset review. It is not a production security certification
@@ -8,8 +8,16 @@ or a claim that every device has passed visual acceptance.
 
 The latest pass keeps the approved visual direction, replaces the ambiguous hero
 with a toolkit-focused introduction, and moves the cow jump to Sleep Lab entry.
-Day mode adds a sun over the original moon, with the existing alpine illustration
-brightened through CSS; this is not a new daytime mountain illustration.
+The latest art pass replaces the original textured scene with paired geometric
+day/night alpine illustrations. Outlined cloud layers, an original vector cow,
+line icons and flatter shared form tokens extend the user's visual references
+through the toolkit. Public copy and PDF branding now identify Shayne's independent
+toolkit. Initial las.ch access remains a separate policy, not sponsorship.
+
+The exact requested hero copy is implemented. GOOGLE-SETUP.md now distinguishes
+whole-site IAP from a public landing page with a separate sign-in entry, and covers
+personal versus organization-owned Cloud projects. RESOURCE-ROADMAP.md stages the
+future feelings, values, roommate, study and guided-pause activities.
 
 The Lab now puts the core task first: a three-step overview, side-by-side log
 workspace on larger screens, a one-question review, and a comparison/chart
@@ -155,7 +163,7 @@ aggregates or turn the existing page's legacy sync on. Session responses explici
 report recordSync:false. No simulated login is added to the public preview.
 
 See GOOGLE-SETUP.md for the exact configuration and verification sequence.
-Production setup needs a LAS-owned project, a runtime identity with Sheet
+Production setup needs an authorized project owner, a runtime identity with Sheet
 access, the deployed audience and a stable secret in Secret Manager.
 
 ## Acceptance record

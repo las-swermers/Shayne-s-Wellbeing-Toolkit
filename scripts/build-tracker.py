@@ -9,7 +9,7 @@ out = ROOT / 'downloads' / 'sleep-lab-tracker.pdf'
 out.parent.mkdir(exist_ok=True)
 c = canvas.Canvas(str(out), pagesize=A4, pageCompression=1, invariant=1)
 c.setTitle('Sleep Lab - My two-week sleep experiment')
-c.setAuthor('LAS Wellbeing Toolkit')
+c.setAuthor("Shayne's Wellbeing Toolkit")
 W, H = A4
 LEFT, RIGHT = 36, W - 36
 ink, soft, line = '#182230', '#536174', '#CCD2DA'
@@ -20,7 +20,7 @@ def text(x, y, value, size=9, bold=False, color=ink):
 def rule(y, x1=LEFT, x2=RIGHT):
     c.setStrokeColor(HexColor(line)); c.setLineWidth(.5); c.line(x1, y, x2, y)
 
-text(LEFT, 804, 'LAS  /  WELLBEING TOOLKIT', 8, True, soft)
+text(LEFT, 804, "SHAYNE'S WELLBEING TOOLKIT", 8, True, soft)
 text(LEFT, 768, 'My sleep experiment', 27, True)
 text(LEFT, 748, 'Two weeks of noticing what helps. Fill in one row each morning.', 10, color=soft)
 rule(733)
@@ -53,6 +53,6 @@ for label,y in [('A',149),('B',128),('C',107)]:
 text(LEFT, 84, 'Day felt: 1 = very low energy, 3 = in between, 5 = very good energy.',8,color=soft)
 text(LEFT, 70, 'Estimates are fine. Use the date you woke up. Keep this sheet somewhere private.',8,color=soft)
 rule(58)
-text(LEFT, 43, 'Need support? Talk to LAS counselling or the health centre at any point.',8,color=soft)
+text(LEFT, 43, 'Need support? Talk to your counsellor or a healthcare professional at any point.',8,color=soft)
 c.showPage();c.save()
 print(out)

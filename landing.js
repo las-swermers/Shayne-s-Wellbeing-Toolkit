@@ -7,6 +7,7 @@
   var intro = document.querySelector('.hero-copy');
   var cue = document.querySelector('.journey-scroll');
   var landscape = document.querySelector('.journey-landscape');
+  var dayLandscape = document.querySelector('.landscape-day');
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var shortScreen = window.matchMedia('(max-height: 600px)');
   var frame = 0;
@@ -20,6 +21,7 @@
     root.dataset.theme = root.dataset.theme === 'day' ? 'night' : 'day';
     try { localStorage.setItem('sleeplab-theme', root.dataset.theme); } catch (e) {}
     labelTheme();
+    schedule();
   });
   function set(name, value) { stage.style.setProperty('--' + name, value); }
   function reset() {
@@ -33,12 +35,13 @@
   function paint() {
     frame = 0;
     if (!journey || !stage || !landscape) return;
-    if (!landscape.complete || !landscape.naturalWidth) { reset(); return; }
+    var activeLandscape = root.dataset.theme === 'day' && dayLandscape ? dayLandscape : landscape;
+    if (!activeLandscape.complete || !activeLandscape.naturalWidth) { reset(); return; }
     var staticScene = motion.matches || shortScreen.matches;
     if (staticScene) reset();
     if (!staticScene) journey.classList.add('is-enhanced');
     var box = journey.getBoundingClientRect();
-    var width = stage.clientWidth, height = stage.clientHeight;
+    var height = stage.clientHeight;
     var progress = staticScene ? 0 : clamp(-box.top / Math.max(1, journey.offsetHeight-height));
     var introFade = smooth(.06,.30,progress);
     // Never hide a focused link while someone is navigating with a keyboard.
@@ -51,14 +54,7 @@
     set('scroll-opacity',cueHidden ? 0 : 1);
     cue.inert = cueHidden;
     if(cueHidden) cue.setAttribute('aria-hidden','true'); else cue.removeAttribute('aria-hidden');
-    // Locate the moon in the actual cover crop (1774 × 887 source, 70% x).
-    // The path is anchored to the artwork, not arbitrary viewport percentages.
-    var scale = Math.max(width/1774,height/887);
-    var moonX = (width-1774*scale)*.70+1265*scale;
-    var moonY = (height-887*scale)*.50+315*scale;
-    var radius = 145*scale;
-    set('sun-x',moonX+'px'); set('sun-y',moonY+'px');
-    set('sun-size',(radius*2)+'px');
+    // Sun and moon are part of the paired artwork; no overlay or crop math.
     var clouds = smooth(.43,.98,progress);
     set('cloud-opacity',.18+clouds*.82);
     set('cloud-scale',1+clouds*.52);
@@ -77,6 +73,10 @@
     shortScreen.addEventListener('change',schedule);
     landscape.addEventListener('load',schedule);
     landscape.addEventListener('error',reset);
+    if (dayLandscape) {
+      dayLandscape.addEventListener('load',schedule);
+      dayLandscape.addEventListener('error',reset);
+    }
     intro.addEventListener('focusin',schedule);
     intro.addEventListener('focusout',schedule);
     schedule();

@@ -17,9 +17,11 @@
 > personal mode, and teacher/block labels belong to the cohort rather than each log.
 > Follow the delivery plan where older constraints below conflict.
 
-Static wellbeing tools for boarding-school students at Leysin American School,
-built and owned by the counselling team. Plain HTML, CSS and JavaScript served
-from GitHub Pages. No framework, no build step, no package manager.
+Independent wellbeing tools by Shayne for his students; not LAS sponsored.
+The public design preview is plain HTML, CSS and JavaScript on Vercel.
+The optional Google server has its own Node dependencies and container.
+Initial approved-account access still targets las.ch; that is an access policy,
+not the toolkit's brand. See [RESOURCE-ROADMAP.md](RESOURCE-ROADMAP.md) for expansion.
 
 The shelf (`index.html`) is a catalogue. The one finished tool on it is the
 **Sleep Lab**, and that is what most of this document is about.
@@ -33,9 +35,9 @@ dataset that comes out of it.
 
 A student measures a week of their ordinary sleep, gets a review that reads
 their own data back to them and recommends changes, runs those changes for a
-second week, and then sees the two weeks side by side. Everyone's data, with
-names stripped, feeds a school-wide comparison that anyone at the school can
-look at.
+second week, and then sees the two weeks side by side. A protected group view
+is planned, but is not live. Removing names alone does not make data anonymous;
+release requires verified participation and reviewed aggregate suppression.
 
 ```
   Week one          Review              Week two           Results

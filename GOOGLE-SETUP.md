@@ -1,134 +1,173 @@
-# LAS Google setup — after design acceptance
+# Connect Google sign-in and the private Sheet
 
-## Current status
+Shayne's Wellbeing Toolkit is an independent resource for Shayne's students,
+not a school-sponsored product. The initial access policy still allows only
+approved las.ch accounts. Branding and access policy are separate decisions.
 
-The design preview remains local-only. The optional google-server implementation
-adds real IAP assertion verification and a read-only Sheet connectivity probe.
-It has not been deployed or tested against LAS accounts or the supplied workbook.
-Student record synchronization is not implemented in that server yet.
+## What is ready
 
-Use the existing school-owned workbook provided in this conversation. Its ID
-belongs in the server SPREADSHEET_ID setting. Do not publish the workbook or
-share it with students; hidden tabs are not separate access boundaries.
-
-## Target architecture
-
-For the initial org-only pilot, host the site and API together on Cloud Run,
-behind Identity-Aware Proxy (IAP). Google handles the sign-in screen before
-serving the site. A custom Google sign-in widget, student Drive permissions and
-per-student Sheets are unnecessary for this deployment.
-
-The Vercel design preview can remain available while it contains no school
-records. If the entire toolkit must be private, disable its public production
-copy when the protected school service is ready. IAP protects its own service;
-it does not make a separate Vercel copy private.
-
-## 1. School project and runtime identity
-
-The LAS technical owner needs an organization-owned Google Cloud project,
-billing, a selected region, and permission to deploy Cloud Run.
-
-Enable Cloud Run, Cloud Build, Artifact Registry, IAP, Secret Manager and
-Google Sheets APIs. Create a dedicated runtime service account. Use the
-attached service identity / Application Default Credentials; do not download
-a service-account JSON key.
-
-Share only the pilot workbook with that service account as Viewer for this
-connectivity phase. Editor access is needed only after the record API is
-implemented and reviewed. Students receive no source-workbook sharing.
-
-## 2. Container and server configuration
-
-From the repository root, build the provided Dockerfile and push the image to
-the school's Artifact Registry. It packages the static site and optional server,
-not the legacy Apps Script, review documents or original PNG files.
-
-The server refuses to start without these values:
-
-| Setting | Value / source |
+| Component | Current status |
 | --- | --- |
-| IAP_AUDIENCE | Exact audience for the deployed service, obtained from IAP configuration |
-| SPREADSHEET_ID | ID from the school-owned Sheet URL provided by the project owner |
-| ACCOUNT_ID_KEY | At least 32 characters of cryptographically random secret material, injected from Secret Manager |
-| PORT | Supplied by Cloud Run; 8080 locally |
+| Google identity verification and las.ch check | Implemented in google-server; not deployed |
+| Stable opaque account IDs | Implemented; pseudonymous, not anonymous |
+| Private Sheet connection | Read-only metadata probe; not configured |
+| Student save, retrieve and cross-device sync | Not implemented |
+| Staff class codes and protected group metrics | Not implemented |
 
-Keep ACCOUNT_ID_KEY stable and backed up. Rotating it changes every account ID;
-rotation requires a planned migration. Grant the runtime identity access only
-to this secret. No values are inserted into index.html or sleep-lab.html.
+This walkthrough deploys the identity/connectivity foundation only. It does
+not turn on student record collection. Start with a test workbook, not real
+student information.
 
-For a local fail-closed smoke test:
+## Architecture and a choice to understand
 
-    npm ci --prefix google-server
-    npm test --prefix google-server
-    node --env-file=google-server/.env google-server/server.mjs
+There are two connections: Google authenticates the person; the server's
+service account accesses one private workbook. Students do not supply their
+own Sheets, share the source workbook, or grant access to their Drive.
 
-Use a private local .env based on the example. A browser request without a valid
-IAP assertion must be rejected locally; there is deliberately no development
-authentication bypass.
+The current server hosts the whole website behind Cloud Run's Identity-Aware
+Proxy (IAP). Google sign-in therefore happens BEFORE that protected site's
+landing page. The separate Vercel design preview stays local-only. IAP does
+not protect a separate public copy of the website.
 
-## 3. Google Console sign-in configuration
+If the desired production experience is a public landing page with sign-in
+only when saving, retain that as the product goal: it needs a separate
+authenticated-app entry or a reviewed in-page session architecture. Do not
+assume the current whole-site IAP setup already implements that experience.
 
-In Cloud Run, select the service's Security settings, require authentication,
-and enable IAP directly. Grant the approved LAS pilot group (or las.ch domain)
-the IAP-secured Web App User role. Avoid public principals.
+Keep the legacy ENDPOINT blank. It expects an old Apps Script deployment, not
+a Sheet URL or this server. Apps Script is not needed for this architecture.
 
-The Console grants invocation to the IAP service agent when enabling IAP.
-Verify that the default run.app address also requires IAP, and do not separately
-configure IAP on a load balancer. Google's current instructions are in
-[Configure IAP for Cloud Run](https://docs.cloud.google.com/run/docs/securing/identity-aware-proxy-cloud-run).
+## 1. Confirm ownership and choose the project
 
-IAP's signed JWT is validated with Google's public keys, configured audience and
-issuer before its subject/email are used. The application then enforces the
-exact las.ch domain. It does not trust unsigned email headers. See
-[Signed IAP headers](https://docs.cloud.google.com/iap/docs/signed-headers-howto).
+Have the authorized Cloud project/billing owner select or create a project for
+Shayne's Toolkit in Google Cloud Console. Record the project ID, numeric project
+number, deployment region and technical owner.
 
-This uses IAP's Google login. A separate OAuth client ID/secret is not required
-by this application code. If school policy requires a custom OAuth brand/client,
-the LAS administrator should configure that through IAP's supported Console flow.
+Agree who may access the workbook, the student participation process, retention,
+deletion and support before collecting data. Independent branding does not
+remove those responsibilities.
 
-## 4. Verify identity and the workbook before any record writes
+Use a private test Sheet for the first connection. The workbook already supplied
+in this conversation can be configured later by its authorized owner. Do not
+publish it, make it link-accessible or share it with students. Hidden tabs are
+not access boundaries. If Workspace blocks service-account sharing, ask the
+administrator; do not weaken sharing policy to work around it.
 
-Use dedicated test accounts. Do not paste assertions, cookies, secrets or student
-records into GitHub issues or this chat.
+## 2. Enable services and create a runtime identity
+
+Enable Cloud Run, Cloud Build, Artifact Registry, Identity-Aware Proxy, Secret
+Manager and Google Sheets APIs in the selected project.
+
+In IAM & Admin > Service Accounts, create a dedicated runtime account such as
+toolkit-runtime. The technical owner attaches it to the Cloud Run service.
+Do not give it project Owner/Editor or download a JSON key. The app uses the
+attached identity through Application Default Credentials. See Google's
+[service identity guide](https://docs.cloud.google.com/run/docs/securing/service-identity).
+
+Share only the test workbook with that exact service-account email as Viewer.
+This phase reads metadata only. Do not grant Editor until record APIs have
+been implemented and reviewed.
+
+## 3. Create the account-ID secret
+
+In Secret Manager, create toolkit-account-id-key with securely generated random
+material of at least 32 characters. Do not paste it into this chat, GitHub or
+HTML. Give the runtime identity Secret Accessor on this secret only, and expose
+a pinned version to the container as ACCOUNT_ID_KEY. Follow Google's
+[Cloud Run secret configuration](https://docs.cloud.google.com/run/docs/configuring/services/secrets).
+
+Keep this key stable and recoverable. It determines the opaque account IDs:
+changing it without a migration would change every student's ID. Those IDs are
+pseudonymous because records remain linked to an authenticated account.
+
+## 4. Build and deploy the container
+
+The technical owner builds this repository's Dockerfile, pushes the image to
+Artifact Registry, then deploys a Cloud Run service such as shaynes-toolkit with
+the runtime identity above. Use the repository container, not a static-site
+deployment or an unconfigured Node image. See
+[deploying container images](https://docs.cloud.google.com/run/docs/deploying).
+
+Configure these container settings:
+
+| Setting | Value |
+| --- | --- |
+| SPREADSHEET_ID | The test Sheet ID between /d/ and /edit in its URL |
+| IAP_AUDIENCE | /projects/PROJECT_NUMBER/locations/REGION/services/shaynes-toolkit |
+| ACCOUNT_ID_KEY | Secret Manager reference from step 3 |
+| PORT | Provided by Cloud Run; server defaults to 8080 locally |
+
+The audience uses the numeric project number and exact region/service name,
+not the project ID, OAuth client ID or website URL. See Google's
+[signed-header audience specification](https://docs.cloud.google.com/iap/docs/signed-headers-howto).
+Missing configuration intentionally prevents startup.
+
+## 5. Configure the Google login gate
+
+In Cloud Run > service > Security, require authentication and enable IAP
+directly. Confirm its service agent has Cloud Run Invoker. Do not also enable
+IAP on a load balancer.
+
+An organization-owned project can use the managed OAuth client for same-org
+users. A personal/no-organization project, or users outside the project's
+organization, needs the supported custom OAuth flow: Edit policy > Configure
+in IAP, configure an accurate consent identity for Shayne's Toolkit and the
+appropriate external audience, then generate the credentials. External audience
+does not itself grant access.
+
+Grant the approved pilot group or explicit test accounts IAP-secured Web App
+User. The server additionally enforces las.ch after verifying the signed
+assertion. Never put a client secret in HTML. Follow the current
+[Cloud Run IAP instructions](https://docs.cloud.google.com/run/docs/securing/identity-aware-proxy-cloud-run).
+An administrator may also need to approve the app under Workspace policy.
+
+## 6. Test without student records
 
 | Check | Required result |
 | --- | --- |
-| Signed-out visit to deployed site | Google/IAP sign-in |
-| Approved LAS test account | Site loads |
-| Personal Google or outside-domain account | Rejected |
-| Valid identity but excluded pilot account | Rejected by IAP policy |
-| /api/session | authenticated:true, opaque accountId, school:LAS, recordSync:false |
-| /api/connection | connected:true, recordSync:false; no workbook contents returned |
-| Invalid signature/audience/expired assertion | Rejected |
-| Direct unsigned request to container API | Rejected |
-| /google-server/.env or /apps-script/Code.gs | Not served |
-| Runtime identity loses workbook access | /api/connection returns 503 |
+| Signed-out visit to protected URL | Google/IAP login |
+| Approved las.ch test account | Site loads |
+| Unapproved or outside-domain account | Rejected |
+| /api/session | authenticated:true, accountId, toolkit name, recordSync:false |
+| /api/connection | connected:true, recordSync:false; no workbook rows |
+| Direct run.app URL | Still protected |
+| Invalid, expired or incorrectly addressed assertion | Rejected |
+| /google-server/.env and /apps-script/Code.gs | Not served |
+| Runtime identity loses workbook access | Connection probe fails safely |
 
-The connectivity probe is read-only and checks spreadsheet metadata. It does
-not confirm row schemas or write permissions and does not create tabs.
+A successful connection is a metadata check, not proof of write access or
+student sync. No tabs are created by the probe.
 
-## 5. Implement records after design and access acceptance
+For connection errors check the Sheet ID, workbook sharing, attached service
+account, API enablement and deployed revision. For login errors check IAP
+policy, OAuth configuration and Workspace restrictions. Do not disable
+authentication to make a failed check pass. Never post cookies, assertions,
+secrets or student rows into issues or chat.
 
-Complete the data blockers in PROJECT-REVIEW.md and the model in
-DELIVERY-PLAN.md. Required work:
+## 7. Implement records before a pilot
 
-- Versioned Participants, Rounds, Entries and Cohorts tabs.
-- Authenticated same-origin APIs with ownership from the verified session.
-- Validated dates, values and server-recomputed metrics.
-- Serialized writes, acknowledged operation IDs, conflict detection and deletion
-  tombstones that survive reconnects and retries.
-- Per-account browser storage, explicit import ownership and shared-device policy.
-- Staff-only cohort generation; code confirmation, revocation and round linkage.
-- Suppressed group outputs based on distinct participants, never raw row access.
-- Personal retrieval, CSV, print and full deletion tested across two devices.
+This remaining work is code, not a Console switch:
 
-Keep the existing ENDPOINT blank. Do not paste the Sheet URL into it: it expects
-an old Apps Script deployment, not the new server. Apps Script can later support
-staff maintenance; it is not needed for the IAP login or Sheets API access.
+- Versioned Participants, Rounds, Entries, Cohorts and Operations schemas.
+- Ownership from the verified session, never a browser-supplied account ID.
+- Per-account browser storage, explicit local-log import and shared-device rules.
+- Server validation and recomputed metrics, including the awake-duration and
+  phase-boundary corrections in PROJECT-REVIEW.md.
+- Durable acknowledged operation IDs, serialized writes, conflict handling and
+  deletion tombstones. One workbook does not provide transaction guarantees.
+- Staff-created class codes, confirmed membership and privacy-protected group
+  outputs based on distinct participants, including complementary suppression.
+- Two-account/two-device tests covering reconnects, edits, deletion and export.
 
-## Deployment information still needed
+Only after review should the runtime receive workbook Editor access and the
+required write scope. A live pilot requires the complete acceptance gates in
+DELIVERY-PLAN.md, not just connected:true.
 
-Project ID/number, approved region, service URL/audience, the runtime service
-account, workbook ownership/access confirmation and approved pilot group.
-These are configuration facts; passwords and private keys must remain in
-school-managed systems.
+## Information needed next
+
+The project ID and number, region, service name/URL, runtime service-account
+email, workbook ownership confirmation and approved pilot group are useful
+non-secret configuration facts. Keep passwords, private keys and student data
+out of the conversation.
+
+No Cloud configuration or workbook sharing has been changed by this PR.

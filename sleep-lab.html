@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="dark light" />
-<title>The Sleep Lab — A Toolkit for Boarders</title>
+<title>Sleep Lab — Shayne's Wellbeing Toolkit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -514,6 +514,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 </style>
 <link rel="stylesheet" href="night-passage.css">
 <link rel="stylesheet" href="lab-polish.css">
+<link rel="stylesheet" href="illustrated.css">
 <script src="night-passage.js" defer></script>
 </head>
 <body>
@@ -524,7 +525,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="masthead-top">
       <div class="wordmark">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <strong>The Sleep Lab</strong><span class="counselling"> · Counselling</span>
+        <strong>The Sleep Lab</strong><span class="counselling"> · Shayne's toolkit</span>
       </div>
       <div class="mast-actions"><a class="back-link" href="index.html">Toolkit</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Switch between night and day view">
@@ -536,7 +537,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       <button class="tab" role="tab" id="t-learn"   aria-controls="p-learn"   aria-selected="true"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4V4Zm16 0h-4a3 3 0 0 0-3 3m0 14a4 4 0 0 1 4-3h3V4"/></svg><span class="n">01</span>How it works</button>
       <button class="tab" role="tab" id="t-log"     aria-controls="p-log"     aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17H6V4Zm3-2h6v4H9V2Zm0 8h6m-6 4h6"/></svg><span class="n">02</span>My log</button>
       <button class="tab" role="tab" id="t-results" aria-controls="p-results" aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v17h17M8 16v-4m5 4V7m5 9V4"/></svg><span class="n">03</span>My results</button>
-      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>The school</button>
+      <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>Group view</button>
       <button class="tab" role="tab" id="t-resources" aria-controls="p-resources" aria-selected="false">Resources</button>
       <button class="tab" role="tab" id="t-help"    aria-controls="p-help"    aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v.01M9 8a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20"/></svg><span class="n">05</span>More help</button>
     </div>
@@ -570,7 +571,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="acct off" id="acct">
       <span class="acct-dot" aria-hidden="true"></span>
       <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
-      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with school Google</button>
+      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with Google</button>
       <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
       <span class="acct-sync" id="acctSync" role="status" aria-live="polite"></span>
     </div>
@@ -646,9 +647,9 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <section class="panel" id="p-class" role="tabpanel" aria-labelledby="t-class" tabindex="0">
   <div class="inner wide">
     <div class="head">
-      <span class="label">03 · The school</span>
+      <span class="label">04 · Group view</span>
       <h2>Our shared picture.</h2>
-      <p class="prose">Protected group summaries will appear here once LAS sign-in and school sync are connected.</p>
+      <p class="prose">Protected group summaries will appear here once Google sign-in and account syncing are connected.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
@@ -657,7 +658,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="viz">
       <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Week one vs week two</span></div>
       <div id="classPhase"></div>
-      <p class="viz-note">Whole-school averages. No control group, no blinding.</p>
+      <p class="viz-note">Group averages can show patterns, not what caused them.</p>
     </div>
 
     <details class="history-drawer"><summary>Explore sleep patterns</summary><div class="class-grid">
@@ -681,7 +682,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ 04 · MORE HELP ══════ -->
 <section class="panel" id="p-resources" role="tabpanel" aria-labelledby="t-resources" tabindex="0">
   <div class="inner"><div class="head"><span class="label">Resources</span><h2>Understand your options.</h2><p class="prose">Every habit below links to its background. Evidence for a full treatment does not prove that one habit will work for everyone.</p></div>
-    <details class="resource-note"><summary>How this relates to CBT-I</summary><p>CBT-I is a structured treatment for insomnia that combines several approaches. This school tool draws on sleep education and selected behavioural ideas; it is not a CBT-I treatment programme. It does not prescribe sleep restriction or reduced time in bed. Ask the health centre about appropriate support for ongoing sleep difficulties.</p><a href="https://www.nhlbi.nih.gov/health/insomnia/treatment" target="_blank" rel="noopener noreferrer">NHLBI: understanding CBT-I and treatment ↗</a></details>
+    <details class="resource-note"><summary>How this relates to CBT-I</summary><p>CBT-I is a structured treatment for insomnia that combines several approaches. This learning tool draws on sleep education and selected behavioural ideas; it is not a CBT-I treatment programme. It does not prescribe sleep restriction or reduced time in bed. Ask the health centre about appropriate support for ongoing sleep difficulties.</p><a href="https://www.nhlbi.nih.gov/health/insomnia/treatment" target="_blank" rel="noopener noreferrer">NHLBI: understanding CBT-I and treatment ↗</a></details>
     <details class="resource-note"><summary>What does adolescent research show?</summary><p>In a 2015 trial with 116 adolescents with insomnia, six weeks of therapist-guided CBT-I improved sleep outcomes compared with a waiting list. That supports the structured treatment studied; it does not validate this two-week school experiment or each habit on its own.</p><a href="https://doi.org/10.5665/sleep.5240" target="_blank" rel="noopener noreferrer">de Bruin and colleagues · Adolescent CBT-I trial ↗</a></details>
     <p class="quiet-note">Teens aged 13–17 generally need 8–10 hours of sleep. <a href="https://www.cdc.gov/sleep/about/index.html" target="_blank" rel="noopener noreferrer">CDC: sleep needs and habits ↗</a></p>
     <div class="tool-list" id="toolList"></div>
@@ -712,9 +713,9 @@ input[type=range] { width:100%; accent-color:var(--accent); }
   </div>
 </section>
 <section class="panel" id="p-help" role="tabpanel" aria-labelledby="t-help" tabindex="0">
-  <div class="inner"><div class="head"><span class="label">Support</span><h2>You can ask at any point.</h2><p class="prose">Talk to LAS counselling, your houseparent or the health centre if sleep is difficult or affects your day. You do not need to finish the experiment first.</p></div>
+  <div class="inner"><div class="head"><span class="label">Support</span><h2>You can ask at any point.</h2><p class="prose">Talk to Shayne, your counsellor or a healthcare professional if sleep is difficult or affects your day. You do not need to finish the experiment first.</p></div>
     <div class="learn-actions"><div class="work-card"><h3>When to get help</h3><p>Ongoing difficulty sleeping, strong daytime sleepiness, or worry around bedtime are worth discussing. Tell the health centre about loud snoring or waking short of breath.</p></div><div class="work-card"><h3>What to bring</h3><p>Your log can help start the conversation. A clinician can assess what is going on and whether treatment such as CBT-I would help. Ask the health centre before using sleep medicines or supplements.</p></div></div>
-    <details class="resource-note"><summary>Where is my information saved?</summary><p>For now, entries are saved in this browser, not your Google account or the school Sheet. Someone using the same browser profile could see them. Download a CSV to keep a copy. LAS sign-in and protected school reporting are not yet active.</p></details>
+    <details class="resource-note"><summary>Where is my information saved?</summary><p>For now, entries are saved in this browser, not your Google account or a shared Sheet. Someone using the same browser profile could see them. Download a CSV to keep a copy. Google sign-in and protected group reporting are not yet active. This is Shayne's independent toolkit, not a school-sponsored service.</p></details>
   </div>
 </section>
 
@@ -752,7 +753,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
   <div id="reportPreview" hidden></div>
   <div class="paper-toolbar"><a class="btn" id="downloadTracker" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a><button class="btn" id="printPersonal" hidden>Print / Save as PDF</button><p class="hint" id="paperHint">One page · A4 · Black and white</p></div>
 </dialog>
-<footer class="footer no-print">The Sleep Lab · Counselling · <span style="font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--ink-soft);font-style:italic;">Leysin American School</span></footer>
+<footer class="footer no-print">Sleep Lab · Shayne's Wellbeing Toolkit · Independent student resources</footer>
 <script>
 (function () {
 'use strict';
@@ -764,7 +765,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
    Setup: apps-script/SETUP.md */
 var CONFIG = {
   ENDPOINT:    '',        // 'https://script.google.com/a/macros/<school>/s/AKfy.../exec'
-  SCHOOL_NAME: 'LAS',  // shown on the sign-in strip
+  SCHOOL_NAME: 'approved',  // account-access label, not a sponsorship claim
 
   /* The class fortnight. Set STUDY_START to the first baseline morning and
      everyone runs the same two weeks. Leave it blank and each student's
@@ -859,7 +860,7 @@ var STRATS = [
   {id:'light-am',name:'Make time for daylight',effort:'Small step',source:'routine',basis:'General sleep guidance',why:'Daytime activity and a regular routine can support sleep.',how:'Try a short outdoor break in your morning routine. This is not light-box treatment.'},
   {id:'wake-anchor',name:'Keep a steady sleep schedule',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Regular bed and wake times support a consistent routine.',how:'Choose a realistic schedule that leaves enough time for sleep. Do not cut sleep short to improve a score.'},
   {id:'weekend',name:'Keep weekends consistent',effort:'Routine',source:'routine',basis:'General sleep guidance',why:'Large schedule changes can make a regular routine harder.',how:'Aim for similar bed and wake times across the week, while allowing enough sleep. Talk to the health centre if you are regularly exhausted.'},
-  {id:'twenty-min',name:'Reset when bed feels frustrating',effort:'Small step',source:'cbti',basis:'Adapted CBT-I principle',why:'Stimulus control aims to reconnect bed with sleep. It is one part of CBT-I.',how:'If lying awake feels frustrating, try a quiet, dimly lit activity and return when sleepy. Follow boarding-house rules; ask staff about a safe place. No clock-watching or timed rule is needed.'},
+  {id:'twenty-min',name:'Reset when bed feels frustrating',effort:'Small step',source:'cbti',basis:'Adapted CBT-I principle',why:'Stimulus control aims to reconnect bed with sleep. It is one part of CBT-I.',how:'If lying awake feels frustrating, try a quiet, dimly lit activity and return when sleepy. Choose a safe space; ask a trusted adult if you are unsure. No clock-watching or timed rule is needed.'},
   {id:'bed-for-sleep',name:'Give studying its own space',effort:'Small step',source:'cbti',basis:'Adapted CBT-I principle',why:'Separating wakeful activities from bed draws on stimulus control.',how:'Use a desk or shared study space when you can, so bed can be a place to rest.'},
   {id:'phone-park',name:'Give screens a bedtime',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Reducing device use before bed is a recommended sleep habit.',how:'Try putting your phone aside at least 30 minutes before bed. Agree a practical place with your houseparent if needed.'},
   {id:'caffeine',name:'Skip afternoon caffeine',effort:'Routine',source:'habits',basis:'General sleep guidance',why:'Caffeine can interfere with sleep.',how:'Choose a caffeine-free drink in the afternoon and evening.'},
@@ -1541,7 +1542,7 @@ $('copySummary').addEventListener('click', function(){
 $('clearLog').addEventListener('click', function(){
   if(!state.log.length) return;
   if(!window.confirm('Delete all nights from this browser? Download a CSV first if you want a copy.')) return;
-  if(Account.on && window.confirm('Also delete these nights from your record in the school Sheet?'))
+  if(Account.on && window.confirm('Also delete these nights from your record in the private Sheet?'))
     state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
   state.log=[]; state.synced={}; renderLog(); saveAll(); renderAcct(); rflash('Log deleted.');
 });
@@ -1604,7 +1605,7 @@ $('printResults').addEventListener('click', function(){
   var report=$('personalReport');
   var person=$('fName').value.trim();
   var picked=c.picked.map(function(id){var tool=byId(id);return tool?esc(tool.name):'';}).filter(Boolean);
-  var out='<header class="report-head"><span>The Sleep Lab · Leysin American School</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
+  var out='<header class="report-head"><span>Sleep Lab · Shayne&#8217;s Wellbeing Toolkit</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
   out+='<h2>Changes chosen</h2><p>'+(picked.length?picked.join(' · '):'No changes chosen for this round yet.')+'</p>';
   out+='<h2>My two weeks</h2><p>'+base.length+' baseline entries · '+iv.length+' intervention entries</p>';
   if(c.committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
@@ -1702,7 +1703,7 @@ function syncPull(opts){
     Account.on=false;
     Account.lastError = err.message==='forbidden'
       ? 'That account is not on the Sleep Lab roster yet. Ask counselling to add you.'
-      : (opts && opts.loud ? 'Could not reach the school Sleep Lab. Your log is safe on this device.' : '');
+      : (opts && opts.loud ? 'Could not reach the toolkit. Your log is safe on this device.' : '');
     renderAcct();
   });
 }
@@ -1855,14 +1856,14 @@ function loadClass(force){
   if(!CONFIG.ENDPOINT){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='School insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
-    classOffline('Waiting on the school connection.');
+    $('classNote').textContent='Group insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
+    classOffline('Waiting on the account connection.');
     return;
   }
   classLoaded=true;
   Net.call(CONFIG.ENDPOINT, { route:'class' }, renderClass, function(){
     $('classNote').style.display='block';
-    $('classNote').textContent='Could not reach the school dashboard. Your own log is unaffected.';
+    $('classNote').textContent='Could not reach the group view. Your own log is unaffected.';
     classOffline('Dashboard unavailable.');
     classLoaded=false;
   });

@@ -17,8 +17,9 @@ function scene(width,height=800) {
   const stage={clientWidth:width,clientHeight:height,style:{setProperty:(k,v)=>values.set(k,v)},
     removeAttribute:()=>values.clear()};
   const landscape={complete:true,naturalWidth:1774,addEventListener:()=>{}};
+  const dayLandscape={complete:true,naturalWidth:1774,addEventListener:()=>{}};
   const nodes={'.journey':journey,'.journey-stage':stage,'.hero-copy':intro,
-    '.journey-scroll':cue,'.journey-landscape':landscape};
+    '.journey-scroll':cue,'.journey-landscape':landscape,'.landscape-day':dayLandscape};
   const document={documentElement:{dataset:{}},activeElement:null,
     querySelector:s=>nodes[s]||null,getElementById:()=>null};
   vm.runInNewContext(source,{document,localStorage:{getItem:()=>null},
@@ -26,7 +27,7 @@ function scene(width,height=800) {
     window:{matchMedia:q=>q.includes('reduced')?motion:short,addEventListener:(n,f)=>events[n]=f}});
   const flush=()=>{while(queue.length)queue.shift()();};
   flush();
-  return {values,classes,intro,document,landscape,journey,events,motion,flush,
+  return {values,classes,intro,document,landscape,dayLandscape,journey,events,motion,flush,
     scroll(p){journey.top=-p*(journey.offsetHeight-height);events.scroll();flush();}};
 }
 test('scroll scene produces finite positions across phone, tablet and desktop widths',()=>{
@@ -34,7 +35,7 @@ test('scroll scene produces finite positions across phone, tablet and desktop wi
     const s=scene(width);
     for(const p of [0,.25,.5,.75,1]){
       s.scroll(p);
-      for(const key of ['--sun-x','--sun-y','--sun-size','--cloud-opacity']){
+      for(const key of ['--near-x','--far-x','--cloud-scale','--cloud-opacity']){
         assert.ok(Number.isFinite(parseFloat(s.values.get(key))),width+' '+key);
       }
     }
@@ -51,11 +52,22 @@ test('focused intro links stay visible; reduced motion clears hidden states',()=
   assert.equal(s.classes.has('is-enhanced'),false);
   assert.equal(s.intro.inert,false);
   assert.equal(s.values.get('--intro-opacity'),1);
-  assert.ok(Number.isFinite(parseFloat(s.values.get('--sun-x'))));
+  assert.equal(s.values.has('--sun-x'),false);
 });
 test('short screens and failed images retain an unpinned readable scene',()=>{
   assert.equal(scene(900,500).classes.has('is-enhanced'),false);
   const s=scene(390);s.landscape.naturalWidth=0;s.scroll(.6);
   assert.equal(s.classes.has('is-enhanced'),false);
   assert.equal(s.intro.inert,false);
+});
+test('day mode waits for its own illustration, independent of the night image',()=>{
+  const s=scene(390);
+  s.document.documentElement.dataset.theme='day';
+  s.dayLandscape.complete=false;s.scroll(.6);
+  assert.equal(s.classes.has('is-enhanced'),false);
+  assert.equal(s.intro.inert,false);
+  s.dayLandscape.complete=true;s.landscape.naturalWidth=0;s.scroll(.6);
+  assert.equal(s.classes.has('is-enhanced'),true);
+  s.document.documentElement.dataset.theme='night';s.scroll(.6);
+  assert.equal(s.classes.has('is-enhanced'),false);
 });

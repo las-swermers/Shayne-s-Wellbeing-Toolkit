@@ -1,4 +1,32 @@
-# Artwork used in the cinematic landing pass
+# Artwork used in the toolkit
+
+## Current geometric illustration pass — September 12, 2026
+
+The current landing page uses alpine-line-day.webp and alpine-line-night.webp,
+paired 1774 × 887 illustrations generated from the user's alpine composition and
+minimal mountain/cloud references. Day uses pale aqua, sage and cream with a sun;
+night uses inky teal and a crescent. WebP delivery encodings use quality 93.
+The previous textured artwork is retained as source history, not the active hero.
+
+Day prompt brief: reinterpret the existing alpine lake, mountain ridges, pines
+and right-hand village as clean geometric silhouettes and restrained outlines.
+Preserve the composition, keep the upper sky spacious for typography, use a small
+sun, flat cream snow and teal/sage terrain. No text, logos or interface elements.
+
+Night edit brief: preserve the daytime composition, positions, outlines and
+landscape features; change only to an inky teal moonlit palette, replace the sun
+with a crescent, and add a few subtle stars. No extra typography or UI.
+
+cloud-line-day.svg and cloud-line-night.svg are original code-native scalloped
+cloud layers with matching geometry and fine contour lines. cow-line.svg is an
+original outlined leaping cow used in the Sleep Lab entrance. The sheep icon is
+now inline SVG alongside the other tool icons, rather than a sculptural bitmap.
+These vectors are intentionally editable and do not use a third-party icon pack.
+
+The artwork and updated one-page PDF were inspected. Automated interaction checks
+are not a substitute for rendered mobile/desktop and motion acceptance.
+
+## Earlier textured pass (retained source history)
 
 ## Delivery optimization
 

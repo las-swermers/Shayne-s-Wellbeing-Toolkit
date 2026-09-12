@@ -7,9 +7,9 @@ compact log and results, keyboard review steps, PDF preview and download.
 Mobile and enlarged-text layouts should scroll naturally where needed; do not
 shrink controls or hide content to force everything into one screen.
 
-## 2. Complete the LAS account and data implementation
+## 2. Complete the approved-account and data implementation
 
-Follow GOOGLE-SETUP.md after selecting the LAS-owned Cloud project and runtime
+Follow GOOGLE-SETUP.md after confirming the authorized Cloud project owner and runtime
 service account. Use one private Sheet and verified account ownership. The
 current server remains a read-only connectivity foundation, not record sync.
 
@@ -35,7 +35,13 @@ Sources checked in this pass:
 - https://www.nhlbi.nih.gov/health/insomnia/treatment
 - https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits
 
-## 4. Roommate Agreement
+## 4. Expand one resource at a time
+
+Follow RESOURCE-ROADMAP.md. Start with a feelings explorer or values card sort
+that does not need personal cloud storage. Bring one existing resource and its
+learning goal; review reuse permissions and remove real student answers first.
+
+## 5. Roommate Agreement
 
 Build only after shared accounts and room access are implemented. A staff-issued
 room invitation should confirm house/room and participants. Each roommate fills

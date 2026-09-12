@@ -8,8 +8,8 @@
   function checkReady() { ready = cloud.complete && cloud.naturalWidth > 0 && cow.complete && cow.naturalWidth > 0; }
   cloud.onload = checkReady;
   cow.onload = checkReady;
-  cloud.src = 'assets/moonlit-clouds.webp';
-  cow.src = 'assets/cow-leap.webp';
+  cloud.src = 'assets/cloud-line-night.svg';
+  cow.src = 'assets/cow-line.svg';
   function clearStamp() { try { sessionStorage.removeItem(storageKey); } catch (e) {} }
   function reset() {
     clearTimeout(timer);

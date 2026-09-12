@@ -1,9 +1,20 @@
-> Current direction: toolkit-focused hero with one Explore action; fog remains on
-> scroll, cow-over-moon moves to entering Sleep Lab. Day mode reveals a sun.
+> Current direction: independent Shayne branding and the exact requested everyday-life
+> headline; one Find what you need action. Paired geometric day/night landscapes,
+> outlined clouds on scroll, and a line-illustrated cow at Sleep Lab entry.
 > Compact working panels, optional detail, and PDF preview/download take priority.
 > See PROJECT-REVIEW.md for this revision and remaining acceptance checks.
 
-# Design brief — LAS wellbeing toolkit
+# Design brief — Shayne's Wellbeing Toolkit
+
+## Current art direction
+
+The user's minimal mountain and outlined-cloud references supersede the earlier
+sculptural/photographic finish below. Preserve the alpine composition and cinematic
+choreography, using simple silhouettes, fine outlines, cream/teal/sage palettes,
+restrained borders and matching icons throughout the landing page, Lab and forms.
+Day mode has a genuinely daytime scene; night mode has its matching moonlit scene.
+Do not brighten a night image or place a second sun over a baked-in moon.
+The toolkit is independent, not LAS sponsored; las.ch remains the initial access gate.
 
 > Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
 > implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)

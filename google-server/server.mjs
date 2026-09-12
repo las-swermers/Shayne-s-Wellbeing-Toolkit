@@ -20,11 +20,13 @@ const assets = new Map([
   ['/sleep-lab.html', ['sleep-lab.html', 'text/html']],
   ['/tools/sleep-lab/', ['tools/sleep-lab/index.html', 'text/html']],
   ['/tools/sleep-lab/index.html', ['tools/sleep-lab/index.html', 'text/html']],
-  ...['landing.css', 'night-passage.css', 'lab-polish.css'].map(x => ['/'+x, [x, 'text/css']]),
+  ...['landing.css', 'night-passage.css', 'lab-polish.css', 'illustrated.css'].map(x => ['/'+x, [x, 'text/css']]),
   ...['landing.js', 'night-passage.js', 'tools.js'].map(x => ['/'+x, [x, 'text/javascript']]),
   ['/downloads/sleep-lab-tracker.pdf', ['downloads/sleep-lab-tracker.pdf', 'application/pdf']],
   ['/assets/tracker-preview.webp', ['assets/tracker-preview.webp', 'image/webp']],
-  ...['alpine-night-clean', 'moonlit-clouds', 'cow-leap', 'sleep-sheep']
+  ...['cloud-line-day', 'cloud-line-night', 'cow-line']
+    .map(x => ['/assets/'+x+'.svg', ['assets/'+x+'.svg', 'image/svg+xml']]),
+  ...['alpine-night-clean', 'moonlit-clouds', 'cow-leap', 'sleep-sheep', 'alpine-line-day', 'alpine-line-night']
     .map(x => ['/assets/'+x+'.webp', ['assets/'+x+'.webp', 'image/webp']])
 ]);
 function json(res, status, data) {
@@ -44,7 +46,7 @@ createServer(async (req, res) => {
   let identity;
   try {
     identity = await verifyIap(req.headers['x-goog-iap-jwt-assertion'], audience, idKey, identityClient);
-  } catch { return json(res, 403, { error:'las_sign_in_required' }); }
+  } catch { return json(res, 403, { error:'approved_account_required' }); }
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.setHeader('Allow', 'GET, HEAD');
     return json(res, 405, { error:'method_not_allowed' });
@@ -71,5 +73,5 @@ createServer(async (req, res) => {
     res.end(req.method === 'HEAD' ? undefined : body);
   } catch { json(res, 500, { error:'asset_unavailable' }); }
 }).listen(Number(process.env.PORT || 8080), '0.0.0.0', () => {
-  console.log('LAS identity and Sheet connectivity service ready; record sync disabled.');
+  console.log('Toolkit identity and Sheet connectivity service ready; record sync disabled.');
 });

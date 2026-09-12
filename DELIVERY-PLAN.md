@@ -1,4 +1,9 @@
-# LAS Sleep Lab — design first, then one private school Sheet
+# Shayne's Sleep Lab — design first, then one private Sheet
+
+> Current ownership: an independent toolkit for Shayne's students, not LAS sponsored.
+> The initial las.ch access policy is retained. Confirm the workbook and Cloud
+> project owners; do not assume school ownership. GOOGLE-SETUP.md is the current
+> connection walkthrough, and RESOURCE-ROADMAP.md covers later tools.
 
 > Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
 > implemented fixes and outstanding release blockers. [GOOGLE-SETUP.md](GOOGLE-SETUP.md)
@@ -18,7 +23,8 @@ baseline → review → intervention → results product, while correcting defec
 
 - Begin with the design; connect production services after the design is reviewable.
 - School access is restricted to verified Google Workspace accounts in `las.ch`.
-- One existing school-owned Google spreadsheet holds the pilot records.
+- One private Google spreadsheet will hold pilot records after ownership and access
+  are confirmed and the record APIs are implemented.
 - Each account has a stable opaque ID. Every entry and round belongs to that ID.
 - Students may optionally join a staff-created class cohort with a short class code.
 - Teacher and block are cohort labels shown after joining; students do not type free-form

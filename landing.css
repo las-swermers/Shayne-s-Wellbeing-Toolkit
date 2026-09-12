@@ -216,9 +216,3 @@ h2{font-size:clamp(2rem,3.5vw,3.3rem);font-weight:500;line-height:1.14;letter-sp
 .theme-toggle .i-moon{display:none}
 [data-theme="day"] .theme-toggle .i-sun{display:none}
 [data-theme="day"] .theme-toggle .i-moon{display:block}
-.journey-sun{position:absolute;left:var(--sun-x,71.3%);top:var(--sun-y,35.5%);width:var(--sun-size,16.35vw);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 38% 35%,#fff9da,#ffd67a 75%);box-shadow:0 0 60px 18px #f9cb7255;opacity:0;transition:opacity .7s ease}
-.journey-landscape{transition:filter .7s ease}
-[data-theme="day"] .journey-landscape{filter:brightness(1.7) saturate(.7) sepia(.15)}
-[data-theme="day"] .journey-sun{opacity:1}
-[data-theme="day"] .journey-shade{background:linear-gradient(180deg,#172638d9,#17263877 40%,#c7dbee18 75%)}
-@media(prefers-reduced-motion:reduce){.journey-sun,.journey-landscape{transition:none}}

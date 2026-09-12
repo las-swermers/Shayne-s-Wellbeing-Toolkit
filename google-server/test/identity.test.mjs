@@ -33,7 +33,7 @@ test('verification passes expected audience/issuer and requires a signed asserti
   };
   await assert.rejects(()=>verifyIap('', 'configured-audience',secret,client));
   assert.equal(called,false);
-  assert.equal((await verifyIap('signed','configured-audience',secret,client)).school,'LAS');
+  assert.equal((await verifyIap('signed','configured-audience',secret,client)).toolkit,"Shayne's Wellbeing Toolkit");
   client.verifySignedJwtWithCertsAsync=async()=>{throw new Error('signature expired or invalid');};
   await assert.rejects(()=>verifyIap('invalid','configured-audience',secret,client));
 });

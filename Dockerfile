@@ -5,6 +5,8 @@ RUN npm ci --omit=dev --prefix google-server
 COPY index.html sleep-lab.html landing.css landing.js night-passage.css night-passage.js lab-polish.css tools.js ./
 COPY tools/ ./tools/
 COPY assets/*.webp ./assets/
+COPY assets/*.svg ./assets/
+COPY illustrated.css ./
 COPY downloads/*.pdf ./downloads/
 COPY google-server/*.mjs ./google-server/
 USER node
