@@ -13,8 +13,8 @@ const dom=new JSDOM(source,{url:'https://toolkit.invalid/sleep-lab.html#log',run
 const d=dom.window.document,$=id=>d.getElementById(id);
 assert.deepEqual(errors,[]);
 assert.equal(d.querySelector('.panel.active').id,'p-log');
-assert.equal($('reviewDrawer').hidden,false);
-$('reviewDrawer').open=true;
+$('openReview').click();assert.equal($('reviewDialog').open,true);
+$('startRoutineQuiz').click();
 for(let i=0;i<5;i++){
  assert.equal(d.querySelectorAll('.rq').length,1);
  assert.equal($('reviewNext').disabled,true);
@@ -26,7 +26,7 @@ assert.ok(d.querySelectorAll('[data-rec]').length>0);
 assert.ok(d.querySelectorAll('.rec-source').length>0);
 $('reviewBack').click();assert.equal(d.querySelectorAll('.rq').length,1);
 $('reviewNext').click();d.querySelector('[data-rec]').click();$('commitBtn').click();
-assert.equal($('reviewDrawer').hidden,true);
+assert.equal($('reviewDialog').open,false);
 $('printBtn2').click();assert.equal($('paperPreview').open,true);assert.equal($('downloadTracker').hidden,false);$('closePaper').click();
 $('t-results').click();$('printResults').click();assert.equal($('paperPreview').open,true);assert.equal($('reportPreview').hidden,false);assert.ok($('reportPreview').textContent.includes('recorded nights'));$('closePaper').click();
 $('t-class').click();assert.equal($('schoolData').hidden,true);assert.ok($('classNote').textContent.includes('not connected'));

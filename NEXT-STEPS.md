@@ -1,3 +1,5 @@
+> Current connection: use [Apps Script setup](apps-script/SETUP.md) and [the connection review](CONNECTION-REVIEW.md). Private data now uses a Google-hosted Lab with native RPC, account-scoped caching and sign-out. No Cloud Run billing or Vercel secrets. Group reporting remains pending. Older transport/deployment instructions below are historical.
+
 # After the design pass
 
 ## 1. Verify the refined experience

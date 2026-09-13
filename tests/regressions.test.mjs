@@ -13,12 +13,12 @@ function results(log, committed='2026-09-08') {
     return nodes.get(id);
   };
   const context = {
-    $, state:{log}, CONFIG:{REVIEW_AFTER:5,RESULTS_AFTER:5},
+    $, esc:String, state:{log}, CONFIG:{REVIEW_AFTER:5,RESULTS_AFTER:5},
     currentCycle:()=>({n:2,committed}), nightsIn:n=>log.filter(e=>e.cycle===n),
     restamp:()=>{},stage:()=>({id:'intervention'}),renderLogChart:()=>{},
     pad:n=>String(n).padStart(2,'0')
   };
-  vm.runInNewContext(estimates+render+';renderLog();',context);
+  vm.runInNewContext(html.slice(html.indexOf('function daysBetween('),html.indexOf('/* Which cycle owns'))+html.slice(html.indexOf('function sourceLabel('),html.indexOf('/* Where the student is'))+estimates+render+';renderLog();',context);
   return $;
 }
 function nights(cycle, count, phase, hours) {
