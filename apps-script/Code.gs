@@ -1,432 +1,132 @@
-/**
- * The Sleep Lab — backend for the counselling-owned Google Sheet.
- *
- * Paste this into a script BOUND to that Sheet (Extensions → Apps Script) and
- * deploy it ONCE. Setup, in order, is in SETUP.md.
- *
- *   Execute as: Me · Access: Anyone in <your school>
- *     Google performs the login and hands this script a verified school email,
- *     so the page never sees a password and students never touch the Sheet.
- *     Everyone at the school can read the anonymous class numbers; nobody
- *     outside it reaches this script at all.
- *
- * Everything answers JSONP, because the static site is on another origin and an
- * Apps Script web app redirects in a way that breaks a plain cross-origin fetch.
- */
+/** Private, school-restricted Apps Script host. See SETUP.md. */
+var CONFIG={ALLOWED_DOMAIN:'las.ch',TIMEZONE:'Europe/Zurich',REQUIRE_ROSTER:false};
+var RECORD_HEADERS=['account_id','kind','record_key','revision','payload'];
+var DISPLAY_HEADERS=['lights_out','out_of_bed','minutes_awake','minutes_asleep','day_rating','phase','cycle'];
+var STRATEGY_IDS=['wake-anchor','light-am','caffeine','phone-park','runway','twenty-min','bed-for-sleep','weekend','brain-dump','cool-dark'];
 
-var CONFIG = {
-  TIMEZONE: 'Europe/Zurich',
-
-  /* Only addresses on this domain may log anything. Leave blank to accept any
-     account the student deployment lets through — the deployment's own
-     "Anyone in <school>" setting is then the only gate. */
-  ALLOWED_DOMAIN: '',           // e.g. 'lasglion.ch'
-
-  /* Set true if counselling wants to approve each student before they can log.
-     The Roster tab then acts as a consent list: an address must appear there
-     with consent = yes. False means any signed-in school account may take part. */
-  REQUIRE_ROSTER: false,
-
-  /* The class dashboard stays blank until this many different students have
-     logged a night. It is the whole anonymity guarantee — do not lower it
-     without deciding, on purpose, that you are happy for a small group to be
-     identifiable from the totals. */
-  MIN_STUDENTS: 5,
-  MIN_BUCKET: 3,                // a bar with fewer nights than this is folded away
-
-  /* The class fortnight. Set STUDY_START and everyone runs the same two weeks.
-     Leave it blank and each student's own first logged night becomes their day
-     one, which is what the page sends up. Do not change it mid-study. */
-  STUDY_START: '',              // 'YYYY-MM-DD', first baseline morning
-  BASELINE_DAYS: 7,
-  INTERVENTION_DAYS: 7,
-
-  CACHE_SECONDS: 300            // how long the public dashboard may be stale
-};
-
-var HEADERS = {
-  Roster:   ['school_email', 'house', 'year_group', 'consent', 'added_at'],
-  Students: ['school_email', 'house', 'first_seen', 'last_seen', 'nights_logged'],
-  Nights:   ['school_email', 'date', 'cycle', 'lights_out', 'out_of_bed', 'mins_to_sleep',
-             'wakings', 'mins_in_bed', 'mins_asleep', 'efficiency', 'day_rating',
-             'tools_done', 'tools_total', 'tools', 'phase', 'updated_at'],
-  Cycles:   ['school_email', 'cycle', 'start_date', 'committed_at', 'tools', 'answers', 'updated_at']
-};
-
-/* ═════════ ROUTING ═════════ */
-
-function doGet(e) {
-  var p = (e && e.parameter) || {};
-  var route = p.route || 'signin';
-
-  if (route === 'signin') return signinPage_();
-
-  var body;
-  try {
-    if (route === 'class')       body = classSummary_();
-    else if (route === 'me')     body = me_();
-    else if (route === 'save')   body = saveNight_(p);
-    else if (route === 'cycle')  body = saveCycle_(p);
-    else if (route === 'delete') body = deleteNight_(p);
-    else                         body = { error: 'unknown-route' };
-  } catch (err) {
-    body = { error: String(err && err.message || err) };
-  }
-  return reply_(body, p.callback);
+function doGet(e){
+  if(e && e.parameter && (e.parameter.route || e.parameter.callback))
+    return HtmlService.createHtmlOutput('This connection has been upgraded. Open the web app URL without query parameters.');
+  try{
+    var user=identity_(),template=HtmlService.createTemplateFromFile('Lab');
+    user.session=Utilities.getUuid()+Utilities.getUuid();
+    CacheService.getScriptCache().put('session:'+user.session,user.accountId,21600);
+    template.bootJson=JSON.stringify(user).replace(/</g,'\\u003c');
+    return template.evaluate().setTitle("Sleep Lab — Shayne's Toolkit").addMetaTag('viewport','width=device-width, initial-scale=1');
+  }catch(err){return HtmlService.createHtmlOutput('Sleep Lab could not open. Use your las.ch account. If already signed in, ask Shayne to check the Apps Script setup and Lab file.');}
 }
-
-function reply_(obj, callback) {
-  var json = JSON.stringify(obj);
-  if (!callback || !/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(callback)) {
-    return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
-  }
-  return ContentService.createTextOutput(callback + '(' + json + ');')
-    .setMimeType(ContentService.MimeType.JAVASCRIPT);
+function doPost(){return ContentService.createTextOutput('{"error":"unsupported-transport"}').setMimeType(ContentService.MimeType.JSON);}
+function identity_(){
+  var email=String(Session.getActiveUser().getEmail()||'').trim().toLowerCase();
+  if(!email || email.split('@').length!==2 || email.split('@')[1]!==CONFIG.ALLOWED_DOMAIN)throw Error('approved-account-required');
+  if(CONFIG.REQUIRE_ROSTER && !legacyRows_('Roster').some(function(r){return String(r.school_email).toLowerCase()===email && String(r.consent).toLowerCase()==='yes';}))throw Error('approved-account-required');
+  var key=PropertiesService.getScriptProperties().getProperty('ACCOUNT_ID_KEY');if(!key)throw Error('setup-required');
+  return {accountId:'as_v1_'+Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(email,key)).replace(/=+$/,''),email:email};
 }
-
-/* The popup the sign-in button opens. Google has already done the work by the
-   time this renders — reaching it at all means the cookie is set. */
-function signinPage_() {
-  var email = activeEmail_();
-  var msg = email
-    ? 'Signed in as ' + email + '. You can close this window.'
-    : 'Sign in with your school Google account, then close this window.';
-  return HtmlService.createHtmlOutput(
-    '<!doctype html><meta charset="utf-8"><title>Sleep Lab</title>' +
-    '<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#121A2B;' +
-    'color:#EDE6D6;font:15px/1.6 system-ui,sans-serif;text-align:center;padding:2rem}' +
-    'p{max-width:22rem}</style><p>' + escapeHtml_(msg) + '</p>' +
-    '<script>setTimeout(function(){try{window.close()}catch(e){}},1800);</script>'
-  ).setTitle('Sleep Lab').setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
-
-/* ═════════ IDENTITY ═════════ */
-
-function activeEmail_() {
-  return String(Session.getActiveUser().getEmail() || '').trim().toLowerCase();
-}
-
-/* Throws rather than returning an anonymous fallback: no identity means no
-   write, and the page treats the failure as "not signed in". */
-function requireStudent_() {
-  var email = activeEmail_();
-  if (!email) throw new Error('signed-out');
-  if (CONFIG.ALLOWED_DOMAIN && email.slice(email.indexOf('@') + 1) !== CONFIG.ALLOWED_DOMAIN.toLowerCase())
-    throw new Error('forbidden');
-  if (CONFIG.REQUIRE_ROSTER) {
-    var row = rows_('Roster').filter(function (r) {
-      return String(r.school_email).trim().toLowerCase() === email;
-    })[0];
-    if (!row || String(row.consent).trim().toLowerCase() !== 'yes') throw new Error('forbidden');
-  }
-  return email;
-}
-
-/* ═════════ STUDENT ROUTES ═════════ */
-
-function me_() {
-  var email = requireStudent_();
-  var mine = rows_('Nights').filter(function (r) { return sameEmail_(r.school_email, email); });
-  return {
-    email: email,
-    name: email.split('@')[0],
-    house: houseOf_(email),
-    study: CONFIG.STUDY_START ? {
-      start: CONFIG.STUDY_START,
-      baselineDays: CONFIG.BASELINE_DAYS,
-      interventionDays: CONFIG.INTERVENTION_DAYS
-    } : null,
-    nights: mine.map(function (r) {
-      return {
-        date: r.date, out: r.lights_out, up: r.out_of_bed,
-        lat: num_(r.mins_to_sleep), wk: num_(r.wakings),
-        inBed: num_(r.mins_in_bed), asleep: num_(r.mins_asleep),
-        eff: num_(r.efficiency), energy: num_(r.day_rating),
-        done: num_(r.tools_done), of: num_(r.tools_total), phase: r.phase || '',
-        cycle: num_(r.cycle) || 1
-      };
-    })
-  };
-}
-
-function saveNight_(p) {
-  var email = requireStudent_();
-  var date = clean_(p.date);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('bad-date');
-
-  var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
-  try {
-    upsertNight_(email, date, {
-      school_email: email,
-      date: date,
-      cycle: num_(p.cycle) || 1,
-      lights_out: clean_(p.out),
-      out_of_bed: clean_(p.up),
-      mins_to_sleep: num_(p.lat),
-      wakings: num_(p.wk),
-      mins_in_bed: num_(p.inBed),
-      mins_asleep: num_(p.asleep),
-      efficiency: num_(p.eff),
-      day_rating: num_(p.energy),
-      tools_done: num_(p.done),
-      tools_total: num_(p.of),
-      tools: clean_(p.tools),
-      phase: phaseFor_(date) || clean_(p.phase),
-      updated_at: stamp_()
-    });
-    touchStudent_(email, clean_(p.house));
-  } finally {
-    lock.releaseLock();
-  }
-  CacheService.getScriptCache().remove('class-summary');
-  return { ok: true, date: date, phase: phaseFor_(date) };
-}
-
-/** Records what a student chose for a round, and when. One row per round. */
-function saveCycle_(p) {
-  var email = requireStudent_();
-  var n = num_(p.cycle) || 1;
-  var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
-  try {
-    var sheet = sheet_('Cycles');
-    if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS.Cycles);
-    var row = [email, n, clean_(p.start), clean_(p.committed), clean_(p.tools), clean_(p.answers), stamp_()];
-    var data = sheet.getDataRange().getValues();
-    for (var i = 1; i < data.length; i++) {
-      if (sameEmail_(data[i][0], email) && num_(data[i][1]) === n) {
-        sheet.getRange(i + 1, 1, 1, row.length).setValues([row]);
-        return { ok: true };
+// Only student RPC. Every request rechecks Google identity; all helpers are private.
+function labRequest(p){
+  try{
+    var user=identity_();if(!p || p.accountId!==user.accountId)throw Error('account-changed');
+    var lock=LockService.getScriptLock();lock.waitLock(20000);
+    try{
+      var sessions=CacheService.getScriptCache();
+      if(typeof p.session!=='string'||p.session.length>100||sessions.get('session:'+p.session)!==user.accountId)throw Error('session-expired');
+      if(p.route==='logout'){sessions.remove('session:'+p.session);return {ok:true};}
+      if(p.route==='class')return {ready:false,message:'Group insights are being prepared. Your personal log is available now.'};
+      if(p.route==='me')return readMine_(user);
+      if(p.route!=='put' && p.route!=='remove')throw Error('unknown-route');
+      var kind=p.kind,key=String(p.key||'');if(kind!=='night' && kind!=='cycle')throw Error('bad-kind');
+      if(kind==='night')date_(key);else integer_(Number(key),1,10000);
+      var current=record_(user.accountId,kind,key),base=current?String(current.row[3]):'';
+      var payload=p.route==='remove'?'':JSON.stringify(kind==='night'?night_(p.value,key):cycle_(p.value,key));
+      // Retrying an acknowledged write after its response was lost is idempotent.
+      if(current && String(current.row[4])===payload){
+        if(p.route==='remove')eraseLegacy_(user.email,kind,key);
+        return {ok:true,revision:base};
       }
-    }
-    sheet.appendRow(row);
-  } finally {
-    lock.releaseLock();
+      if(String(p.revision||'')!==base)return {error:'conflict',revision:base,value:current && current.row[4]?JSON.parse(current.row[4]):null};
+      var revision=Utilities.getUuid(),row=[user.accountId,kind,key,revision,payload],sheet=records_();
+      var display=kind==='night'&&payload?JSON.parse(payload):null;
+      row=row.concat(display?[display.out,display.up,display.awakeMinutes,display.asleep,display.energy,display.phase,display.cycle]:['','','','','','','']);
+      if(current)sheet.getRange(current.index,1,1,row.length).setValues([row]);else sheet.appendRow(row);
+      if(p.route==='remove')eraseLegacy_(user.email,kind,key);
+      return {ok:true,revision:revision};
+    }finally{lock.releaseLock();}
+  }catch(err){
+    var known=['approved-account-required','account-changed','session-expired','setup-required','bad-kind','bad-value','bad-date','unknown-route'];
+    return {error:known.indexOf(err.message)>=0?err.message:'service-unavailable'};
   }
-  return { ok: true };
 }
-
-function deleteNight_(p) {
-  var email = requireStudent_();
-  var date = clean_(p.date);
-  var sheet = sheet_('Nights');
-  var data = sheet.getDataRange().getValues();
-  for (var i = data.length - 1; i >= 1; i--) {
-    if (sameEmail_(data[i][0], email) && String(data[i][1]) === date) sheet.deleteRow(i + 1);
-  }
-  CacheService.getScriptCache().remove('class-summary');
-  return { ok: true };
+function records_(){
+  var s=SpreadsheetApp.getActive().getSheetByName('Records');
+  if(!s || s.getLastRow()<1 || JSON.stringify(s.getRange(1,1,1,5).getValues()[0])!==JSON.stringify(RECORD_HEADERS))throw Error('setup-required');return s;
 }
-
-/* ═════════ CLASS ROUTE ═════════ */
-
-/**
- * Every number the class dashboard is allowed to know. Reads Nights, returns
- * counts. No email address, no per-student row and no single night ever leaves
- * this function — if you add a field here, check it cannot be traced to a person.
- */
-function classSummary_() {
-  requireStudent_();   // school login required; the numbers themselves are anonymous
-  var cache = CacheService.getScriptCache();
-  var hit = cache.get('class-summary');
-  if (hit) return JSON.parse(hit);
-
-  var all = rows_('Nights').filter(function (r) { return num_(r.mins_asleep) > 0; });
-  var people = {};
-  all.forEach(function (r) { people[String(r.school_email).toLowerCase()] = 1; });
-  var students = Object.keys(people).length;
-
-  var out;
-  if (students < CONFIG.MIN_STUDENTS || !all.length) {
-    out = {
-      ready: false,
-      message: 'The dashboard opens once at least ' + CONFIG.MIN_STUDENTS +
-               ' students have logged a night, so nobody can be picked out of the totals.'
-    };
-  } else {
-    var hours = all.map(function (r) { return num_(r.mins_asleep) / 60; });
-    var enough = hours.filter(function (h) { return h >= 8; }).length;
-
-    out = {
-      ready: true,
-      students: students,
-      nights: all.length,
-      avgHours: mean_(hours),
-      pctEnough: Math.round(enough / all.length * 100),
-      avgEnergy: mean_(all.map(function (r) { return num_(r.day_rating); })),
-      hours: bucketHours_(all),
-      weekday: byWeekday_(all),
-      tools: topTools_(all),
-      phases: phaseAverages_(all),
-      updated: stamp_()
-    };
-  }
-  cache.put('class-summary', JSON.stringify(out), CONFIG.CACHE_SECONDS);
-  return out;
+function record_(account,kind,key){
+  var rows=records_().getDataRange().getValues();
+  for(var i=1;i<rows.length;i++)if(rows[i][0]===account && rows[i][1]===kind && String(rows[i][2])===key)return {row:rows[i],index:i+1};
+  return null;
 }
-
-function bucketHours_(rows) {
-  var bands = [
-    ['Under 6h',  function (h) { return h < 6; }],
-    ['6 – 7h',    function (h) { return h >= 6 && h < 7; }],
-    ['7 – 8h',    function (h) { return h >= 7 && h < 8; }],
-    ['8 – 9h',    function (h) { return h >= 8 && h < 9; }],
-    ['9h or more',function (h) { return h >= 9; }]
-  ];
-  return bands.map(function (b) {
-    var n = rows.filter(function (r) { return b[1](num_(r.mins_asleep) / 60); }).length;
-    return { band: b[0], n: n < CONFIG.MIN_BUCKET ? 0 : n };
+function readMine_(user){
+  var nights={},cycles={},revisions={};
+  legacyRows_('Nights').filter(function(r){return String(r.school_email).toLowerCase()===user.email;}).forEach(function(r){
+    var k=dateText_(r.date);nights[k]={date:k,out:timeText_(r.lights_out),up:timeText_(r.out_of_bed),lat:Number(r.mins_to_sleep)||0,wk:Number(r.wakings)||0,inBed:Number(r.mins_in_bed)||0,asleep:Number(r.mins_asleep)||0,eff:Number(r.efficiency)||0,energy:Number(r.day_rating)||3,done:Number(r.tools_done)||0,of:Number(r.tools_total)||0,cycle:Number(r.cycle)||1,phase:r.phase||'baseline',calculationVersion:'legacy-wakings-12',entrySource:'paper'};
   });
-}
-
-
-function byWeekday_(rows) {
-  var names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var order = [1, 2, 3, 4, 5, 6, 0];
-  return order.map(function (d) {
-    var hrs = rows.filter(function (r) { return dayOf_(r.date) === d; })
-                  .map(function (r) { return num_(r.mins_asleep) / 60; });
-    return { day: names[d], hours: hrs.length >= CONFIG.MIN_BUCKET ? mean_(hrs) : 0 };
+  legacyRows_('Cycles').filter(function(r){return String(r.school_email).toLowerCase()===user.email;}).forEach(function(r){
+    var names=['Keep a steady sleep schedule','Make time for daylight','Skip afternoon caffeine','Give screens a bedtime','Make room to wind down','Reset when bed feels frustrating','Give studying its own space','Keep weekends consistent','Write down tomorrow','Make your room restful'];
+    var picked=String(r.tools||'').split(';').map(function(t){return STRATEGY_IDS[names.indexOf(t.trim())];}).filter(Boolean);
+    var n=Number(r.cycle)||1;cycles[n]={n:n,start:dateText_(r.start_date),committed:dateText_(r.committed_at),picked:picked,answers:{},timelineVersion:'fixed-calendar-v1',interventionStart:'',legacyTools:String(r.tools||'')};
   });
-}
-
-function topTools_(rows) {
-  var tally = {};
-  rows.forEach(function (r) {
-    String(r.tools || '').split(';').forEach(function (t) {
-      t = t.trim();
-      if (t) tally[t] = (tally[t] || 0) + 1;
-    });
+  records_().getDataRange().getValues().slice(1).forEach(function(r){
+    if(r[0]!==user.accountId)return;var key=String(r[2]),map=r[1]==='night'?nights:cycles;revisions[r[1]+':'+key]=String(r[3]);
+    if(r[4])map[key]=JSON.parse(r[4]);else delete map[key];
   });
-  return Object.keys(tally)
-    .map(function (k) { return { name: k, n: tally[k] }; })
-    .filter(function (t) { return t.n >= CONFIG.MIN_BUCKET; })
-    .sort(function (a, b) { return b.n - a.n; })
-    .slice(0, 8);
+  return {accountId:user.accountId,email:user.email,nights:Object.keys(nights).sort().map(function(k){return nights[k];}),cycles:Object.keys(cycles).sort(function(a,b){return Number(a)-Number(b);}).map(function(k){return cycles[k];}),revisions:revisions};
 }
-
-/* Rows carry a phase whether it came from CONFIG.STUDY_START or from the
-   student's own first night, so this works either way. */
-function phaseAverages_(rows) {
-  var out = {};
-  ['baseline', 'intervention'].forEach(function (phase) {
-    var set = rows.filter(function (r) { return r.phase === phase; });
-    if (set.length < CONFIG.MIN_STUDENTS) return;
-    out[phase] = {
-      hours:  mean_(set.map(function (r) { return num_(r.mins_asleep) / 60; })),
-      lat:    mean_(set.map(function (r) { return num_(r.mins_to_sleep); })),
-      eff:    mean_(set.map(function (r) { return num_(r.efficiency); })),
-      energy: mean_(set.map(function (r) { return num_(r.day_rating); }))
-    };
-  });
-  return (out.baseline && out.intervention) ? out : null;
+function number_(v,min,max){if(typeof v!=='number'||!isFinite(v)||v<min||v>max)throw Error('bad-value');return v;}
+function integer_(v,min,max){number_(v,min,max);if(Math.floor(v)!==v)throw Error('bad-value');return v;}
+function date_(v,blank){
+  if(blank && v==='')return v;
+  if(typeof v!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(v)||isNaN(Date.parse(v+'T00:00:00Z'))||new Date(v+'T00:00:00Z').toISOString().slice(0,10)!==v)throw Error('bad-date');return v;
 }
-
-/* ═════════ SHEET PLUMBING ═════════ */
-
-/** Run once from the editor, then approve the permissions Google asks for. */
-function setupSheets() {
-  Object.keys(HEADERS).forEach(function (name) {
-    var s = sheet_(name);
-    if (s.getLastRow() === 0) {
-      s.appendRow(HEADERS[name]);
-      s.getRange(1, 1, 1, HEADERS[name].length).setFontWeight('bold');
-      s.setFrozenRows(1);
-    }
-  });
-  return 'Sleep Lab tabs ready. Next: deploy twice, per SETUP.md.';
+function time_(v){if(typeof v!=='string'||!/^([01]\d|2[0-3]):[0-5]\d$/.test(v))throw Error('bad-value');return Number(v.slice(0,2))*60+Number(v.slice(3));}
+function ids_(v){if(!Array.isArray(v)||v.length>10||new Set(v).size!==v.length||v.some(function(x){return STRATEGY_IDS.indexOf(x)<0;}))throw Error('bad-value');return v.slice();}
+function night_(v,key){
+  if(!v||v.date!==key||date_(key)>Utilities.formatDate(new Date(),CONFIG.TIMEZONE,'yyyy-MM-dd'))throw Error('bad-date');
+  var span=(time_(v.up)-time_(v.out)+1440)%1440,lat=integer_(v.lat,0,720),awake=integer_(v.awakeMinutes,0,720);
+  if(span<1||lat+awake>span||v.calculationVersion!=='awake-minutes-v1')throw Error('bad-value');
+  var strategies=ids_(v.strategyIds||[]),planned=integer_(v.of,0,10);
+  if(strategies.length>planned||['baseline','intervention'].indexOf(v.phase)<0||['morning','paper','memory'].indexOf(v.entrySource)<0)throw Error('bad-value');
+  return {date:key,out:v.out,up:v.up,lat:lat,wk:integer_(v.wk,0,50),awakeMinutes:awake,inBed:span,asleep:span-lat-awake,eff:Math.round((span-lat-awake)/span*100),energy:integer_(v.energy,1,5),done:strategies.length,of:planned,strategyIds:strategies,cycle:integer_(v.cycle,1,10000),phase:v.phase,entrySource:v.entrySource,calculationVersion:'awake-minutes-v1'};
 }
-
-/** Sanity check before you hand the link out. Run from the editor. */
-function selfTest() {
-  var report = [
-    'Signed in as: ' + (activeEmail_() || '(none)'),
-    'Domain lock: ' + (CONFIG.ALLOWED_DOMAIN || 'off'),
-    'Roster required: ' + CONFIG.REQUIRE_ROSTER,
-    'Nights on file: ' + rows_('Nights').length,
-    'Class dashboard: ' + (classSummary_().ready ? 'live' : 'held back for anonymity')
-  ].join('\n');
-  Logger.log(report);
-  return report;
+function cycle_(v,key){
+  if(!v||String(v.n)!==key)throw Error('bad-value');
+  var answers=v.answers||{},clean={},choices={awake:['head','wired','notsleepy','room','none'],phone:['inbed','reach','away'],caffeine:['evening','afternoon','early'],inbed:['often','sometimes','never','no-space'],light:['none','some','lots']};
+  Object.keys(answers).forEach(function(k){if(!choices[k]||choices[k].indexOf(answers[k])<0)throw Error('bad-value');clean[k]=answers[k];});
+  if(['rolling-v1','fixed-calendar-v1'].indexOf(v.timelineVersion)<0)throw Error('bad-value');
+  if(v.timelineVersion==='rolling-v1' && (v.picked||[]).length>3)throw Error('bad-value');
+  var committed=v.committed||'';if(committed && !(committed==='migrated' && v.timelineVersion==='fixed-calendar-v1') && (typeof committed!=='string'||committed.length>40||isNaN(Date.parse(committed))))throw Error('bad-value');
+  return {n:integer_(v.n,1,10000),start:date_(v.start||'',true),picked:ids_(v.picked||[]),answers:clean,committed:committed,timelineVersion:v.timelineVersion,interventionStart:date_(v.interventionStart||'',true)};
 }
-
-function sheet_(name) {
-  var ss = SpreadsheetApp.getActive();
-  return ss.getSheetByName(name) || ss.insertSheet(name);
+function legacyRows_(name){var s=SpreadsheetApp.getActive().getSheetByName(name);if(!s||s.getLastRow()<2)return [];var d=s.getDataRange().getValues(),h=d.shift();return d.map(function(r){var o={};h.forEach(function(k,i){o[k]=r[i];});return o;});}
+function dateText_(v){return v instanceof Date?Utilities.formatDate(v,CONFIG.TIMEZONE,'yyyy-MM-dd'):String(v||'');}
+function timeText_(v){
+  if(v instanceof Date)return Utilities.formatDate(v,CONFIG.TIMEZONE,'HH:mm');
+  var text=String(v||'');
+  if(/^\d{4}-\d\d-\d\dT/.test(text)&&!isNaN(Date.parse(text)))return Utilities.formatDate(new Date(text),CONFIG.TIMEZONE,'HH:mm');
+  return text;
 }
-
-function rows_(name) {
-  var s = sheet_(name);
-  if (s.getLastRow() < 2) return [];
-  var v = s.getDataRange().getValues();
-  var h = v.shift();
-  return v.filter(function (r) { return r.some(function (x) { return x !== ''; }); })
-          .map(function (r) {
-            var o = {};
-            h.forEach(function (key, i) { o[key] = r[i] == null ? '' : r[i]; });
-            o.date = normDate_(o.date);
-            return o;
-          });
+function eraseLegacy_(email,kind,key){
+  var s=SpreadsheetApp.getActive().getSheetByName(kind==='night'?'Nights':'Cycles');if(!s)return;var rows=s.getDataRange().getValues();
+  for(var i=rows.length-1;i>=1;i--)if(String(rows[i][0]).toLowerCase()===email && (kind==='night'?dateText_(rows[i][1]):String(rows[i][1]))===key)s.deleteRow(i+1);
 }
-
-/* Sheets happily turns '2026-09-14' into a Date object. Normalise on the way
-   out so string comparison against the page's ISO dates keeps working. */
-function normDate_(v) {
-  if (v instanceof Date) return Utilities.formatDate(v, CONFIG.TIMEZONE, 'yyyy-MM-dd');
-  return String(v || '');
+function requireOwner_(){var a=String(Session.getActiveUser().getEmail()||'').toLowerCase();if(!a||a!==String(Session.getEffectiveUser().getEmail()).toLowerCase())throw Error('owner-only');}
+function setupSheets(){
+  requireOwner_();var lock=LockService.getScriptLock();lock.waitLock(20000);
+  try{
+    var p=PropertiesService.getScriptProperties();if(!p.getProperty('ACCOUNT_ID_KEY'))p.setProperty('ACCOUNT_ID_KEY',Utilities.getUuid()+Utilities.getUuid());
+    var ss=SpreadsheetApp.getActive(),s=ss.getSheetByName('Records')||ss.insertSheet('Records');
+    if(s.getLastRow()===0){s.appendRow(RECORD_HEADERS.concat(DISPLAY_HEADERS));s.setFrozenRows(1);s.getRange(1,1,1,12).setFontWeight('bold');}
+    records_();return 'Ready. Add Lab.html and update the existing web app deployment.';
+  }finally{lock.releaseLock();}
 }
-
-function upsertNight_(email, date, obj) {
-  var s = sheet_('Nights');
-  if (s.getLastRow() === 0) s.appendRow(HEADERS.Nights);
-  var row = HEADERS.Nights.map(function (h) { return obj[h] == null ? '' : obj[h]; });
-  var data = s.getDataRange().getValues();
-  for (var i = 1; i < data.length; i++) {
-    if (sameEmail_(data[i][0], email) && normDate_(data[i][1]) === date) {
-      s.getRange(i + 1, 1, 1, row.length).setValues([row]);
-      return;
-    }
-  }
-  s.appendRow(row);
-}
-
-function touchStudent_(email, house) {
-  var s = sheet_('Students');
-  if (s.getLastRow() === 0) s.appendRow(HEADERS.Students);
-  var count = rows_('Nights').filter(function (r) { return sameEmail_(r.school_email, email); }).length;
-  var data = s.getDataRange().getValues();
-  for (var i = 1; i < data.length; i++) {
-    if (sameEmail_(data[i][0], email)) {
-      s.getRange(i + 1, 2, 1, 4).setValues([[house || data[i][1], data[i][2], stamp_(), count]]);
-      return;
-    }
-  }
-  s.appendRow([email, house || '', stamp_(), stamp_(), count]);
-}
-
-function houseOf_(email) {
-  var r = rows_('Students').filter(function (x) { return sameEmail_(x.school_email, email); })[0];
-  return r ? String(r.house || '') : '';
-}
-
-/* ═════════ SMALL HELPERS ═════════ */
-
-function sameEmail_(a, b) { return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase(); }
-function clean_(v) { return String(v == null ? '' : v).trim().slice(0, 500); }
-function num_(v) { var n = Number(v); return isFinite(n) ? n : 0; }
-function mean_(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : 0; }
-function stamp_() { return Utilities.formatDate(new Date(), CONFIG.TIMEZONE, "yyyy-MM-dd HH:mm"); }
-function dayOf_(iso) { var d = new Date(iso + 'T00:00:00'); return isNaN(d) ? -1 : d.getDay(); }
-function escapeHtml_(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
-function phaseFor_(date) {
-  if (!CONFIG.STUDY_START) return '';
-  var start = new Date(CONFIG.STUDY_START + 'T00:00:00');
-  var day = Math.floor((new Date(date + 'T00:00:00') - start) / 86400000);
-  if (day < 0) return 'before_study';
-  if (day < CONFIG.BASELINE_DAYS) return 'baseline';
-  if (day < CONFIG.BASELINE_DAYS + CONFIG.INTERVENTION_DAYS) return 'intervention';
-  return 'after_study';
-}
-
+function selfTest(){requireOwner_();identity_();records_();Logger.log('Owner identity, domain and Records schema passed. Test student login and live saves next.');}

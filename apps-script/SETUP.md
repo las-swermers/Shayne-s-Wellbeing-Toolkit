@@ -1,121 +1,55 @@
-# Switching the Sleep Lab on
+# Connect Sleep Lab without a billing account
 
-The Lab works with nothing connected: students can read the guide, print the
-tracking sheet, log nights and see their own two-week comparison, all saved in
-their own browser. Everything below is about the extra step — students signing in
-with their school Google account so their log follows them between devices, and
-the school seeing its own anonymous numbers.
+No Vercel environment variables, Cloud Shell, service-account key or OAuth client secret are needed for this version. The landing page stays on Vercel. The connected Lab opens in a Google-hosted page using the same layout and styles.
 
-One Sheet, one script, one deployment. About fifteen minutes.
+Your existing /exec URL stays the same. Do not create a second deployment.
 
----
+## Update the existing script
 
-## 1 · Create the Sheet
+1. Open your [Sleep Tracker Sheet](https://docs.google.com/spreadsheets/d/1XQ2Z06jgvcjet1ZNgHPnAnMaQ8AGce0RkuCBo9yMK5k/edit). Choose **Extensions → Apps Script**.
+2. Open **Code.gs**. Replace its contents with [the updated Code.gs](Code.gs).
+3. Beside **Files**, click **+ → HTML**. Name the file **Lab** (Google adds .html). Paste the entire contents of [Lab.html](Lab.html). If Lab already exists, replace that file instead. Save both files.
+4. In the function dropdown at the top, choose **setupSheets**, then click **Run**. Approve Google's requested access if prompted. This adds a **Records** tab and creates the account-ID key internally. Existing tabs are preserved. Do not erase or rotate ACCOUNT_ID_KEY in Script Properties.
+5. Choose **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Keep **Execute as: Me** and **Who has access: Anyone in Leysin American School**. Keep the Sheet itself private.
 
-1. In the counselling Drive, create a Google Sheet called **Sleep Lab**.
-2. **Extensions → Apps Script**. This opens a script *bound* to that Sheet, which
-   is what lets it write without any keys or credentials.
-3. Delete the placeholder `Code.gs` contents and paste in [`Code.gs`](Code.gs).
-4. At the top of the file, set:
-   - `TIMEZONE` — yours, if not `Europe/Zurich`.
-   - `ALLOWED_DOMAIN` — your school's mail domain, e.g. `'lasglion.ch'`.
-   - `STUDY_START` — the first morning of week one, if the whole class runs the
-     same fortnight. Leave it blank and each student's first logged night becomes
-     their own day one.
-   - `REQUIRE_ROSTER` — leave `false` to let any signed-in school account take
-     part. Set `true` to approve each student first, using the `Roster` tab.
-5. Run **`setupSheets`** once from the editor toolbar and approve the permissions.
-   It creates the `Roster`, `Students`, `Nights` and `Cycles` tabs.
+Updating code in GitHub does not update Apps Script. The two files above must be copied into Apps Script and deployed.
 
----
+## Try it yourself
 
-## 2 · Deploy it
+Open the same [connected Sleep Lab](https://script.google.com/a/macros/las.ch/s/AKfycbzZ5h0XCN_kRuv0RtWNSBs8fwdtGJCxpTJzy1xuSQLY298wSKrFscsucNDwCYoaVvOA/exec).
 
-- **Deploy → New deployment → Web app**
-- **Execute as: Me.** The script touches the Sheet with *your* access, so students
-  need none of their own.
-- **Who has access: Anyone in \<your school\>.** Google handles the login and hands
-  the script a verified school email. There is no password anywhere in this system
-  for you to look after.
-- Deploy, approve, and copy the `/exec` URL.
+- Save one test night. Wait for **Up to date**. Find it in the **Records** tab (new saves no longer go to Nights).
+- Reload the connected Lab, and open it on another device with the same account. Confirm the date, times, awake minutes and chosen changes.
+- Edit that night, then delete it. Wait for **Up to date** after each action. Its payload and display fields should be cleared when deleted.
+- Click **Sign out of Sleep Lab**. The page should clear its account cache and show a signed-out screen. Gmail remains signed in.
+- Have one other approved account open the connected Lab: it should have its own empty history. A personal Google account must be refused.
+- Try a failed connection and press **Sync now** after reconnecting. The pending change should survive a page reload if browser storage is available.
 
-Anyone at the school can then read the anonymous class numbers. Nobody outside the
-school reaches the script at all.
+These steps are the live acceptance checks. Local automated tests use simulated Google and Sheets services; they cannot prove your organisation's identity settings work.
 
----
+If the page says it cannot open, check the active Google account, the presence of Lab.html and whether setupSheets completed. Some Workspace policies prevent Apps Script from returning a student's email; it refuses access if identity is blank. Test with an actual second school account before inviting students.
 
-## 3 · Point the page at it
+## Publish the website changes
 
-Open `sleep-lab.html`, find `CONFIG` near the top of the `<script>`, and fill in:
+After the connected Lab works, merge the review PR. It includes PR #10's compact Entry/Calendar workspace and points the public Lab's **Open connected Sleep Lab** button to the existing URL. Keep Cloud Run PR #11 unmerged.
 
-```js
-var CONFIG = {
-  ENDPOINT:    'https://script.google.com/a/macros/yourschool.ch/s/AKfy…/exec',
-  SCHOOL_NAME: 'Leysin American School',
-  STUDY_START: '2026-09-14',   // match the Apps Script value, or leave blank
-```
+Vercel continues to serve a static site. No new environment variables or build command are required. Existing browser-only diaries stay on their original Vercel origin and are not silently uploaded or transferred between accounts. Export a CSV and enter any missing paper/browser nights by their original dates if needed.
 
-Commit and push. GitHub Pages redeploys in a minute or two.
+## What changes in the Sheet
 
----
+New records use a stable account ID and a JSON payload, with readable time/rating columns alongside it. They are pseudonymous, not guaranteed anonymous. The app derives IDs from the verified school email and a server-held key; a changed school email needs an explicit account migration.
 
-## 4 · Test before anyone else sees it
+Existing Nights and Cycles rows are read for their original owner. Those older tabs may still contain email addresses. New records override the corresponding old entries; deleting a record also removes its matching old row. Old metrics retain their historical calculation method until the student edits the entry and supplies awake minutes. Old free-text strategy names are preserved in the legacy Cycles tab; recognised strategy names are mapped into the current choices.
 
-1. Open the Lab signed into a **student** account.
-2. **My log** → the strip at the top should offer to sign you in. It should settle
-   to *Signed in* with the school address shown.
-3. Log a night. The strip should read **Up to date**, and a row should appear in
-   the `Nights` tab.
-4. Reload. The night should come back down from the Sheet, not just the browser.
-5. **The school** should load with either the numbers or the "not enough students
-   yet" message.
-6. Run **`selfTest`** in the Apps Script editor for a one-glance summary.
+A deleted record keeps only a revision marker so an old device cannot silently upload it again. The Sheet's own version history is subject to the owner's retention arrangements. Sign-out clears only this Lab account's cache in this browser; old public-site diaries and other browser tabs are separate.
 
-The dashboard stays blank until `MIN_STUDENTS` (default 5) different students have
-logged something, and any bar with fewer than `MIN_BUCKET` (default 3) nights
-behind it is folded away. That is the anonymity guarantee. Lower those numbers only
-as a deliberate decision.
+Group summaries are deliberately not released in this version. The previous thresholds counted nights instead of distinct people in some views and could reveal small groups through subtraction. A separate aggregate/privacy pass is required before enabling group or class-code reports.
 
----
+## For future code changes
 
-## Running the fortnight with a class
+Run `node scripts/build-apps-script.mjs` after editing sleep-lab.html or its CSS; commit the generated Lab.html. It bundles the Lab's styles and logic. Images, fonts and the printable PDF use public HTTPS asset URLs.
 
-- Set `STUDY_START` in **both** `Code.gs` and `sleep-lab.html` to the first Monday.
-- Hand out the printed tracking sheet so students have something physical for
-  week one.
-- **Week one** the page tells them to change nothing and shows how many nights
-  remain before their review unlocks (5 by default).
-- **The review** reads their own baseline back to them, asks five questions, and
-  recommends changes with their numbers as the reason. They pick three and commit.
-- **Week two** their choices appear as daily tick-boxes.
-- **Results** puts the two weeks side by side, and offers another round.
+Only `labRequest` handles student data. It checks the verified account and revocable Lab session on every call; Google Apps Script's native RPC carries payloads. The old JSONP and URL write routes are disabled. Owner setup functions reject student callers.
 
-Each round is numbered. The `Nights` tab carries a `cycle` column and the
-`Cycles` tab records what each student chose and when — one row per student per
-round, which is the table to look at if you want to know which changes were
-popular and which actually moved anything.
-
----
-
-## Things worth knowing
-
-**Changing the script after deploying.** Edits do not go live on their own. Use
-**Deploy → Manage deployments → edit (pencil) → Version: New version**, which keeps
-the same URL.
-
-**The dashboard is cached** for five minutes (`CACHE_SECONDS`). A night just logged
-will not appear there instantly, which is deliberate: an instantly-updating counter
-is a way to identify whoever just typed.
-
-**Deleting.** A student deleting a night in the Lab deletes it from the Sheet too.
-Deleting their whole log asks first.
-
-**What is in the Sheet.** `Nights` holds a school email against each night, so a
-student can see their own history and so counselling can follow up if asked. Treat
-it as a pastoral record: it lives in the counselling Drive, and it is not the
-document students or teaching staff open.
-
-**What is not.** There is no route that lists students and no route that returns
-another person's rows. The class dashboard can only call `classSummary_`, which
-returns totals.
+Sources: [Google's native browser/server communication](https://developers.google.com/apps-script/guides/html/communication), [Apps Script identity availability](https://developers.google.com/apps-script/reference/base/session), [Google's JSONP security warning](https://developers.google.com/apps-script/guides/content).
 

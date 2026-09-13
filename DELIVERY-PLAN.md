@@ -1,3 +1,7 @@
+> Current connection: use [Apps Script setup](apps-script/SETUP.md) and [the connection review](CONNECTION-REVIEW.md). Private data now uses a Google-hosted Lab with native RPC, account-scoped caching and sign-out. No Cloud Run billing or Vercel secrets. Group reporting remains pending. Older transport/deployment instructions below are historical.
+
+> Sleep Lab update: [SLEEP-EVIDENCE-REVIEW.md](SLEEP-EVIDENCE-REVIEW.md) records the current flexible-diary behaviour, research limits and remaining work. Its phase terminology supersedes the fixed-week wording below for self-paced rounds.
+
 # Shayne's Sleep Lab — design first, then one private Sheet
 
 > Current ownership: an independent toolkit for Shayne's students, not LAS sponsored.

@@ -1,3 +1,7 @@
+> Current connection: use [Apps Script setup](apps-script/SETUP.md) and [the connection review](CONNECTION-REVIEW.md). Private data now uses a Google-hosted Lab with native RPC, account-scoped caching and sign-out. No Cloud Run billing or Vercel secrets. Group reporting remains pending. Older transport/deployment instructions below are historical.
+
+> Latest Sleep Lab design and evidence decisions: [Sleep evidence review](SLEEP-EVIDENCE-REVIEW.md). The student flow uses flexible baseline/changes phases; the five-entry review is a usability threshold, not a clinical assessment.
+
 # Shayne's Wellbeing Toolkit
 
 > Current refinement: see [PROJECT-REVIEW.md](PROJECT-REVIEW.md) for the source audit,
