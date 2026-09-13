@@ -549,11 +549,11 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ 01 · HOW IT WORKS ══════ -->
 <section class="panel active" id="p-learn" role="tabpanel" aria-labelledby="t-learn" tabindex="0">
   <div class="inner">
-    <div class="head"><span class="label">The sleep experiment</span><h1>Notice. Try. Reflect.</h1><p class="lede">A short morning check-in. Two weeks to learn about your sleep.</p></div>
+    <div class="head"><span class="label">The sleep experiment</span><h1>Notice. Try. Reflect.</h1><p class="lede">A short morning check-in. Notice your routine, then try a small change. Gaps are okay.</p></div>
     <div class="steps">
-      <div class="step"><span class="step-n">01 / Week one</span><h3>Notice your routine</h3><p>Log your usual sleep each morning. Estimates are fine.</p></div>
-      <div class="step"><span class="step-n">02 / Review</span><h3>Choose a small change</h3><p>After five nights, review your patterns and choose up to three habits.</p></div>
-      <div class="step"><span class="step-n">03 / Week two</span><h3>See what you notice</h3><p>Keep logging as you try your changes. Compare your two weeks.</p></div>
+      <div class="step"><span class="step-n">01 / Baseline</span><h3>Notice your routine</h3><p>Aim to record each morning for 7–14 days, including school and free days. Five entries unlock an initial review.</p></div>
+      <div class="step"><span class="step-n">02 / Review</span><h3>Choose a small change</h3><p>After five entries, explore suggestions. Start with one manageable habit.</p></div>
+      <div class="step"><span class="step-n">03 / Try a change</span><h3>See what you notice</h3><p>Keep logging as you try your changes. Compare your baseline with your changes phase.</p></div>
     </div>
     <div class="learn-actions">
       <div class="work-card"><h3>Keep it digital</h3><p>Your entries currently stay in this browser.</p><button class="btn" id="startNow">Log last night</button></div>
@@ -566,7 +566,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ 02 · MY LOG ══════ -->
 <section class="panel" id="p-log" role="tabpanel" aria-labelledby="t-log" tabindex="0">
   <div class="inner">
-    <span class="label">02 · My log</span>
+    <span class="label log-kicker">02 · My log</span>
 
     <div class="acct off" id="acct">
       <span class="acct-dot" aria-hidden="true"></span>
@@ -578,31 +578,33 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="notice" id="storeNote" style="display:none;"></div>
 
     <!-- where the student is, right now -->
-    <div class="log-workspace"><aside class="log-context"><div class="stage" id="stageBox"></div><button class="btn ghost" id="printBtn2">Preview paper tracker</button><button class="btn ghost" id="goResults">See my results</button></aside>
+    <div class="log-workspace"><div class="stage" id="stageBox"></div>
+    <div class="workspace-toolbar"><div class="workspace-tabs" role="tablist" aria-label="Log view"><button id="entryTab" role="tab" aria-selected="true" aria-controls="entryView" type="button">Entry</button><button id="openCalendar" role="tab" aria-selected="false" aria-controls="calendarView" tabindex="-1" type="button">Calendar</button></div><div class="workspace-actions"><button class="btn ghost" id="printBtn2" type="button">Paper tracker</button><button class="btn ghost" id="goResults" type="button">Results ↗</button></div></div>
 
     <!-- the week-one review: unlocks once the baseline has enough nights -->
 
 
-    <div class="log-form">
-      <span class="label">Log last night</span>
+    <div class="log-form" id="entryView" role="tabpanel" aria-labelledby="entryTab">
+      <div class="log-heading"><h2 id="entryTitle">Log a night</h2><button class="btn ghost" id="entryHelp" type="button" aria-label="Help with your sleep entry">Entry help</button></div>
       <div class="lf-grid">
-        <div class="field"><label class="label" for="lDate">Morning I woke up</label><input type="date" id="lDate"><div class="hint">Use the date you woke up.</div></div>
+        <div class="field"><label class="label" for="lDate">Morning date</label><input type="date" id="lDate"></div>
         <div class="field"><label class="label" for="lOut">Lights out</label><input type="time" id="lOut" value="22:30"></div>
         <div class="field"><label class="label" for="lUp">Out of bed at</label><input type="time" id="lUp" value="07:00"></div>
-        <div class="field"><div class="night-waking-fields"><div><label class="label" for="lWakings">Wake-ups</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div><div><label class="label" for="lAwake">Minutes awake</label><input type="number" id="lAwake" min="0" max="1440" step="1" value="0" inputmode="numeric" aria-describedby="awakeHint"></div></div><div class="hint" id="awakeHint">Estimate total awake time after first falling asleep, including before getting up.</div></div>
+        <div class="field"><div class="night-waking-fields"><div><label class="label" for="lWakings">Wake-ups</label><select id="lWakings"><option value="0">None</option><option value="1">Once</option><option value="2">Twice</option><option value="3">Three or more</option></select></div><div><label class="label" for="lAwake">Minutes awake</label><input type="number" id="lAwake" min="0" max="1440" step="1" value="0" inputmode="numeric" aria-describedby="awakeHint"></div></div></div>
         <div class="field"><label class="label" for="lLatency">Minutes to fall asleep <span class="slider-val" id="lLatencyVal">20 min</span></label><input type="range" id="lLatency" min="0" max="120" step="5" value="20"></div>
-        <div class="field"><label class="label" for="lEnergy">Energy now, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
+        <div class="field"><label class="label" for="lEnergy">Morning energy, 1&ndash;5 <span class="slider-val" id="lEnergyVal">3</span></label><input type="range" id="lEnergy" min="1" max="5" step="1" value="3"></div>
       </div>
+      <div class="field entry-source"><label class="label" for="lSource">Entry source</label><select id="lSource" aria-describedby="sourceHint"><option value="">Choose an entry source</option><option value="morning">A check-in today / yesterday</option><option value="paper">My diary, written that morning</option><option value="recalled">Remembering an older night</option><option value="unknown" hidden>Earlier entry · source not recorded</option></select></div>
       <div class="field" id="checkField"><label class="label">Changes I actually did</label><div class="chk-row" id="lChecks"></div></div>
-      <p class="hint" id="editNote" hidden></p><div class="btn-row"><button class="btn" id="saveLog">Save last night</button><button class="btn ghost" id="cancelEdit" hidden>Cancel edit</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
+      <p class="hint" id="editNote" hidden></p><div class="btn-row"><button class="btn" id="saveLog">Save night</button><button class="btn ghost" id="cancelEdit" hidden>Cancel edit</button><span class="acct-sync" id="copyMsg" role="status" aria-live="polite"></span></div>
     </div>
 
+    <div id="calendarView" role="tabpanel" aria-labelledby="openCalendar" hidden><p class="hint">Choose the morning you woke up. Filled dates open your saved entry.</p><div class="calendar-toolbar"><button class="btn ghost" id="calendarPrev" aria-label="Previous month">←</button><h3 id="calendarMonth" aria-live="polite"></h3><button class="btn ghost" id="calendarNext" aria-label="Next month">→</button></div><div class="calendar-week" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div><div id="calendarDays" class="calendar-days"></div><p class="hint">B = baseline · C = trying changes · R = remembered later. Gaps are okay.</p></div>
     </div>
-    <details class="review-drawer" id="reviewDrawer" hidden><summary>Review my week <span>Five quick questions</span></summary><div id="reviewBox" style="display:none;"></div></details>
-    <details class="print-options"><summary>Personalise my printed record</summary><div class="lf-grid">
-      <div class="field"><label class="label" for="fName">Name (optional)</label><input type="text" id="fName"></div>
-      <div class="field"><label class="label" for="fHouse">House / year (optional)</label><input type="text" id="fHouse"></div>
-    </div><p class="hint">These details appear in your personal report. The downloadable tracker is blank.</p></details>
+    <dialog id="entryHelpDialog" aria-labelledby="entryHelpTitle"><div class="dialog-toolbar"><h2 id="entryHelpTitle">A few useful details</h2><button id="closeEntryHelp" class="btn ghost" type="button">Close</button></div><p>Use the morning you woke up. Choose a saved date in the calendar or a filled progress dot to edit it.</p><p id="awakeHint">Estimate total awake time after first falling asleep, including before getting up.</p><p id="sourceHint">You can copy a diary written that morning at any time. Label older memories separately; leave a night blank if you cannot remember it.</p><p>Your baseline and trying-changes counts show recorded nights, not a streak. Each phase has seven guide dots; five entries unlock a review or comparison.</p></dialog>
+    <dialog id="reviewDialog" aria-labelledby="reviewTitle"><div class="dialog-toolbar"><h2 id="reviewTitle">Your baseline review</h2><button class="btn ghost" id="closeReview" type="button">Keep logging</button></div><div id="reviewBox"></div></dialog>
+
+
   </div>
 </section>
 
@@ -656,7 +658,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div id="schoolData" hidden><div class="stat-row" id="classStats"></div>
 
     <div class="viz">
-      <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Week one vs week two</span></div>
+      <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Baseline vs the changes phase</span></div>
       <div id="classPhase"></div>
       <p class="viz-note">Group averages can show patterns, not what caused them.</p>
     </div>
@@ -682,8 +684,9 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ 04 · MORE HELP ══════ -->
 <section class="panel" id="p-resources" role="tabpanel" aria-labelledby="t-resources" tabindex="0">
   <div class="inner"><div class="head"><span class="label">Resources</span><h2>Understand your options.</h2><p class="prose">Every habit below links to its background. Evidence for a full treatment does not prove that one habit will work for everyone.</p></div>
+    <details class="resource-note"><summary>Why dates and diary sources matter</summary><p>Record near waking when possible. You can copy a morning paper diary later. Older memories are labelled and excluded from the diary signals used to suggest habits; your results still include all saved entries with source counts. Five entries unlock an initial reflection, not a validated assessment. Aim for 7–14 mornings with school and free days represented.</p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3250369/" target="_blank" rel="noopener noreferrer">Consensus Sleep Diary · prospective self-monitoring ↗</a></details>
     <details class="resource-note"><summary>How this relates to CBT-I</summary><p>CBT-I is a structured treatment for insomnia that combines several approaches. This learning tool draws on sleep education and selected behavioural ideas; it is not a CBT-I treatment programme. It does not prescribe sleep restriction or reduced time in bed. Ask the health centre about appropriate support for ongoing sleep difficulties.</p><a href="https://www.nhlbi.nih.gov/health/insomnia/treatment" target="_blank" rel="noopener noreferrer">NHLBI: understanding CBT-I and treatment ↗</a></details>
-    <details class="resource-note"><summary>What does adolescent research show?</summary><p>In a 2015 trial with 116 adolescents with insomnia, six weeks of therapist-guided CBT-I improved sleep outcomes compared with a waiting list. That supports the structured treatment studied; it does not validate this two-week school experiment or each habit on its own.</p><a href="https://doi.org/10.5665/sleep.5240" target="_blank" rel="noopener noreferrer">de Bruin and colleagues · Adolescent CBT-I trial ↗</a></details>
+    <details class="resource-note"><summary>What does adolescent research show?</summary><p>In a 2015 trial with 116 adolescents with insomnia, six weeks of therapist-guided CBT-I improved sleep outcomes compared with a waiting list. That supports the structured treatment studied; it does not validate this student wellbeing experiment or each habit on its own.</p><a href="https://doi.org/10.5665/sleep.5240" target="_blank" rel="noopener noreferrer">de Bruin and colleagues · Adolescent CBT-I trial ↗</a></details>
     <p class="quiet-note">Teens aged 13–17 generally need 8–10 hours of sleep. <a href="https://www.cdc.gov/sleep/about/index.html" target="_blank" rel="noopener noreferrer">CDC: sleep needs and habits ↗</a></p>
     <div class="tool-list" id="toolList"></div>
     <details class="resource-note"><summary>Explore sleep pressure</summary><!-- VIZ 1 — two-process -->
@@ -728,11 +731,11 @@ input[type=range] { width:100%; accent-color:var(--accent); }
   <div class="smeta">
     <div><span class="label">Name</span><div class="v" id="sName"></div></div>
     <div><span class="label">House / year</span><div class="v" id="sHouse"></div></div>
-    <div><span class="label">Week one · measure</span><div class="v" id="sBase"></div></div>
-    <div><span class="label">Week two · changes</span><div class="v" id="sInt"></div></div>
+    <div><span class="label">Baseline · measure</span><div class="v" id="sBase"></div></div>
+    <div><span class="label">Trying changes</span><div class="v" id="sInt"></div></div>
   </div>
-  <span class="label sec-label">Week one: measure only. Change nothing on purpose.</span>
-  <span class="label sec-label" style="margin-top:.4rem;">Week two: run these</span>
+  <span class="label sec-label">Notice your usual sleep. Keep any existing care or helpful routines.</span>
+  <span class="label sec-label" style="margin-top:.4rem;">Trying changes: run these</span>
   <ul class="commit" id="sCommit"></ul>
   <span class="label sec-label">Fill this in each morning</span>
   <div style="overflow-x:auto;"><table class="tracker-t" id="sTracker"></table></div>
@@ -740,7 +743,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="sig"><span class="label">Student signature</span></div>
     <div class="sig"><span class="label">Counsellor / houseparent</span></div>
   </div>
-  <div class="sheet-foot">Judge this on the fortnight, not one night. If it is not working by the end of week two, talk to someone. Nothing here replaces the counselling team or the health centre.</div>
+  <div class="sheet-foot">Look across several nights, not one night. If it is not working by the end of the changes phase, talk to someone. Nothing here replaces the counselling team or the health centre.</div>
 </section>
 
 </main>
@@ -749,6 +752,10 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 
 <dialog id="paperPreview" aria-labelledby="paperTitle">
   <div class="paper-toolbar"><div><span class="label">On paper</span><h2 id="paperTitle">Your fourteen-day tracker</h2></div><button class="btn ghost" id="closePaper" type="button">Close</button></div>
+    <details class="print-options"><summary>Personalise my printed record</summary><div class="lf-grid">
+      <div class="field"><label class="label" for="fName">Name (optional)</label><input type="text" id="fName"></div>
+      <div class="field"><label class="label" for="fHouse">House / year (optional)</label><input type="text" id="fHouse"></div>
+    </div><p class="hint">These details appear in your personal report. The downloadable tracker is blank.</p></details>
   <div id="trackerPreview"><p class="hint">A blank A4 sheet. Download it, then fill it in by hand.</p><img src="assets/tracker-preview.webp" width="794" height="1123" alt="Preview of the one-page Sleep Lab tracker: two seven-day tables with morning date, lights out, time to fall asleep, night wake-ups, awake minutes, out of bed, energy and changes tried."></div>
   <div id="reportPreview" hidden></div>
   <div class="paper-toolbar"><a class="btn" id="downloadTracker" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a><button class="btn" id="printPersonal" hidden>Print / Save as PDF</button><p class="hint" id="paperHint">One page · A4 · Black and white</p></div>
@@ -773,9 +780,9 @@ var CONFIG = {
   STUDY_START:       '',  // 'YYYY-MM-DD'
   BASELINE_DAYS:     7,
   INTERVENTION_DAYS: 7,
-  MAX_TOOLS:         3,   // how many changes a student may run in week two
+  MAX_TOOLS:         3,   // how many changes a student may run in the changes phase
   REVIEW_AFTER:      5,   // baseline nights needed before the review unlocks
-  RESULTS_AFTER:     5    // week-two nights needed before results are shown
+  RESULTS_AFTER:     5    // changes-phase nights needed before results are shown
 };
 
 /* ═════════ STORAGE ═════════
@@ -850,7 +857,7 @@ var Account = {
 
 /* ═════════ DATA ═════════
    Ten changes, chosen for the strength of the evidence behind them and for
-   working inside a boarding house. A student runs two or three in week two. */
+   working inside a boarding house. A student runs two or three in the changes phase. */
 var SOURCES = {
   routine:{url:'https://www.nhlbi.nih.gov/health/sleep-deprivation/healthy-sleep-habits',label:'NHLBI · Healthy sleep habits'},
   habits:{url:'https://www.cdc.gov/sleep/about/index.html',label:'CDC · Sleep habits'},
@@ -1029,10 +1036,12 @@ function drawPressure(){
    entries beat a student's guess about their own patterns, so the review only
    asks about the things a log cannot see. */
 function signals(cycleN){
-  var L=nightsIn(cycleN,'baseline');
-  if(L.length<2) return null;
+  var L=nightsIn(cycleN,'baseline').filter(function(e){return e.entrySource!=='recalled';});
+  if(L.length<CONFIG.REVIEW_AFTER) return null;
   var avg=function(f){ return L.reduce(function(a,e){ return a+f(e); },0)/L.length; };
   var wakeMins=L.map(function(e){ return toMin(e.up)||0; });
+  // Unwrap around the first observation so 23:50 and 00:10 are close.
+  var anchor=wakeMins[0]; wakeMins=wakeMins.map(function(m){return anchor+((m-anchor+2160)%1440)-720;});
   var mean=wakeMins.reduce(function(a,b){ return a+b; },0)/wakeMins.length;
   var spread=Math.sqrt(wakeMins.reduce(function(a,m){ return a+(m-mean)*(m-mean); },0)/wakeMins.length);
 
@@ -1062,7 +1071,8 @@ var REVIEW_Q = [
     a:[ {t:'My head will not stop', k:'head'},
         {t:'My body feels wired', k:'wired'},
         {t:'I am just not sleepy yet', k:'notsleepy'},
-        {t:'Noise, heat, or my roommate', k:'room'} ] },
+        {t:'Noise, heat, or my roommate', k:'room'},
+        {t:'Usually okay / not sure', k:'none'} ] },
   { id:'phone', q:'Where is your phone once you are in bed?',
     a:[ {t:'In bed with me', k:'inbed'},
         {t:'Within reach', k:'reach'},
@@ -1074,7 +1084,7 @@ var REVIEW_Q = [
   { id:'inbed', q:'Do you work or scroll in bed?',
     a:[ {t:'Most nights', k:'often'},
         {t:'Sometimes', k:'sometimes'},
-        {t:'Never — bed is for sleeping', k:'never'} ] },
+        {t:'Never — bed is for sleeping', k:'never'} , {t:'I do not have another place to work', k:'no-space'} ] },
   { id:'light', q:'How much daylight do you get before lunch?',
     a:[ {t:'Barely any', k:'none'},
         {t:'A bit', k:'some'},
@@ -1101,13 +1111,9 @@ function recommend(sig, ans){
   if(sig){
     if(sig.latency>=30)      add('twenty-min', 4, 'You took '+mins(sig.latency)+' to fall asleep on an average night.', true);
     if(sig.latency>=45)      add('twenty-min', 1, '', true);
-    if(sig.eff<85)           add('bed-for-sleep', 3, 'You were asleep for '+Math.round(sig.eff)+'% of the time you spent in bed.', true);
-    if(sig.wakings>=1.5)     add('cool-dark', 4, 'You woke up '+sig.wakings.toFixed(1)+' times a night on average.', true);
-    if(sig.wakeSwing>=60)    add('wake-anchor', 4, 'Your wake time moved by about '+Math.round(sig.wakeSwing)+' minutes from night to night.', true);
-    if(sig.wakeSwing>=90)    add('weekend', 3, 'Your wake time swung by more than an hour and a half across the week.', true);
-    if(sig.lightsOut!==null && sig.lightsOut>=1410) add('light-am', 4, 'Your lights went out around '+hhmm(sig.lightsOut)+' on an average night.', true);
-    if(sig.hours<7)          add('wake-anchor', 2, 'You averaged '+sig.hours.toFixed(1)+' hours of sleep, under the 8 to 10 you need.', true);
-    if(sig.hours<6.5)        add('caffeine', 1, '', true);
+    // Studying in bed is suggested only when the student reports that habit.
+    if(sig.wakeSwing>=60)    add('wake-anchor', 4, 'Your recorded wake times varied (standard deviation about '+Math.round(sig.wakeSwing)+' minutes).', true);
+    if(sig.hours<8)          add('wake-anchor', 2, 'You averaged '+sig.hours.toFixed(1)+' hours of sleep, below the general 8–10-hour guidance for teens; protect enough time for sleep.', true);
   }
 
   var A=ans||{};
@@ -1117,7 +1123,7 @@ function recommend(sig, ans){
   if(A.awake==='room')      { add('cool-dark', 3, 'You said the room, the heat or your roommate is what wakes you.'); }
   if(A.phone==='inbed')     { add('phone-park', 4, 'You said your phone is in bed with you.'); }
   if(A.phone==='reach')     { add('phone-park', 2, 'You said your phone is within reach overnight.'); }
-  if(A.caffeine==='evening'){ add('caffeine', 4, 'You said your last caffeine is in the evening — half of it is still in you at bedtime.'); }
+  if(A.caffeine==='evening'){ add('caffeine', 4, 'You said your last caffeine is in the evening; it may still affect sleep at bedtime.'); }
   if(A.caffeine==='afternoon'){ add('caffeine', 2, 'You said you drink caffeine into the afternoon.'); }
   if(A.inbed==='often')     { add('bed-for-sleep', 4, 'You said you work or scroll in bed most nights.'); }
   if(A.inbed==='sometimes') { add('bed-for-sleep', 1, ''); }
@@ -1125,14 +1131,14 @@ function recommend(sig, ans){
   if(A.light==='some')      { add('light-am', 1, ''); }
 
   var ranked = STRATS.map(function(t){ return { id:t.id, tool:t, score:score[t.id]||0, why:reasonFor(t.id) }; })
-    .filter(function(r){ return r.score>0; })
+    .filter(function(r){ return r.score>0 && !(A.inbed==='no-space' && r.id==='bed-for-sleep'); })
     .sort(function(a,b){ return b.score-a.score; });
 
-  /* Never send anyone away with nothing: the two anchors work for everybody. */
+  /* Offer optional starting points without claiming universal benefit. */
   if(ranked.length<3){
     ['wake-anchor','light-am','runway'].forEach(function(id){
       if(ranked.length<3 && !ranked.some(function(r){ return r.id===id; }))
-        ranked.push({ id:id, tool:byId(id), score:0, why:'A good default when nothing else stands out.' });
+        ranked.push({ id:id, tool:byId(id), score:0, why:'An optional starting point. See whether it fits your routine.' });
     });
   }
   return ranked.slice(0,4);
@@ -1196,6 +1202,37 @@ function nightsIn(cycleN, phase){
   return state.log.filter(function(e){ return e.cycle===cycleN && (!phase || e.phase===phase); });
 }
 
+// Pure assignment: only the first self-paced round can extend backwards.
+// Saved ownership and committed phase boundaries remain unchanged.
+function entryPhase(date){
+  var saved=state.log.find(function(e){return e.date===date;});
+  var p=saved && saved.phase?saved:phaseFor(date);
+  if(p) return {cycle:state.cycles.find(function(c){return c.n===p.cycle;}),phase:p};
+  var first=ensureCycles()[0];
+  if(!first.start || (date<first.start && first.timelineVersion==='rolling-v1' && !CONFIG.STUDY_START))
+    return {cycle:first,phase:{phase:'baseline',cycle:first.n},extend:true};
+  return null;
+}
+function validEntrySource(source,date,today,existing){
+  if(source==='paper' || source==='recalled') return true;
+  if(source==='unknown') return !!existing && (!existing.entrySource || existing.entrySource==='unknown');
+  if(source==='morning') return (existing && existing.entrySource==='morning') || (daysBetween(date,today)>=0 && daysBetween(date,today)<=1);
+  return false;
+}
+function sourceLabel(source){
+  return {morning:'Recent check-in',paper:'Morning diary',recalled:'Remembered later',unknown:'Source not recorded'}[source] || 'Source not recorded';
+}
+function coverageText(entries){
+  if(!entries.length) return 'No nights recorded yet.';
+  var dates=entries.map(function(e){return e.date;}).sort();
+  var span=daysBetween(dates[0],dates[dates.length-1])+1;
+  var recalled=entries.filter(function(e){return e.entrySource==='recalled';}).length;
+  var paper=entries.filter(function(e){return e.entrySource==='paper';}).length;
+  var unknown=entries.filter(function(e){return !e.entrySource || e.entrySource==='unknown';}).length;
+  return entries.length+' entries across '+span+' calendar days ('+dates[0]+' to '+dates[dates.length-1]+'). '+
+    paper+' from a morning diary; '+recalled+' remembered later; '+unknown+' with source not recorded.';
+}
+
 /* Where the student is right now. This drives the whole log page. */
 function stage(){
   var c=currentCycle();
@@ -1225,15 +1262,17 @@ function restamp(){
 
 /* ═════════ STAGE & REVIEW UI ═════════ */
 function pips(cycle){
-  var B=CONFIG.BASELINE_DAYS, I=CONFIG.INTERVENTION_DAYS, out='';
-  var have={},base=nightsIn(cycle.n,'baseline').length,iv=nightsIn(cycle.n,'intervention').length;
-  for(var n=1;n<=Math.min(B,base);n++) have[n]='baseline';
-  for(var n=1;n<=Math.min(I,iv);n++) have[B+n]='intervention';
-  for(var d=1; d<=B+I; d++){
-    var cls='pip'+(have[d]?' done':'')+(have[d]==='intervention'?' iv':'')+(d===B+1?' gap':'');
-    out+='<span class="'+cls+'"></span>';
-  }
-  return '<div class="pips">'+out+'</div>';
+  return '<div class="night-progress" aria-label="Recorded nights">'+['baseline','intervention'].map(function(phase){
+    var entries=nightsIn(cycle.n,phase).slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+    var recent=entries.slice(-7),label=phase==='baseline'?'Baseline':'Trying changes';
+    var out='<div class="progress-phase"><span class="progress-label">'+label+' <strong>'+entries.length+'</strong></span><div class="progress-dots">';
+    recent.forEach(function(e){
+      out+='<button type="button" class="night-dot '+phase+'" data-progress-date="'+e.date+'" aria-label="Edit '+e.date+', '+label+'" title="'+e.date+' · '+label+'"'+(editingDate===e.date?' aria-current="true"':'')+'><span aria-hidden="true"></span></button>';
+    });
+    for(var i=recent.length;i<7;i++) out+='<span class="night-dot empty" aria-hidden="true"><span></span></span>';
+    if(entries.length>7) out+='<button type="button" class="progress-more" data-progress-month="'+entries[0].date.slice(0,7)+'" aria-label="See all '+entries.length+' '+label+' nights in the calendar">+'+(entries.length-7)+'</button>';
+    return out+'</div></div>';
+  }).join('')+'</div>';
 }
 
 function renderStage(){
@@ -1242,57 +1281,138 @@ function renderStage(){
   var round = state.cycles.length>1 ? ' · round '+c.n : '';
   var head=function(step,title,body,ready){
     box.className='stage'+(ready?' ready':'');
-    box.innerHTML='<div class="stage-top"><span class="stage-step">'+esc(step+round)+'</span></div>'+
-      '<h3>'+title+'</h3><p>'+body+'</p>'+
-      (c.start ? pips(c)+'<span class="pips-key">Recorded nights · baseline, then changes</span>' : '');
+    box.innerHTML='<div class="stage-summary"><div class="stage-top"><span class="stage-step">'+esc(step+round)+'</span></div>'+
+      '<h3>'+title+'</h3><p>'+body+'</p></div>'+pips(c);
   };
 
   if(st.id==='start'){
     head('Step 1 of 4','Start with one night.',
-      'Log your usual sleep. Your review opens after '+CONFIG.REVIEW_AFTER+' nights.');
+      'Your review opens after '+CONFIG.REVIEW_AFTER+' recorded nights.');
   } else if(st.id==='baseline'){
-    head('Step 1 of 4','Week one: measure only.',
-      'Keep noticing your routine. <strong>'+st.need+' more night'+(st.need>1?'s':'')+'</strong> until your review.');
+    head('Step 1 of 4','Notice your usual sleep.',
+      '<strong>'+st.need+' more night'+(st.need>1?'s':'')+'</strong> until your review. Gaps are okay.');
   } else if(st.id==='review'){
     head('Step 2 of 4','Your review is ready.',
-      'You have '+st.base+' nights of baseline. Open “Review my week” below to explore possible changes.', true);
+      '<button class="btn" id="openReview" type="button">Explore my suggestions</button>', true);
   } else if(st.id==='intervention'){
-    var names=c.picked.map(function(i){ var t=byId(i); return t?t.name:''; }).filter(Boolean);
-    head('Step 3 of 4','Week two: run your changes.',
-      (c.interventionStart ? 'Your first changes-night is the night ending <strong>'+esc(c.interventionStart)+'</strong>. ' : '')+
-      'Your plan: <strong>'+esc(names.join(', '))+'</strong>. Keep logging and tick off what you managed. '+
-      st.need+' more night'+(st.need>1?'s':'')+' until your comparison.');
+    head('Step 3 of 4','Try your chosen changes.',
+      st.need+' more night'+(st.need>1?'s':'')+' until your comparison. Mark what you tried below.');
   } else {
     head('Step 4 of 4','Your comparison is ready.',
-      'You logged '+st.base+' baseline nights and '+st.iv+' in week two. <button class="btn" id="stageResults" style="margin-left:.4rem;padding:.4rem .8rem;">See my results</button>', true);
+      '<button class="btn" id="stageResults" style="margin-left:.4rem;padding:.4rem .8rem;">See my results</button>', true);
     var r=$('stageResults'); if(r) r.addEventListener('click', function(){ showTab('t-results'); });
   }
 
   /* Ticking off changes only makes sense once there are changes to tick. */
   var cf=$('checkField'); if(cf) cf.style.display = (st.id==='intervention'||st.id==='results') && c.picked.length ? '' : 'none';
   if(c.timelineVersion==='fixed-calendar-v1') box.insertAdjacentHTML('beforeend','<p class="hint">This older round keeps its original calendar dates. New rounds follow the date you commit your changes.</p>');
+  Array.prototype.forEach.call(box.querySelectorAll('[data-progress-date]'),function(b){
+    b.addEventListener('click',function(){setLogView('entry');editNight(b.dataset.progressDate);});
+  });
+  Array.prototype.forEach.call(box.querySelectorAll('[data-progress-month]'),function(b){
+    b.addEventListener('click',function(){calendarCursor=b.dataset.progressMonth;setLogView('calendar');});
+  });
+  if(logView==='calendar') renderCalendar();
   renderReview(st);
+  var reviewButton=$('openReview'); if(reviewButton) reviewButton.addEventListener('click',openReview);
   renderChecks();
 }
 
 var reviewAnswers = {};
-var reviewStep = 0;
+var reviewStep = -1;
+function openReview(){
+  if(stage().id!=='review') return;
+  renderReview(stage());
+  if(!$('reviewDialog').open) $('reviewDialog').showModal();
+  $('closeReview').focus();
+}
+function maybeOpenReview(){
+  var st=stage();
+  if(st.id==='review' && !st.cycle.reviewPrompted){
+    st.cycle.reviewPrompted=true; saveAll(); reviewStep=-1; openReview();
+  }
+}
+$('closeReview').addEventListener('click',function(){ $('reviewDialog').close(); });
+$('reviewDialog').addEventListener('close',function(){
+  var target=$('openReview')||$('stageBox'); target.tabIndex=0; target.focus({preventScroll:true});
+});
+
+var calendarCursor='',logView='entry';
+function setLogView(view){
+  logView=view;
+  var calendar=view==='calendar';
+  $('entryView').hidden=calendar; $('calendarView').hidden=!calendar;
+  $('entryTab').setAttribute('aria-selected',calendar?'false':'true');
+  $('openCalendar').setAttribute('aria-selected',calendar?'true':'false');
+  $('entryTab').tabIndex=calendar?-1:0;$('openCalendar').tabIndex=calendar?0:-1;
+  if(calendar){ if(!calendarCursor) calendarCursor=($('lDate').value||todayLocal()).slice(0,7);renderCalendar(); }
+}
+[$('entryTab'),$('openCalendar')].forEach(function(button,index){
+  button.addEventListener('keydown',function(e){
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+    e.preventDefault();var next=e.key==='Home'?0:e.key==='End'?1:1-index;
+    setLogView(next?'calendar':'entry');$(next?'openCalendar':'entryTab').focus();
+  });
+});
+$('entryTab').addEventListener('click',function(){setLogView('entry');});
+$('entryHelp').addEventListener('click',function(){$('entryHelpDialog').showModal();});
+$('closeEntryHelp').addEventListener('click',function(){$('entryHelpDialog').close();});
+function selectNight(date){
+  if(!date) return;
+  calendarCursor=date.slice(0,7);
+  if(state.log.some(function(e){return e.date===date;})){editNight(date);return;}
+  finishEditing(); checkState={}; $('lDate').value=date;
+  $('lSource').value=daysBetween(date,todayLocal())<=1?'morning':'';
+  $('lOut').value='22:30';$('lUp').value='07:00';$('lLatency').value='20';$('lLatencyVal').textContent='20 min';
+  $('lAwake').value='0';$('lWakings').value='0';$('lEnergy').value='3';$('lEnergyVal').textContent='3';
+  renderStage();renderChecks();
+}
+function renderCalendar(){
+  var parts=calendarCursor.split('-').map(Number),y=parts[0],m=parts[1]-1;
+  var first=new Date(Date.UTC(y,m,1)), count=new Date(Date.UTC(y,m+1,0)).getUTCDate();
+  $('calendarMonth').textContent=first.toLocaleDateString(undefined,{month:'long',year:'numeric',timeZone:'UTC'});
+  $('calendarNext').disabled=calendarCursor>=todayLocal().slice(0,7);
+  var out=''; for(var gap=0;gap<(first.getUTCDay()+6)%7;gap++) out+='<span></span>';
+  for(var day=1;day<=count;day++){
+    var date=calendarCursor+'-'+pad(day),entry=state.log.find(function(e){return e.date===date;});
+    var label=entry?(entry.phase==='intervention'?'C':entry.phase==='baseline'?'B':'•')+(entry.entrySource==='recalled'?' R':''):'';
+    var unavailable=date>todayLocal() || !entryPhase(date);
+    out+='<button type="button" data-night="'+date+'" class="calendar-day'+(entry?' recorded':'')+'"'+
+      (unavailable?' disabled':'')+(date===todayLocal()?' aria-current="date"':'')+
+      ' aria-label="'+date+(entry?', '+esc(entry.phase)+', '+sourceLabel(entry.entrySource)+', edit entry':', add entry')+'">'+day+'<small>'+label+'</small></button>';
+  }
+  $('calendarDays').innerHTML=out;
+  Array.prototype.forEach.call($('calendarDays').querySelectorAll('[data-night]'),function(b){
+    b.addEventListener('click',function(){
+      setLogView('entry');selectNight(b.dataset.night);$('lOut').focus({preventScroll:true});
+    });
+  });
+}
+$('openCalendar').addEventListener('click',function(){
+  setLogView('calendar');
+});
+function moveCalendar(delta){
+  var p=calendarCursor.split('-').map(Number),d=new Date(Date.UTC(p[0],p[1]-1+delta,1));
+  calendarCursor=d.toISOString().slice(0,7);renderCalendar();
+}
+$('calendarPrev').addEventListener('click',function(){moveCalendar(-1);});
+$('calendarNext').addEventListener('click',function(){moveCalendar(1);});
 function renderReview(st){
   var box=$('reviewBox'); if(!box) return;
-  var drawer=$('reviewDrawer'); if(drawer) drawer.hidden=st.id!=='review';
+  if(st.id!=='review' && $('reviewDialog').open) $('reviewDialog').close();
   if(st.id!=='review'){ box.style.display='none'; return; }
   box.style.display='';
   var c=st.cycle, sig=signals(c.n);
   reviewAnswers = c.answers && Object.keys(c.answers).length ? c.answers : reviewAnswers;
 
-  var read='';
+  var read='<p class="hint">There are fewer than five diary entries available for pattern suggestions after leaving out older memories. You can still explore general options or answer the routine check.</p>';
   if(sig){
-    read = '<span class="label">What your week already says</span><div class="readout">'+
+    read = '<span class="label">What your recorded nights suggest</span><div class="readout">'+
       '<div><span class="label">Estimated sleep</span><span class="rv">'+Math.floor(sig.hours)+'h'+pad(Math.round((sig.hours%1)*60))+'</span></div>'+
       '<div><span class="label">To fall asleep</span><span class="rv">'+Math.round(sig.latency)+'m</span></div>'+
       '<div><span class="label">Wake-ups a night</span><span class="rv">'+sig.wakings.toFixed(1)+'</span></div>'+
-      '<div><span class="label">Wake time swing</span><span class="rv">'+Math.round(sig.wakeSwing)+'m</span></div>'+
-      '<div><span class="label">Day felt</span><span class="rv">'+sig.energy.toFixed(1)+'</span></div></div>';
+      '<div><span class="label">Wake-time variation (SD)</span><span class="rv">'+Math.round(sig.wakeSwing)+'m</span></div>'+
+      '<div><span class="label">Morning energy</span><span class="rv">'+sig.energy.toFixed(1)+'</span></div></div>';
   }
 
   var qs = REVIEW_Q.map(function(q,index){
@@ -1306,33 +1426,37 @@ function renderReview(st){
 
   var answered = REVIEW_Q.filter(function(q){ return reviewAnswers[q.id]; }).length;
   var recs='';
-  if(answered===REVIEW_Q.length && reviewStep===REVIEW_Q.length){
+  if(reviewStep===-1 || (answered===REVIEW_Q.length && reviewStep===REVIEW_Q.length)){
     var picks=recommend(sig, reviewAnswers);
+    c.picked=c.picked.filter(function(id){return picks.some(function(r){return r.id===id;});});
     recs = '<hr class="rule"><span class="label">Choose your changes</span>'+
-      '<p class="hint" style="margin:.4rem 0 .9rem;">Suggestions based on your answers. Choose up to '+CONFIG.MAX_TOOLS+'.</p>'+
+      '<p class="hint" style="margin:.4rem 0 .9rem;">Possible fits, not a diagnosis. Start with one; you can choose up to '+CONFIG.MAX_TOOLS+'.</p><div class="suggestion-grid">'+
       picks.map(function(r){
         var on = c.picked.indexOf(r.id)!==-1;
-        return '<button class="rec" type="button" aria-pressed="'+(on?'true':'false')+'" data-rec="'+r.id+'">'+
+        return '<div class="suggestion-card"><button class="rec" type="button" aria-pressed="'+(on?'true':'false')+'" data-rec="'+r.id+'">'+
           '<span class="box" aria-hidden="true"></span><span><h4>'+esc(r.tool.name)+'</h4>'+
           (r.why?'<div class="rw">'+esc(r.why)+'</div>':'')+
-          '<div class="rh">'+esc(r.tool.how)+'</div></span></button><a class="rec-source" href="'+SOURCES[r.tool.source].url+'" target="_blank" rel="noopener noreferrer">'+esc(r.tool.basis)+' · Learn more ↗</a>';
-      }).join('')+
-      '<div class="btn-row"><button class="btn" id="commitBtn"'+(c.picked.length?'':' disabled')+'>Start week two with these</button>'+
+          '<div class="rh">'+esc(r.tool.how)+'</div></span></button><a class="rec-source" href="'+SOURCES[r.tool.source].url+'" target="_blank" rel="noopener noreferrer">'+esc(r.tool.basis)+' · Learn more ↗</a></div>';
+      }).join('')+'</div>'+
+      '<div class="btn-row"><button class="btn" id="commitBtn"'+(c.picked.length?'':' disabled')+'>Start my plan</button>'+
       '<span class="acct-sync" id="commitMsg">'+(c.picked.length?c.picked.length+' of '+CONFIG.MAX_TOOLS+' chosen':'Choose at least one')+'</span></div>';
   }
 
   /* The stage card directly above already says "Step 2 of 4", so this heading
      carries the question on its own rather than repeating the step. */
   box.innerHTML='<div class="review">'+
-    '<h3 style="font-size:1.45rem;margin:0 0 .9rem;">What should you change?</h3>'+
-    '<details class="review-data"><summary>What my log shows</summary>'+read+'</details>'+
-    '<p class="review-progress">'+(reviewStep<REVIEW_Q.length?'Question '+(reviewStep+1)+' of '+REVIEW_Q.length:'Choose what you want to try')+'</p>'+qs+
-    '<div class="review-nav"><button class="btn ghost" id="reviewBack"'+(reviewStep===0?' disabled':'')+'>Back</button>'+
-    (reviewStep<REVIEW_Q.length?'<button class="btn" id="reviewNext"'+(!reviewAnswers[REVIEW_Q[reviewStep].id]?' disabled':'')+'>'+(reviewStep===REVIEW_Q.length-1?'See suggestions':'Next question')+'</button>':'')+'</div>'+recs+'</div>';
+    '<h3 style="font-size:1.45rem;margin:0 0 .9rem;">A small next step.</h3>'+
+    '<p class="hint">'+esc(coverageText(nightsIn(c.n,'baseline')))+'</p>'+
+    '<details class="review-data"'+(reviewStep===-1?' open':'')+'><summary>What my log shows</summary>'+read+'</details>'+
+    (reviewStep===-1?'<p class="hint">Five entries open an initial review; they do not diagnose a sleep problem. These suggestions use your diary and any saved answers. A quick routine check can help you choose.</p><button class="btn" id="startRoutineQuiz">Find what fits my day · 5 questions</button>':'')+
+    '<p class="review-progress">'+(reviewStep>=0 && reviewStep<REVIEW_Q.length?'Question '+(reviewStep+1)+' of '+REVIEW_Q.length:'Choose what you want to try')+'</p>'+qs+
+    '<div class="review-nav"><button class="btn ghost" id="reviewBack"'+(reviewStep===-1?' disabled':'')+'>Back</button>'+
+    (reviewStep>=0 && reviewStep<REVIEW_Q.length?'<button class="btn" id="reviewNext"'+(!reviewAnswers[REVIEW_Q[reviewStep].id]?' disabled':'')+'>'+(reviewStep===REVIEW_Q.length-1?'See suggestions':'Next question')+'</button>':'')+'</div>'+recs+'</div>';
   function moveReview(delta){
-    reviewStep=Math.max(0,Math.min(REVIEW_Q.length,reviewStep+delta));renderReview(st);
+    reviewStep=Math.max(-1,Math.min(REVIEW_Q.length,reviewStep+delta));renderReview(st);
     var heading=box.querySelector('.review-progress');heading.tabIndex=-1;heading.focus({preventScroll:true});
   }
+  var quizButton=$('startRoutineQuiz'); if(quizButton) quizButton.addEventListener('click',function(){moveReview(1);});
   $('reviewBack').addEventListener('click',function(){moveReview(-1);});
   var nextButton=$('reviewNext');if(nextButton)nextButton.addEventListener('click',function(){moveReview(1);});
 
@@ -1360,6 +1484,7 @@ function renderReview(st){
   if(cb) cb.addEventListener('click', function(){
     var c2=currentCycle();
     if(!c2.picked.length) return;
+    c2.reviewSnapshot={version:'routine-review-v2',at:new Date().toISOString(),dates:nightsIn(c2.n,'baseline').map(function(e){return e.date;}),signals:signals(c2.n),answers:Object.assign({},c2.answers),picked:c2.picked.slice()};
     c2.committed=todayLocal();
     if(c2.timelineVersion==='rolling-v1'){
       var last=nightsIn(c2.n).reduce(function(d,e){return e.date>d?e.date:d;},c2.committed);
@@ -1393,7 +1518,7 @@ function renderChecks(){
     });
   });
 }
-$('lDate').addEventListener('change', function(){ checkState={}; renderStage(); renderChecks(); });
+$('lDate').addEventListener('change', function(){selectNight($('lDate').value);});
 $('lWakings').addEventListener('change', function(){ if(+$('lWakings').value>0 && $('lAwake').value==='0') $('lAwake').value=''; });
 $('lLatency').addEventListener('input', function(e){ $('lLatencyVal').textContent=e.target.value+' min'; });
 $('lEnergy').addEventListener('input', function(e){ $('lEnergyVal').textContent=e.target.value; });
@@ -1415,11 +1540,13 @@ function estimateDescription(entries){
 }
 var editingDate='';
 function finishEditing(){
-  editingDate=''; $('lDate').disabled=false; $('editNote').hidden=true;
-  $('cancelEdit').hidden=true; $('saveLog').textContent='Save last night';
+  editingDate=''; $('entryTitle').textContent='Log a night'; $('lDate').disabled=false; $('editNote').hidden=true;
+  $('cancelEdit').hidden=true; $('saveLog').textContent='Save night';
 }
 function editNight(date){
   var entry=state.log.find(function(e){return e.date===date;}); if(!entry) return;
+  calendarCursor=date.slice(0,7);setLogView('entry');$('entryTitle').textContent='Edit your night';
+  $('lSource').value=entry.entrySource||'unknown';
   editingDate=date; $('lDate').value=date; $('lDate').disabled=true;
   $('lOut').value=entry.out; $('lUp').value=entry.up;
   // The original 0..120 slider cannot represent a longer historic estimate.
@@ -1434,7 +1561,7 @@ function editNight(date){
   showTab('t-log'); renderChecks(); $('lAwake').focus({preventScroll:true});
 }
 $('cancelEdit').addEventListener('click',function(){
-  finishEditing(); checkState={}; $('lDate').value=todayLocal(); $('lAwake').value='0'; renderStage();
+  finishEditing(); checkState={}; selectNight(todayLocal());
 });
 $('saveLog').addEventListener('click', function(){
   var date=$('lDate').value; if(!date){ flash('Pick a date first.'); return; }
@@ -1443,13 +1570,18 @@ $('saveLog').addEventListener('click', function(){
   try{ metrics=sleepEstimate($('lOut').value,$('lUp').value,lat,awake===''?NaN:Number(awake)); }
   catch(err){ flash(err.message); $('lAwake').focus({preventScroll:true}); return; }
   var existing=state.log.find(function(e){return e.date===date;});
-  if(existing && editingDate!==date && !window.confirm('Replace the saved entry for '+date+'? Use Edit in your history to load its values first.')) return;
+  if(existing && editingDate!==date){editNight(date);flash('Loaded your saved entry. Review it before saving changes.');return;}
   var ph=existing && existing.phase ? existing : phaseFor(date);
   var c=ph ? state.cycles.find(function(c){return c.n===ph.cycle;}) : currentCycle();
-  if(!ph && c.start && date<c.start){ flash('This morning is before your round starts. Choose a morning in the round.'); return; }
+  var assignment=entryPhase(date);
+  if(!assignment){ flash('This date is outside this round. Earlier fixed rounds keep their original dates.'); return; }
+  c=assignment.cycle; ph=assignment.phase;
+  var source=$('lSource').value;
+  if(!validEntrySource(source,date,todayLocal(),existing)){flash('Choose whether this is a recent check-in, a morning diary, or an older memory.');$('lSource').focus();return;}
+  if(assignment.extend) c.start=date;
   var planned=ph && ph.phase==='intervention' ? c.picked : [];
   var done=planned.filter(function(id){ return checkState[id]; });
-  var entry={ date:date, out:$('lOut').value, up:$('lUp').value, lat:lat, wk:wk,
+  var entry={ entrySource:source,createdAt:existing?existing.createdAt||null:new Date().toISOString(),updatedAt:new Date().toISOString(),date:date, out:$('lOut').value, up:$('lUp').value, lat:lat, wk:wk,
               awakeMinutes:Number(awake), strategyIds:done.slice(), calculationVersion:'awake-minutes-v1',
               inBed:metrics.inBed, asleep:metrics.asleep, eff:metrics.eff,
               energy:+$('lEnergy').value, done:done.length, of:planned.length,
@@ -1465,7 +1597,8 @@ $('saveLog').addEventListener('click', function(){
   var d=new Date(date+'T00:00:00'); d.setDate(d.getDate()+1);
   var nextDate=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
   $('lDate').value=wasEditing?todayLocal():(nextDate>todayLocal()?todayLocal():nextDate);
-  $('lAwake').value='0'; $('lWakings').value='0'; renderChecks();
+  $('lAwake').value='0'; $('lWakings').value='0'; $('lSource').value=daysBetween($('lDate').value,todayLocal())<=1?'morning':''; renderChecks();
+  maybeOpenReview();
 });
 function flash(m){ say('copyMsg',m); }
 function rflash(m){ say('resultsMsg',m); }
@@ -1474,16 +1607,16 @@ function say(id,m){ var el=$(id); if(!el) return; el.textContent=m; setTimeout(f
 function renderLog(){
   restamp();
   var L=nightsIn(currentCycle().n);
-  if($('estimateNote')) $('estimateNote').textContent=estimateDescription(L);
+  if($('estimateNote')) $('estimateNote').textContent=estimateDescription(L)+' '+coverageText(L);
   var rn=$('resultsNote');
   if(rn){
     var st=stage();
     if(st.id==='start' || st.id==='baseline'){
       rn.style.display='block';
-      rn.innerHTML='<strong>Week one is still running.</strong> Choose your changes after baseline, then log '+CONFIG.RESULTS_AFTER+' week-two nights to compare.';
+      rn.innerHTML='<strong>Your baseline is still building.</strong> Choose your changes after your baseline, then log '+CONFIG.RESULTS_AFTER+' changes-phase nights to compare.';
     } else if(st.id==='review'){
       rn.style.display='block';
-      rn.innerHTML='<strong>Your review is ready.</strong> Answer the five questions on <button class="btn ghost" id="rnGo" style="padding:.3rem .7rem;">My log</button> to pick your changes and start week two.';
+      rn.innerHTML='<strong>Your review is ready.</strong> Explore your suggestions on <button class="btn ghost" id="rnGo" style="padding:.3rem .7rem;">My log</button> to pick your changes and start the changes phase.';
       var g=$('rnGo'); if(g) g.addEventListener('click', function(){ showTab('t-log'); });
     } else { rn.style.display='none'; }
   }
@@ -1491,13 +1624,14 @@ function renderLog(){
   var hrs=avg(function(e){ return e.asleep; })/60;
   var eff=avg(function(e){ return e.eff; });
   var en=avg(function(e){ return e.energy; });
-  var adh=L.length? L.reduce(function(a,e){ return a+(e.of?e.done/e.of:0); },0)/L.length*100 : 0;
+  var plannedNights=L.filter(function(e){return e.phase==='intervention' && e.of>0;});
+  var adh=plannedNights.length? plannedNights.reduce(function(a,e){return a+e.done/e.of;},0)/plannedNights.length*100:0;
   $('stats').innerHTML =
     '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+L.length+'</span></div>'+
     '<div class="stat"><span class="label">Estimated sleep</span><span class="sv">'+(L.length?(Math.floor(hrs)+'h'+pad(Math.round((hrs%1)*60))):'—')+'</span></div>'+
     '<div class="stat"><span class="label">Asleep while in bed</span><span class="sv">'+(L.length?Math.round(eff)+'%':'—')+'</span></div>'+
-    '<div class="stat"><span class="label">Day felt, avg</span><span class="sv">'+(L.length?en.toFixed(1):'—')+'</span></div>'+
-    '<div class="stat"><span class="label">Tools kept</span><span class="sv">'+(L.length?Math.round(adh)+'%':'—')+'</span></div>';
+    '<div class="stat"><span class="label">Morning energy, avg</span><span class="sv">'+(L.length?en.toFixed(1):'—')+'</span></div>'+
+    '<div class="stat"><span class="label">Tools kept</span><span class="sv">'+(plannedNights.length?Math.round(adh)+'%':'—')+'</span></div>';
 
   /* Study mode: the comparison that is actually the point of the experiment */
   var cmp=$('phaseCompare');
@@ -1510,28 +1644,29 @@ function renderLog(){
         ['Hours asleep', m(base,function(e){return e.asleep/60;}), m(iv,function(e){return e.asleep/60;}), 'h', 1, true],
         ['Minutes to fall asleep', m(base,function(e){return e.lat;}), m(iv,function(e){return e.lat;}), ' min', 0, false],
         ['Asleep while in bed', m(base,function(e){return e.eff;}), m(iv,function(e){return e.eff;}), '%', 0, true],
-        ['Day rating', m(base,function(e){return e.energy;}), m(iv,function(e){return e.energy;}), '/5', 1, true]
+        ['Morning energy', m(base,function(e){return e.energy;}), m(iv,function(e){return e.energy;}), '/5', 1, true]
       ];
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Week one ('+base.length+' nights) vs week two ('+iv.length+' nights)</span>'+
-        '<table class="log-table" style="margin-top:.6rem;"><tr><th>Measure</th><th>Week one</th><th>Week two</th><th>Change</th></tr>'+
+      cmp.innerHTML='<span class="label">Baseline ('+base.length+' nights) vs the changes phase ('+iv.length+' nights)</span>'+
+        '<table class="log-table" style="margin-top:.6rem;"><tr><th>Measure</th><th>Baseline</th><th>Trying changes</th><th>Change</th></tr>'+
         rows.map(function(r){
-          var diff=r[2]-r[1], good=r[5]?diff>0:diff<0;
-          var col=Math.abs(diff)<0.05?'var(--ink-mute)':(good?'var(--teal)':'var(--coral)');
+          var diff=r[2]-r[1];
+          var col='var(--ink-soft)'; // A numerical change is not a clinical success/failure score.
           return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
                  '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
         }).join('')+'</table>'+
-        '<p class="hint" style="margin-top:.6rem;">These weeks can show a pattern, but cannot prove what caused a change.</p>';
+        '<p class="hint">Baseline: '+esc(coverageText(base))+' Changes: '+esc(coverageText(iv))+'</p>'+
+        '<p class="hint" style="margin-top:.6rem;">These phases describe recorded nights, not proof that a habit worked. Missing days, memories, and different school/free-day mixes can change the averages.</p>';
     } else {
       cmp.style.display='block';
-      cmp.innerHTML='<span class="label">Current round · week one vs week two</span><p class="hint" style="margin-top:.5rem;">Complete your review and log '+CONFIG.REVIEW_AFTER+' baseline nights and '+CONFIG.RESULTS_AFTER+' week-two nights. '+base.length+' baseline, '+iv.length+' in week two so far.</p>';
+      cmp.innerHTML='<span class="label">Current round · baseline vs the changes phase</span><p class="hint" style="margin-top:.5rem;">Complete your review and log '+CONFIG.REVIEW_AFTER+' baseline nights and '+CONFIG.RESULTS_AFTER+' changes-phase nights. '+base.length+' baseline, '+iv.length+' in the changes phase so far.</p>';
     }
   }
 
   $('logTable').innerHTML = state.log.length
     ? '<tr><th>Date</th><th>Lights out</th><th>Up</th><th>Asleep</th><th>Efficiency</th><th>Day</th><th>Tools</th><th></th></tr>'+
       state.log.slice().reverse().map(function(e){
-        return '<tr><td>'+e.date+'</td><td>'+e.out+'</td><td>'+e.up+'</td><td>'+Math.floor(e.asleep/60)+'h'+pad(e.asleep%60)+'</td>'+
+        return '<tr><td>'+e.date+'<br><small>'+esc(sourceLabel(e.entrySource))+'</small></td><td>'+e.out+'</td><td>'+e.up+'</td><td>'+Math.floor(e.asleep/60)+'h'+pad(e.asleep%60)+'</td>'+
                '<td>'+e.eff+'%</td><td>'+e.energy+'/5</td><td>'+e.done+'/'+e.of+'</td>'+
                '<td class="del"><button class="rm" type="button" data-edit="'+e.date+'">Edit</button> <button class="rm" type="button" data-del="'+e.date+'">Delete</button></td></tr>';
       }).join('')
@@ -1587,8 +1722,8 @@ function renderLogChart(){
 
 $('exportCsv').addEventListener('click', function(){
   if(!state.log.length){ rflash('Nothing to export yet.'); return; }
-  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase','round','awake_minutes','calculation_version','strategy_ids']];
-  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'',e.cycle,e.awakeMinutes==null?'':e.awakeMinutes,e.calculationVersion||'legacy-wakings-12',(e.strategyIds||[]).join(';')]); });
+  var rows=[['wake_date','lights_out','out_of_bed','minutes_to_sleep','night_wakings','minutes_in_bed','minutes_asleep','sleep_efficiency_pct','day_rating','tools_done','tools_planned','phase','round','awake_minutes','calculation_version','strategy_ids','entry_source','created_at','updated_at']];
+  state.log.forEach(function(e){ rows.push([e.date,e.out,e.up,e.lat,e.wk,e.inBed,e.asleep,e.eff,e.energy,e.done,e.of,e.phase||'',e.cycle,e.awakeMinutes==null?'':e.awakeMinutes,e.calculationVersion||'legacy-wakings-12',(e.strategyIds||[]).join(';'),e.entrySource||'unknown',e.createdAt||'',e.updatedAt||'']); });
   var csv=rows.map(function(r){ return r.join(','); }).join('\n');
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
@@ -1615,7 +1750,7 @@ $('clearLog').addEventListener('click', function(){
   if(!window.confirm('Delete all nights and reset your rounds in this browser? Download a CSV first if you want a copy.')) return;
   if(Account.on && window.confirm('Also delete these nights from your record in the private Sheet?'))
     state.log.forEach(function(e){ Net.call(CONFIG.ENDPOINT, { route:'delete', date:e.date }); });
-  state.log=[]; state.synced={}; state.cycles=[newCycle(1,'')]; reviewAnswers={}; reviewStep=0; checkState={};
+  state.log=[]; state.synced={}; state.cycles=[newCycle(1,'')]; reviewAnswers={}; reviewStep=-1; checkState={};
   finishEditing(); renderLog(); renderStage(); buildSheet(); saveAll(); renderAcct(); rflash('Log deleted.');
 });
 
@@ -1683,11 +1818,11 @@ $('printResults').addEventListener('click', function(){
   var picked=c.picked.map(function(id){var tool=byId(id);return tool?esc(tool.name):'';}).filter(Boolean);
   var out='<header class="report-head"><span>Sleep Lab · Shayne&#8217;s Wellbeing Toolkit</span><h1>My sleep record</h1><p>'+esc(person?person+' · ':'')+'Round '+c.n+' · '+entries.length+' recorded nights</p></header>';
   out+='<h2>Changes chosen</h2><p>'+(picked.length?picked.join(' · '):'No changes chosen for this round yet.')+'</p>';
-  out+='<h2>My two weeks</h2><p>'+base.length+' baseline entries · '+iv.length+' intervention entries</p>';
+  out+='<h2>My sleep experiment</h2><p>'+base.length+' baseline entries · '+iv.length+' intervention entries</p><p>'+esc(coverageText(entries))+'</p>';
   if(c.committed && base.length>=CONFIG.REVIEW_AFTER && iv.length>=CONFIG.RESULTS_AFTER){
     var avg=function(rows,key){return rows.reduce(function(total,e){return total+e[key];},0)/rows.length;};
     out+='<table><thead><tr><th>Measure</th><th>Baseline</th><th>Intervention</th></tr></thead><tbody>';
-    [['Estimated sleep','asleep',60,' h'],['Time to fall asleep','lat',1,' min'],['Day rating','energy',1,' / 5']].forEach(function(r){
+    [['Estimated sleep','asleep',60,' h'],['Time to fall asleep','lat',1,' min'],['Morning energy','energy',1,' / 5']].forEach(function(r){
       out+='<tr><td>'+r[0]+'</td><td>'+(avg(base,r[1])/r[2]).toFixed(1)+r[3]+'</td><td>'+(avg(iv,r[1])/r[2]).toFixed(1)+r[3]+'</td></tr>';
     });
     out+='</tbody></table>';
@@ -1712,7 +1847,7 @@ $('newCycle').addEventListener('click', function(){
   }
   state.cycles.push(newCycle(state.cycles.length+1, next));
   finishEditing(); checkState={};
-  reviewAnswers={}; reviewStep=0;
+  reviewAnswers={}; reviewStep=-1;
   renderLog(); renderStage(); renderChecks(); buildSheet(); saveAll();
   showTab('t-log');
 });
@@ -1901,7 +2036,7 @@ function renderClass(d){
     '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+d.nights+'</span></div>'+
     '<div class="stat"><span class="label">Estimated sleep</span><span class="sv">'+d.avgHours.toFixed(1)+'h</span></div>'+
     '<div class="stat"><span class="label">Getting 8h or more</span><span class="sv">'+d.pctEnough+'%</span></div>'+
-    '<div class="stat"><span class="label">Day felt, avg</span><span class="sv">'+d.avgEnergy.toFixed(1)+'</span></div>';
+    '<div class="stat"><span class="label">Morning energy, avg</span><span class="sv">'+d.avgEnergy.toFixed(1)+'</span></div>';
 
   var pct=function(n){ return d.nights? Math.round(n/d.nights*100)+'%' : '0%'; };
   bars($('classHours'),  (d.hours||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }));
@@ -1913,12 +2048,12 @@ function renderClass(d){
       ['Hours asleep', ph.baseline.hours, ph.intervention.hours, 'h', 1, true],
       ['Minutes to fall asleep', ph.baseline.lat, ph.intervention.lat, ' min', 0, false],
       ['Asleep while in bed', ph.baseline.eff, ph.intervention.eff, '%', 0, true],
-      ['Day rating', ph.baseline.energy, ph.intervention.energy, '/5', 1, true]
+      ['Morning energy', ph.baseline.energy, ph.intervention.energy, '/5', 1, true]
     ];
-    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Week one</th><th>Week two</th><th>Change</th></tr>'+
+    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Baseline</th><th>Trying changes</th><th>Change</th></tr>'+
       rows.map(function(r){
-        var diff=r[2]-r[1], good=r[5]?diff>0:diff<0;
-        var col=Math.abs(diff)<0.05?'var(--ink-mute)':(good?'var(--teal)':'var(--coral)');
+        var diff=r[2]-r[1];
+        var col='var(--ink-soft)'; // A numerical change is not a clinical success/failure score.
         return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
                '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
       }).join('')+'</table>';
@@ -1954,6 +2089,7 @@ function todayLocal(){
 (function(){
   var t=new Date(), iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());
   $('lDate').value=iso;
+  $('lSource').value='morning';
   $('lDate').max=iso;
 })();
 window.addEventListener('focus',function(){ $('lDate').max=todayLocal(); });
