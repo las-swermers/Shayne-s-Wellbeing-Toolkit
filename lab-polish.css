@@ -282,3 +282,9 @@
 @media print { #entryHelpDialog { display:none!important; } }
 
 @media screen and (max-width:380px) { .progress-phase { flex-wrap:wrap;gap:0 6px; }.progress-label { min-width:80px; }.progress-dots { gap:0; } }
+
+@media screen {
+  .google-account { display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0; }
+  #googleStatus { color:var(--ink-soft);font-size:12px;line-height:1.5;flex:1 1 220px; }
+  .google-account .btn { min-height:36px;padding:6px 10px;font-size:12px; }
+}

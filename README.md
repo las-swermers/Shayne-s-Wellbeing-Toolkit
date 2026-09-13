@@ -1,3 +1,5 @@
+> Google connection update: [GOOGLE-SETUP.md](GOOGLE-SETUP.md) now documents in-page Google sign-in with an authenticated Cloud Run API. This supersedes the older IAP setup. The first release verifies identity and reads workbook metadata only; student record sync remains disabled.
+
 > Latest Sleep Lab design and evidence decisions: [Sleep evidence review](SLEEP-EVIDENCE-REVIEW.md). The student flow uses flexible baseline/changes phases; the five-entry review is a usability threshold, not a clinical assessment.
 
 # Shayne's Wellbeing Toolkit

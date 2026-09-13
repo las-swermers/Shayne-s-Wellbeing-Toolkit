@@ -1,3 +1,5 @@
+> Google connection update: [GOOGLE-SETUP.md](GOOGLE-SETUP.md) now documents in-page Google sign-in with an authenticated Cloud Run API. This supersedes the older IAP setup. The first release verifies identity and reads workbook metadata only; student record sync remains disabled.
+
 > Sleep Lab update: [SLEEP-EVIDENCE-REVIEW.md](SLEEP-EVIDENCE-REVIEW.md) records the current flexible-diary behaviour, research limits and remaining work. Its phase terminology supersedes the fixed-week wording below for self-paced rounds.
 
 # Shayne's Sleep Lab — design first, then one private Sheet
