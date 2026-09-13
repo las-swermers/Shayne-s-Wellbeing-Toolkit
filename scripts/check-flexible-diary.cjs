@@ -45,7 +45,7 @@ fill('2026-09-04','paper');
 assert.equal(saved().log.find(e=>e.date==='2026-09-04').phase,'baseline');
 assert.equal(saved().cycles[0].interventionStart,'2026-09-15');
 assert.equal(JSON.stringify(saved().cycles[0].reviewSnapshot),snapshot);
-$('openCalendar').click();assert.equal(d.querySelector('[data-night="2026-09-15"]').disabled,true);$('closeCalendar').click();
+$('openCalendar').click();assert.equal(d.querySelector('[data-night="2026-09-15"]').disabled,true);$('entryTab').click();
 now='2026-09-20T12:00:00Z';fill('2026-09-16','recalled');
 assert.equal(saved().log.find(e=>e.date==='2026-09-16').phase,'intervention');
 $('t-results').click();assert.match($('estimateNote').textContent,/1 remembered later/);

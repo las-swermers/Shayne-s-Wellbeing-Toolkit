@@ -166,9 +166,8 @@
   .log-heading { margin-bottom:16px;flex-wrap:wrap; }
   .log-heading>.label { font:500 22px var(--sans);letter-spacing:-.03em;text-transform:none; }
   .entry-source { margin-top:16px; }
-  #reviewDialog,#calendarDialog { margin:auto;width:min(820px,calc(100% - 24px));max-height:90svh;padding:24px;border:1px solid var(--hairline);border-radius:20px;background:var(--paper);color:var(--ink);overflow:auto; }
-  #calendarDialog { width:min(480px,calc(100% - 24px)); }
-  #reviewDialog::backdrop,#calendarDialog::backdrop { background:#061d25b8;backdrop-filter:blur(8px); }
+  #reviewDialog { margin:auto;width:min(820px,calc(100% - 24px));max-height:90svh;padding:24px;border:1px solid var(--hairline);border-radius:20px;background:var(--paper);color:var(--ink);overflow:auto; }
+  #reviewDialog::backdrop { background:#061d25b8;backdrop-filter:blur(8px); }
   .dialog-toolbar { position:sticky;top:-24px;background:var(--paper);padding:12px 0;z-index:2; }
   .dialog-toolbar h2 { font:500 clamp(20px,3vw,26px) var(--sans);letter-spacing:-.04em; }
   #reviewBox .review { margin:0;padding:8px 0;border:0;background:transparent;box-shadow:none; }
@@ -188,11 +187,11 @@
   #stageBox #openReview { display:block;margin-top:14px; }
 }
 @media screen and (max-width:600px) {
-  #reviewDialog,#calendarDialog { padding:16px; }.dialog-toolbar { top:-16px; }
+  #reviewDialog { padding:16px; }.dialog-toolbar { top:-16px; }
   #reviewBox .readout { grid-template-columns:repeat(2,minmax(0,1fr)); }
   #reviewBox .rec { grid-template-columns:20px minmax(0,1fr); }
 }
-@media print { #reviewDialog,#calendarDialog { display:none!important; } }
+@media print { #reviewDialog { display:none!important; } }
 @media screen {
   .suggestion-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px; }
   .suggestion-card { min-width:0;display:flex;flex-direction:column; }
@@ -200,3 +199,86 @@
   .suggestion-card .rec-source { margin:0 4px;font-size:11px; }
 }
 @media screen and (max-width:600px) { .suggestion-grid { grid-template-columns:1fr; } }
+
+/* My Log: one working surface, two interchangeable views. */
+@media screen {
+  #p-log { padding-top:12px;padding-bottom:16px; }
+  #p-log .log-kicker { display:none; }
+  #p-log .log-workspace { display:block;margin-top:8px; }
+  #p-log #stageBox { display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:20px;padding:14px 20px;margin:0 0 10px; }
+  #p-log .stage-summary { min-width:0; }
+  #p-log #stageBox h3 { font-size:21px;line-height:1.2;margin:5px 0; }
+  #p-log #stageBox p { font-size:13px;line-height:1.4;margin:0; }
+  #p-log #stageBox .stage-step { font-size:10px; }
+  #p-log #stageBox #openReview,#p-log #stageResults { display:inline-flex;margin:4px 0 0!important;min-height:32px;padding:4px 10px!important;font-size:12px; }
+  .night-progress { display:grid;gap:4px; }
+  .progress-phase { display:flex;align-items:center;gap:10px; }
+  .progress-label { min-width:106px;font-size:11px;color:var(--ink-soft); }
+  .progress-label strong { color:var(--ink);margin-left:3px; }
+  .progress-dots { display:flex;align-items:center;gap:2px; }
+  .night-dot { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:0;background:transparent;padding:0;border-radius:8px;flex-shrink:0;cursor:pointer; }
+  .night-dot>span { width:10px;height:10px;border-radius:50%;border:1px solid var(--hairline); }
+  .night-dot.baseline>span { background:var(--accent);border-color:var(--accent); }
+  .night-dot.intervention>span { background:var(--teal);border-color:var(--teal); }
+  .night-dot.empty { cursor:default; }
+  .night-dot[aria-current] { box-shadow:inset 0 0 0 1px var(--accent); }
+  .night-dot:hover:enabled { background:var(--paper-warm); }
+  .night-dot:focus-visible,.progress-more:focus-visible,.workspace-tabs button:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+  .progress-more { background:transparent;color:var(--accent);border:0;font:inherit;font-size:11px;min-width:28px;min-height:28px;cursor:pointer;padding:0; }
+  .workspace-toolbar { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px; }
+  .workspace-tabs { display:inline-flex;gap:3px;padding:3px;border:1px solid var(--hairline);border-radius:12px;background:var(--paper-warm); }
+  .workspace-tabs button { min-height:36px;padding:6px 24px;border:0;border-radius:8px;background:transparent;color:var(--ink-soft);font:500 13px var(--sans);cursor:pointer; }
+  .workspace-tabs button[aria-selected=true] { background:var(--paper);color:var(--ink);box-shadow:0 1px 4px #00000015; }
+  .workspace-actions { display:flex;gap:4px; }
+  .workspace-actions .btn { min-height:36px;padding:6px 12px;font-size:12px; }
+  #p-log .log-form { padding:16px 20px; }
+  #p-log .log-heading { margin-bottom:12px; }
+  #entryTitle { font:500 20px var(--sans);letter-spacing:-.03em;margin:0; }
+  #entryHelp { min-height:28px;padding:4px 8px;font-size:11px; }
+  #p-log .log-form .lf-grid { grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 20px; }
+  #p-log .field .label { font-size:11px;margin-bottom:4px; }
+  #p-log .entry-source { margin-top:12px;max-width:400px; }
+  #p-log .entry-source select { min-height:36px;font-size:13px; }
+  #p-log #checkField { margin-top:10px; }
+  #p-log #editNote { margin:8px 0 0;font-size:11px; }
+  #p-log .btn-row { margin-top:12px;align-items:center; }
+  #calendarView { border:1px solid var(--hairline);border-radius:20px;background:var(--paper-warm);padding:14px 24px; }
+  #calendarView>.hint,#calendarView .calendar-toolbar,#calendarView .calendar-week,#calendarDays { max-width:560px;margin-left:auto;margin-right:auto; }
+  #calendarView .calendar-toolbar { margin-top:8px;margin-bottom:10px; }
+  #calendarView>.hint { font-size:12px;line-height:1.45; }
+  #calendarView .calendar-day { min-height:40px; }
+  #calendarView #calendarDays+p { margin-top:10px; }
+  #entryHelpDialog { margin:auto;width:min(520px,calc(100% - 24px));max-height:90svh;overflow:auto;padding:20px;border:1px solid var(--hairline);border-radius:20px;background:var(--paper);color:var(--ink); }
+  #entryHelpDialog::backdrop { background:#061d25b8;backdrop-filter:blur(8px); }
+  #entryHelpDialog p { font-size:14px;line-height:1.6;margin:12px 0; }
+  #paperPreview .print-options { margin:0;padding:0; }
+}
+@media screen and (max-width:760px) {
+  #p-log { padding:8px 12px 12px; }
+  #p-log #stageBox { grid-template-columns:1fr;gap:8px;padding:10px 12px; }
+  #p-log #stageBox h3 { font-size:18px; }
+  #p-log #stageBox p { font-size:12px; }
+  .night-progress { gap:0; }
+  .progress-phase { gap:6px; }
+  .progress-label { min-width:96px;font-size:10px; }
+  .night-dot { width:24px;height:26px; }
+  .night-dot>span { width:8px;height:8px; }
+  .progress-more { min-width:24px; }
+  .workspace-toolbar { gap:6px;margin-bottom:8px; }
+  .workspace-tabs button { min-height:34px;padding:5px 14px;font-size:12px; }
+  .workspace-actions .btn { min-height:34px;padding:4px 6px;font-size:11px; }
+  #p-log .log-form { padding:12px; }
+  #p-log .log-heading { margin-bottom:8px; }
+  #entryTitle { font-size:18px; }
+  #p-log .log-form .lf-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px; }
+  #p-log .entry-source { margin-top:8px;max-width:none; }
+  #p-log .entry-source select { font-size:16px; }
+  #p-log .btn-row { margin-top:8px;gap:6px; }
+  #p-log #copyMsg { font-size:11px;min-height:0; }
+  #calendarView { padding:12px;border-radius:16px; }
+  #calendarView .calendar-day { min-height:40px; }
+}
+/* Never crop controls at high zoom, with a keyboard open, or on short screens. */
+@media print { #entryHelpDialog { display:none!important; } }
+
+@media screen and (max-width:380px) { .progress-phase { flex-wrap:wrap;gap:0 6px; }.progress-label { min-width:80px; }.progress-dots { gap:0; } }

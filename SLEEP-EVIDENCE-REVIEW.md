@@ -78,3 +78,12 @@ Automated checks exercise sparse dates, earlier paper entries, editing without d
 Browser visual and keyboard verification should cover 360px and 1440px in both themes: no horizontal overflow, readable calendar dates, native dialog Escape/focus behaviour and access to the commit button. Responsive code alone is not visual acceptance. Clinical validation and a real-account sync test are separate work.
 
 Validation for this PR: 22 automated tests and three DOM journeys passed. Native browser rendering was unavailable: Playwright is installed but its Chromium executable is absent. No screenshots, native keyboard pass or mobile visual acceptance are claimed. Review the Vercel PR preview in both themes before merging.
+
+
+## Compact My Log workspace refinement
+
+The calendar is now an inline alternate view rather than a modal. Entry/Calendar tabs share one working surface and preserve an unfinished entry when switching views. The stage strip keeps separate baseline/changes totals and displays clickable dots for the latest seven saved nights per phase. An overflow control opens the calendar for older dates. These represent recorded entries, not consecutive days.
+
+Entry help and optional report personalisation are available through Entry help and Paper tracker. Desktop inputs use three columns; narrow layouts use two. No fixed-height clipping or disabled page scrolling is introduced: short screens, larger text and open keyboards must retain access to controls. A typical-laptop single-screen layout is the design target; native visual acceptance remains outstanding.
+
+`check-log-workspace.cjs` verifies view switching, arrow-key tab navigation, draft retention, calendar markers, exact-date progress links, overflow access, editing without duplication and the relocated secondary controls. The existing three DOM journeys still pass alongside this fourth journey.
