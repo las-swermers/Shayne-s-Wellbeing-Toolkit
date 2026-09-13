@@ -651,7 +651,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <div class="head">
       <span class="label">04 · Group view</span>
       <h2>Our shared picture.</h2>
-      <p class="prose">Protected group summaries will appear here once Google sign-in and account syncing are connected.</p>
+      <p class="prose">Class codes and protected group summaries are coming next. You can use your personal sleep log without joining a class.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
@@ -677,7 +677,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     </div>
 
     </details><p class="hint" id="classFoot" style="margin-top:1.2rem;"></p></div>
-    <p class="quiet-note">Your personal entries currently stay on this device. Class codes are being prepared.</p>
+    <p class="quiet-note">A class code will identify your group; it will not give classmates access to your diary. Group summaries are not available in this release.</p>
   </div>
 </section>
 
@@ -2044,8 +2044,8 @@ function loadClass(force){
   if(!Connected){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='Group insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
-    classOffline('Waiting on the account connection.');
+    $('classNote').textContent='Group view is coming later. Signing in enables your personal record, but does not switch on class codes or group summaries.';
+    classOffline('Group view is not available in this release.');
     return;
   }
   classLoaded=true;

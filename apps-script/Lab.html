@@ -831,6 +831,58 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 @media print { #entryHelpDialog { display:none!important; } }
 
 @media screen and (max-width:380px) { .progress-phase { flex-wrap:wrap;gap:0 6px; }.progress-label { min-width:80px; }.progress-dots { gap:0; } }
+
+/* Fit the morning form to the screen without reducing readable text. */
+@media screen {
+  #p-log .log-form .field { margin-bottom:0;min-width:0; }
+  .acct-txt,.acct-sync { overflow-wrap:anywhere;min-width:0; }
+  .workspace-toolbar { flex-wrap:wrap; }
+}
+@media screen and (max-width:760px) {
+  .masthead { position:relative; }
+  .mast-inner { padding:8px 12px 0; }
+  .tabs .tab { min-height:44px; }
+  .acct { display:grid;grid-template-columns:8px minmax(0,1fr);padding:12px;gap:8px 10px; }
+  .acct .acct-txt { grid-column:2;font-size:13px;line-height:1.5; }
+  .acct .btn,.acct .acct-sync { grid-column:2; }
+  .acct .btn { min-height:44px;white-space:normal; }
+  .acct .acct-sync:empty { display:none; }
+  #p-log .workspace-tabs button,#p-log .workspace-actions .btn,#entryHelp,
+  #p-log #stageBox #openReview,#p-log #stageResults { min-height:44px; }
+  #p-log .log-form .lf-grid { gap:12px; }
+  #p-log .field .label { font-size:12px; }
+  #p-log .field input[type=range] { min-height:44px; }
+  #p-log .entry-source select { min-height:44px; }
+  #calendarView .calendar-day { min-height:44px; }
+  .night-dot { width:36px;height:44px; }
+  .progress-more { min-width:36px;min-height:44px; }
+  .progress-dots { flex-wrap:wrap;gap:2px; }
+  .progress-phase { align-items:flex-start;flex-direction:column;gap:0; }
+  .progress-label { font-size:12px; }
+  .night-progress { gap:6px; }
+  #reviewDialog .dialog-toolbar { align-items:flex-start; }
+  #reviewDialog .dialog-toolbar .btn { flex-shrink:0; }
+}
+@media screen and (max-width:540px) {
+  #p-log .log-form .lf-grid>.field:first-child,
+  #p-log .log-form .lf-grid>.field:nth-child(n+4) { grid-column:1/-1; }
+  .workspace-toolbar { align-items:stretch;gap:8px; }
+  .workspace-tabs { display:flex;width:100%; }
+  .workspace-tabs button { flex:1; }
+  .workspace-actions { width:100%;gap:8px; }
+  .workspace-actions .btn { flex:1; }
+  #p-log .btn-row #saveLog { flex:1; }
+  #p-log #copyMsg { flex-basis:100%;font-size:13px; }
+  .stat-row { grid-template-columns:1fr; }
+  .stat { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+  .stat .label { font-size:12px; }
+  #reviewBox .readout { grid-template-columns:1fr; }
+}
+@media screen and (max-width:380px) {
+  #p-log .log-form .lf-grid { grid-template-columns:1fr; }
+  .mast-actions { gap:8px; }
+  .wordmark { font-size:12px; }
+}
 </style>
 <style>/* Shared art direction: matte fills, precise contours, quiet working surfaces. */
 :root,:root[data-theme="night"]{
@@ -1102,7 +1154,7 @@ body::before{display:none}
     <div class="head">
       <span class="label">04 · Group view</span>
       <h2>Our shared picture.</h2>
-      <p class="prose">Protected group summaries will appear here once Google sign-in and account syncing are connected.</p>
+      <p class="prose">Class codes and protected group summaries are coming next. You can use your personal sleep log without joining a class.</p>
     </div>
 
     <div class="notice" id="classNote" style="display:none;"></div>
@@ -1128,7 +1180,7 @@ body::before{display:none}
     </div>
 
     </details><p class="hint" id="classFoot" style="margin-top:1.2rem;"></p></div>
-    <p class="quiet-note">Your personal entries currently stay on this device. Class codes are being prepared.</p>
+    <p class="quiet-note">A class code will identify your group; it will not give classmates access to your diary. Group summaries are not available in this release.</p>
   </div>
 </section>
 
@@ -2495,8 +2547,8 @@ function loadClass(force){
   if(!Connected){
     classLoaded=true;
     $('classNote').style.display='block';
-    $('classNote').textContent='Group insights are not connected yet. This view will show protected group summaries when enough students have taken part.';
-    classOffline('Waiting on the account connection.');
+    $('classNote').textContent='Group view is coming later. Signing in enables your personal record, but does not switch on class codes or group summaries.';
+    classOffline('Group view is not available in this release.');
     return;
   }
   classLoaded=true;

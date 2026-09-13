@@ -14,6 +14,10 @@ Your existing /exec URL stays the same. Do not create a second deployment.
 
 Updating code in GitHub does not update Apps Script. The two files above must be copied into Apps Script and deployed.
 
+If the web app only says **“Signed in as … You can close this window”**, it is still serving the old version. The updated version opens the full Sleep Lab and has **Sign out of Sleep Lab** in My log. Check that both files were saved, then select **New version** in the existing deployment and open its `/exec` URL again. Also check that you updated the deployment matching the URL used by the website.
+
+The Vercel page saying **Saving to this browser** is expected: that page is the local diary. The Google-hosted Lab holds the connected record. Moving Vercel to production does not update the Google-hosted app or transfer browser entries.
+
 ## Try it yourself
 
 Open the same [connected Sleep Lab](https://script.google.com/a/macros/las.ch/s/AKfycbzZ5h0XCN_kRuv0RtWNSBs8fwdtGJCxpTJzy1xuSQLY298wSKrFscsucNDwCYoaVvOA/exec).
@@ -52,4 +56,3 @@ Run `node scripts/build-apps-script.mjs` after editing sleep-lab.html or its CSS
 Only `labRequest` handles student data. It checks the verified account and revocable Lab session on every call; Google Apps Script's native RPC carries payloads. The old JSONP and URL write routes are disabled. Owner setup functions reject student callers.
 
 Sources: [Google's native browser/server communication](https://developers.google.com/apps-script/guides/html/communication), [Apps Script identity availability](https://developers.google.com/apps-script/reference/base/session), [Google's JSONP security warning](https://developers.google.com/apps-script/guides/content).
-

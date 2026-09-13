@@ -32,7 +32,7 @@ function labRequest(p){
       var sessions=CacheService.getScriptCache();
       if(typeof p.session!=='string'||p.session.length>100||sessions.get('session:'+p.session)!==user.accountId)throw Error('session-expired');
       if(p.route==='logout'){sessions.remove('session:'+p.session);return {ok:true};}
-      if(p.route==='class')return {ready:false,message:'Group insights are being prepared. Your personal log is available now.'};
+      if(p.route==='class')return {ready:false,message:'Class codes and protected group summaries are not available in this release. Your personal log is available now.'};
       if(p.route==='me')return readMine_(user);
       if(p.route!=='put' && p.route!=='remove')throw Error('unknown-route');
       var kind=p.kind,key=String(p.key||'');if(kind!=='night' && kind!=='cycle')throw Error('bad-kind');
