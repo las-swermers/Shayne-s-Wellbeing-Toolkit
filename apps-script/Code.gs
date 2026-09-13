@@ -7,13 +7,26 @@ var STRATEGY_IDS=['wake-anchor','light-am','caffeine','phone-park','runway','twe
 function doGet(e){
   if(e && e.parameter && (e.parameter.route || e.parameter.callback))
     return HtmlService.createHtmlOutput('This connection has been upgraded. Open the web app URL without query parameters.');
+  var stage='identity';
   try{
-    var user=identity_(),template=HtmlService.createTemplateFromFile('Lab');
+    var user=identity_();stage='lab-file';
+    var template=HtmlService.createTemplateFromFile('Lab');stage='session';
     user.session=Utilities.getUuid()+Utilities.getUuid();
     CacheService.getScriptCache().put('session:'+user.session,user.accountId,21600);
     template.bootJson=JSON.stringify(user).replace(/</g,'\\u003c');
+    stage='lab-render';
     return template.evaluate().setTitle("Sleep Lab — Shayne's Toolkit").addMetaTag('viewport','width=device-width, initial-scale=1');
-  }catch(err){return HtmlService.createHtmlOutput('Sleep Lab could not open. Use your las.ch account. If already signed in, ask Shayne to check the Apps Script setup and Lab file.');}
+  }catch(err){
+    var messages={
+      'identity':'Google could not verify an approved school account. Open this link with your las.ch account.',
+      'setup-required':'Setup is incomplete. The project owner needs to run setupSheets in Apps Script.',
+      'lab-file':'The Lab page could not be loaded. Check that the HTML file is named Lab.html, with a capital L and only one .html extension.',
+      'session':'The Lab session could not start. Try again shortly.',
+      'lab-render':'The Lab page could not be prepared. The project owner should run selfTest in Apps Script to check the HTML file.'
+    };
+    var code=err && err.message==='setup-required'?'setup-required':stage;
+    return HtmlService.createHtmlOutput('Sleep Lab could not open. '+messages[code]+' Check: '+code+'.');
+  }
 }
 function doPost(){return ContentService.createTextOutput('{"error":"unsupported-transport"}').setMimeType(ContentService.MimeType.JSON);}
 function identity_(){
@@ -129,4 +142,26 @@ function setupSheets(){
     records_();return 'Ready. Add Lab.html and update the existing web app deployment.';
   }finally{lock.releaseLock();}
 }
-function selfTest(){requireOwner_();identity_();records_();Logger.log('Owner identity, domain and Records schema passed. Test student login and live saves next.');}
+// Owner-only, read-only checks. Never print emails, keys, sessions or diary contents.
+function selfTest(){
+  requireOwner_();
+  var stage='ACCOUNT: Check that you are using your las.ch account and have run setupSheets.';
+  try{
+    identity_();Logger.log('PASS: School account and setup key.');
+    stage='SHEET: Run setupSheets from the Apps Script project opened through the tracker Sheet.';
+    records_();Logger.log('PASS: Records tab and headers.');
+    stage='LAB FILE: Name the HTML file Lab (capital L, without typing .html in the name field).';
+    var template=HtmlService.createTemplateFromFile('Lab');
+    Logger.log('PASS: Lab.html found.');
+    stage='LAB CONTENT: Replace the entire HTML file with the supplied Lab.html code using Raw on GitHub.';
+    var raw=template.getRawContent();
+    if(!/<!doctype html>/i.test(raw)||raw.indexOf('window.SLEEP_BOOT')<0||raw.indexOf('<?!= bootJson ?>')<0)throw Error('wrong-template');
+    template.bootJson='{"accountId":"setup-check","email":"setup-check@las.ch","session":""}';
+    template.evaluate().setTitle('Sleep Lab setup check').addMetaTag('viewport','width=device-width, initial-scale=1');
+    Logger.log('PASS: Lab page renders. Editor checks passed. Update the existing deployment to New version and test its web app URL.');
+    return 'Editor checks passed; the deployed web app still needs a live check.';
+  }catch(err){
+    Logger.log('CHECK FAILED — '+stage);
+    throw Error(stage);
+  }
+}
