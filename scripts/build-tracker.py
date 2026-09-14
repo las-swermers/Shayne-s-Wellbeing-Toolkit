@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 out = ROOT / 'downloads' / 'sleep-lab-tracker.pdf'
 out.parent.mkdir(exist_ok=True)
 c = canvas.Canvas(str(out), pagesize=A4, pageCompression=1, invariant=1)
-c.setTitle('Sleep Lab - My two-week sleep experiment')
+c.setTitle('Sleep Lab - My sleep experiment')
 c.setAuthor("Shayne's Wellbeing Toolkit")
 W, H = A4
 LEFT, RIGHT = 36, W - 36
@@ -22,7 +22,7 @@ def rule(y, x1=LEFT, x2=RIGHT):
 
 text(LEFT, 804, "SHAYNE'S WELLBEING TOOLKIT", 8, True, soft)
 text(LEFT, 768, 'My sleep experiment', 27, True)
-text(LEFT, 748, 'Two weeks of noticing what helps. Fill in one row each morning.', 10, color=soft)
+text(LEFT, 748, 'Two phases, at your own pace. Record near waking; gaps are okay.', 10, color=soft)
 rule(733)
 text(LEFT, 713, 'Name (optional)', 8, color=soft); rule(698, LEFT, 279)
 text(304, 713, 'House / year (optional)', 8, color=soft); rule(698, 304, RIGHT)
@@ -44,9 +44,9 @@ def week(y, label, subtitle, start):
     for x in xs[1:-1]:
         c.setStrokeColor(HexColor(line));c.line(x,top-32,x,top-200)
 
-week(672, '01  Notice your usual sleep', 'Week one: record your routine. No changes needed yet.',1)
-week(416, '02  Try your chosen changes', 'Week two: keep logging. Mark which changes you tried using A, B or C.',8)
-text(LEFT, 169, '* My changes for week two',10,True)
+week(672, '01  Notice your usual sleep', 'Baseline: record your routine. Review after five entries; keep logging if useful.',1)
+week(416, '02  Try your chosen changes', 'Changes phase: mark A, B or C for habits tried. Compare after five entries.',8)
+text(LEFT, 169, '* My chosen changes',10,True)
 for label,y in [('A',149),('B',128),('C',107)]:
     text(LEFT,y,label,9,True);rule(y-3,LEFT+20,RIGHT)
 text(LEFT, 84, 'Day felt: 1 = very low energy, 3 = in between, 5 = very good energy.',8,color=soft)

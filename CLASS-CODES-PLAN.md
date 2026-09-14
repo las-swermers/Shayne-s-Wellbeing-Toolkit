@@ -1,6 +1,6 @@
 # Teacher classes and comparisons
 
-Proposal for the next feature after the mobile/account layout pass. No class routes or teacher permissions are enabled by this document.
+Approved plan. This draft implements the first release: server-verified teacher roles, class membership, join-code rotation/expiry, and reciprocal teacher comparison invitations. It builds on the mobile/account layout PR. Shared sleep summaries and contribution consent are not implemented or enabled. The current production Apps Script is unchanged until its owner deploys the two updated files.
 
 ## Student and teacher experience
 

@@ -29,7 +29,7 @@ $('reviewNext').click();d.querySelector('[data-rec]').click();$('commitBtn').cli
 assert.equal($('reviewDialog').open,false);
 $('printBtn2').click();assert.equal($('paperPreview').open,true);assert.equal($('downloadTracker').hidden,false);$('closePaper').click();
 $('t-results').click();$('printResults').click();assert.equal($('paperPreview').open,true);assert.equal($('reportPreview').hidden,false);assert.ok($('reportPreview').textContent.includes('recorded nights'));$('closePaper').click();
-$('t-class').click();assert.equal($('schoolData').hidden,true);assert.ok($('classNote').textContent.includes('not connected'));
+$('t-class').click();assert.equal($('classWorkspace').hidden,true);assert.equal($('classConnect').hidden,false);assert.ok($('classNote').textContent.includes('school account'));
 $('t-resources').click();assert.equal(d.querySelector('.panel.active').id,'p-resources');assert.equal(d.querySelectorAll('.resource-card').length,10);
 assert.deepEqual(errors,[]);
 console.log('DOM integration passed: full init, five review steps, back/edit, choose/commit, tracker/report previews, resource navigation, school empty state.');
