@@ -334,3 +334,30 @@
   .mast-actions { gap:8px; }
   .wordmark { font-size:12px; }
 }
+
+/* Account identity, status and actions each keep their own space. */
+@media screen {
+  #acct { display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:14px 18px;margin:0 0 12px;width:100%;max-width:100%;box-sizing:border-box; }
+  #acct .acct-summary { display:grid;grid-template-columns:8px minmax(0,1fr);align-items:start;gap:12px;min-width:0; }
+  #acct .acct-dot { margin:6px 0 0;position:static; }
+  #acct .acct-details,#acct .acct-txt,#acct .acct-sync { min-width:0;max-width:100%;overflow-wrap:anywhere;grid-column:auto; }
+  #acct .acct-txt { font-size:13px;line-height:1.5; }
+  #acct .acct-sync { margin-top:4px;font-size:12px;line-height:1.5; }
+  #acct .acct-sync:empty { display:none; }
+  #acct .acct-actions { display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;min-width:0;max-width:100%; }
+  #acct .btn { min-height:44px;max-width:100%;padding:8px 12px;white-space:normal;overflow-wrap:anywhere;grid-column:auto;margin:0; }
+}
+@media screen and (max-width:900px) {
+  #acct { grid-template-columns:minmax(0,1fr);gap:12px;padding:14px; }
+  #acct .acct-actions { justify-content:flex-start;padding-left:20px; }
+}
+@media screen and (max-width:540px) {
+  #acct .acct-actions { display:grid;grid-template-columns:minmax(0,1fr);padding-left:0; }
+  #acct .btn { width:100%; }
+  .dialog-toolbar { flex-wrap:wrap; }
+  #p-log .night-progress { min-width:0; }
+  #p-log .progress-dots { max-width:100%; }
+  .results-grid>.viz { min-width:0;padding:16px; }
+  .viz-head { flex-wrap:wrap;gap:8px; }
+  .legend { flex-wrap:wrap; }
+}

@@ -569,11 +569,17 @@ input[type=range] { width:100%; accent-color:var(--accent); }
     <span class="label log-kicker">02 · My log</span>
 
     <div class="acct off" id="acct">
-      <span class="acct-dot" aria-hidden="true"></span>
-      <span class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</span>
-      <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with Google</button>
-      <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
-      <span class="acct-sync" id="acctSync" role="status" aria-live="polite"></span>
+      <div class="acct-summary">
+        <span class="acct-dot" aria-hidden="true"></span>
+        <div class="acct-details">
+          <div class="acct-txt" id="acctTxt">Checking whether you are signed in&hellip;</div>
+          <div class="acct-sync" id="acctSync" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="acct-actions" id="acctActions">
+        <button class="btn" id="signInBtn" type="button" style="display:none;">Sign in with Google</button>
+        <button class="btn ghost" id="syncBtn" type="button" style="display:none;">Sync now</button>
+      </div>
     </div>
     <div class="notice" id="storeNote" style="display:none;"></div>
 
@@ -1880,7 +1886,7 @@ function renderAcct(){
   }
   txt.innerHTML='<strong>'+ (Account.on?'Signed in.':'Connecting…')+'</strong> '+esc(boot.email)+'<br>Your personal record · Google stays signed in when you leave the Lab.';
   var out=$('signOutBtn');
-  if(!out){out=document.createElement('button');out.id='signOutBtn';out.className='btn ghost';out.textContent='Sign out of Sleep Lab';out.type='button';box.appendChild(out);out.addEventListener('click',signOutLab);}
+  if(!out){out=document.createElement('button');out.id='signOutBtn';out.className='btn ghost';out.textContent='Sign out of Sleep Lab';out.type='button';$('acctActions').appendChild(out);out.addEventListener('click',signOutLab);}
   out.disabled=syncBusy||sessionEnded;
   acctSay(Account.lastError || (syncBusy?'Syncing…':n?n+' change'+(n===1?'':'s')+' waiting':Account.on?'Up to date':'Checking your account…'));
 }
