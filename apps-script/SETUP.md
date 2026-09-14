@@ -10,7 +10,8 @@ Your existing /exec URL stays the same. Do not create a second deployment.
 2. Open **Code.gs**. Replace its contents with [the updated Code.gs](Code.gs).
 3. Beside **Files**, click **+ → HTML**. Name the file **Lab** (Google adds .html). Paste the entire contents of [Lab.html](Lab.html). If Lab already exists, replace that file instead. Save both files.
 4. In the function dropdown at the top, choose **setupSheets**, then click **Run**. Approve Google's requested access if prompted. This adds a **Records** tab and creates the account-ID key internally. Existing tabs are preserved. Do not erase or rotate ACCOUNT_ID_KEY in Script Properties.
-5. Choose **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Keep **Execute as: Me** and **Who has access: Anyone in Leysin American School**. Keep the Sheet itself private.
+5. Choose **selfTest** and click **Run**. Confirm all four checks say **PASS**. This checks the editor files; the deployed app still needs a live check.
+6. Choose **Deploy → Manage deployments → pencil → Version: New version → Deploy**. Keep **Execute as: Me** and **Who has access: Anyone in Leysin American School**. Keep the Sheet itself private.
 
 Updating code in GitHub does not update Apps Script. The two files above must be copied into Apps Script and deployed.
 
@@ -56,3 +57,22 @@ Run `node scripts/build-apps-script.mjs` after editing sleep-lab.html or its CSS
 Only `labRequest` handles student data. It checks the verified account and revocable Lab session on every call; Google Apps Script's native RPC carries payloads. The old JSONP and URL write routes are disabled. Owner setup functions reject student callers.
 
 Sources: [Google's native browser/server communication](https://developers.google.com/apps-script/guides/html/communication), [Apps Script identity availability](https://developers.google.com/apps-script/reference/base/session), [Google's JSONP security warning](https://developers.google.com/apps-script/guides/content).
+
+
+## Class-code pilot: only after reviewing this draft
+
+This adds class membership and teacher invitations. It does not share or compare sleep results yet. No Vercel environment variables are needed.
+
+1. Replace both **Code.gs** and **Lab.html** with the files from this same branch. Keep the HTML name **Lab** (capital L; do not type the extension).
+2. Run **setupSheets** if this is a new project, then run **setupClasses**. This creates Teachers, Classes, Memberships and Comparisons. It preserves diary rows and grants nobody teacher access automatically.
+3. In the private workbook, open **Teachers**. Add approved staff below the headers: their school email under `school_email`, the name students should see under `display_name`, and `yes` under `active`. The workbook owner controls approval. Do not give students workbook access or put real teacher emails into GitHub.
+4. Run **selfTest**, then update the existing deployment to **New version** as above. Keep school-only access and execute as the owner.
+5. Reopen the connected Lab. Approved staff get a **Teacher** tab. Create a class, choose its study dates and copy the student join code. Codes expire after seven days; **New join code** replaces the old one. **Close joining** keeps existing memberships; **Archive class** removes them and revokes its comparison connections. No diary entries are deleted by either action.
+6. A student opens **Group view**, previews the code, checks the teacher/class and confirms joining. Students can leave without losing their personal log. The pilot permits one class per overlapping study period.
+7. To connect two classes, the first teacher chooses **Invite comparison** and sends that separate code to the other teacher. The other teacher previews it and confirms one of their own classes with the exact same study dates. Each class can have one accepted comparison connection. Either teacher can revoke it. Results remain unavailable until the later summary release.
+
+For the pilot, use two approved staff accounts and a separate school test account. Check joining, leaving, expired/replaced codes, staff removal and class archiving before inviting a class. Changing a Teachers row from `yes` to `no` blocks teacher actions and new joins to that teacher's classes immediately; it does not transfer class ownership. To hand a class to another teacher, archive it and create a new one in this version.
+
+Student membership is pseudonymous in the private Sheet. Class names, teacher display names and study dates are shown to signed-in school accounts with a valid code; do not use sensitive class names. A code alone does not grant diary access. Codes are stored as keyed digests and shown once; the browser does not save them. Request throttling uses Apps Script's best-effort cache and is not a guaranteed durable abuse limit. Agree retention and class sizes before any shared summary release.
+
+Next release: explicit contribution choices, fixed-period aggregates, distinct-student thresholds, rounded approved snapshots, overlap/subtraction protections, and deletion/withdrawal handling. No current class route reads the Records, Nights or Cycles tabs.

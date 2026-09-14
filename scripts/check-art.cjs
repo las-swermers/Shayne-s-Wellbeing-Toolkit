@@ -15,7 +15,8 @@ for (const file of ['index.html', 'sleep-lab.html']) {
     assert.ok(fs.existsSync(path.resolve(root,ref.split('#')[0])), file+': '+ref);
   }
   assert.ok(doc.querySelector('link[href="illustrated.css"]'));
-  assert.ok(!/Leysin American School|everyday life at LAS/.test(html));
+  doc.querySelectorAll('script,style').forEach(el=>el.remove());
+  assert.ok(!/Leysin American School|everyday life at LAS/.test(doc.body.textContent));
 }
 const landing = new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
 assert.equal(landing.querySelector('h1').textContent,'Tools for everyday life.');

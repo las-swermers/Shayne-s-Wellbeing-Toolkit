@@ -537,6 +537,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       <button class="tab" role="tab" id="t-learn"   aria-controls="p-learn"   aria-selected="true"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4V4Zm16 0h-4a3 3 0 0 0-3 3m0 14a4 4 0 0 1 4-3h3V4"/></svg><span class="n">01</span>How it works</button>
       <button class="tab" role="tab" id="t-log"     aria-controls="p-log"     aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17H6V4Zm3-2h6v4H9V2Zm0 8h6m-6 4h6"/></svg><span class="n">02</span>My log</button>
       <button class="tab" role="tab" id="t-results" aria-controls="p-results" aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3v17h17M8 16v-4m5 4V7m5 9V4"/></svg><span class="n">03</span>My results</button>
+      <button class="tab" role="tab" hidden id="t-teacher" aria-controls="p-teacher" aria-selected="false">Teacher</button>
       <button class="tab" role="tab" id="t-class"   aria-controls="p-class"   aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12H4Zm5 0v-7h6v7M8 10h1m6 0h1"/></svg><span class="n">04</span>Group view</button>
       <button class="tab" role="tab" id="t-resources" aria-controls="p-resources" aria-selected="false">Resources</button>
       <button class="tab" role="tab" id="t-help"    aria-controls="p-help"    aria-selected="false"><svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v.01M9 8a3 3 0 1 1 5 2c-2 1-2 2-2 3M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20"/></svg><span class="n">05</span>More help</button>
@@ -556,8 +557,8 @@ input[type=range] { width:100%; accent-color:var(--accent); }
       <div class="step"><span class="step-n">03 / Try a change</span><h3>See what you notice</h3><p>Keep logging as you try your changes. Compare your baseline with your changes phase.</p></div>
     </div>
     <div class="learn-actions">
-      <div class="work-card"><h3>Keep it digital</h3><p>Your entries currently stay in this browser.</p><button class="btn" id="startNow">Log last night</button></div>
-      <div class="work-card"><h3>Prefer pen and paper?</h3><p>One A4 sheet, with room for all fourteen mornings.</p><div class="btn-row"><button class="btn ghost" id="printIntro">Preview tracker</button><a class="btn ghost" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a></div></div>
+      <div class="work-card"><h3>Keep it digital</h3><p>Keep a local log here, or open the connected Lab to save to your school account.</p><button class="btn" id="startNow">Log last night</button></div>
+      <div class="work-card"><h3>Prefer pen and paper?</h3><p>One A4 sheet, with seven spaces per phase. Gaps between dates are okay.</p><div class="btn-row"><button class="btn ghost" id="printIntro">Preview tracker</button><a class="btn ghost" href="downloads/sleep-lab-tracker.pdf" download>Download PDF</a></div></div>
     </div>
     <p class="quiet-note">This is a wellbeing experiment, not a test or a diagnosis. <a href="#resources">Explore the research</a> or <a href="#help">find support</a>.</p>
   </div>
@@ -653,38 +654,21 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 
 <!-- ══════ 03 · THE SCHOOL ══════ -->
 <section class="panel" id="p-class" role="tabpanel" aria-labelledby="t-class" tabindex="0">
-  <div class="inner wide">
-    <div class="head">
-      <span class="label">04 · Group view</span>
-      <h2>Our shared picture.</h2>
-      <p class="prose">Class codes and protected group summaries are coming next. You can use your personal sleep log without joining a class.</p>
-    </div>
-
-    <div class="notice" id="classNote" style="display:none;"></div>
-    <div id="schoolData" hidden><div class="stat-row" id="classStats"></div>
-
-    <div class="viz">
-      <div class="viz-head"><h3>Did the changes move anything?</h3><span class="label">Baseline vs the changes phase</span></div>
-      <div id="classPhase"></div>
-      <p class="viz-note">Group averages can show patterns, not what caused them.</p>
-    </div>
-
-    <details class="history-drawer"><summary>Explore sleep patterns</summary><div class="class-grid">
-      <div class="viz">
-        <div class="viz-head"><h3>How long we sleep</h3><span class="label">Nights, by length</span></div>
-        <div class="bars" id="classHours"></div>
-        <p class="viz-note">Teenagers need <strong>8&ndash;10 hours</strong>.</p>
-      </div>
-      <div class="viz">
-        <div class="viz-head"><h3>Nights by weekday</h3><span class="label">Average hours asleep</span></div>
-        <div class="bars" id="classWeek"></div>
-        <p class="viz-note">A big weekday-to-weekend gap is <strong>social jet lag</strong>, and it is what makes Monday feel like a flight.</p>
-      </div>
-    </div>
-
-    </details><p class="hint" id="classFoot" style="margin-top:1.2rem;"></p></div>
-    <p class="quiet-note">A class code will identify your group; it will not give classmates access to your diary. Group summaries are not available in this release.</p>
-  </div>
+ <div class="inner wide"><div class="head"><span class="label">Group view</span><h2>Your class.</h2><p class="prose">Join a class with a code from your teacher. Your personal sleep diary stays private.</p></div>
+ <p id="classNote" class="notice" role="status" aria-live="polite"></p>
+ <button type="button" class="btn" id="classConnect" hidden>Open connected Sleep Lab</button>
+ <div id="classWorkspace" hidden><form id="joinForm" class="class-form"><label for="joinCode">Class join code</label><div class="class-actions"><input id="joinCode" required maxlength="32" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX"><button class="btn" type="submit">Preview class</button></div></form>
+ <div id="joinPreview" class="class-card" hidden></div><div id="memberships" class="class-cards"></div></div>
+ <p class="quiet-note">Joining records your class membership only. Shared sleep summaries are not enabled yet; joining does not share your sleep entries.</p></div>
+</section>
+<section class="panel" id="p-teacher" role="tabpanel" aria-labelledby="t-teacher" tabindex="0">
+ <div class="inner wide"><div class="head"><span class="label">Teacher</span><h2>Bring your class together.</h2><p class="prose">Create a class and share its join code with students. Use a separate invitation to connect with another teacher.</p></div>
+ <p id="teacherNote" class="notice" role="status" aria-live="polite"></p>
+ <div id="teacherWorkspace" hidden><form id="createClass" class="class-form"><div class="class-fields"><label>Class name<input id="className" required maxlength="60" autocomplete="off"></label><label>Study starts<input id="classStart" required type="date"></label><label>Study ends<input id="classEnd" required type="date"></label></div><button type="submit" class="btn">Create class</button></form>
+ <div id="classCodeOutput" class="class-card" role="status" hidden></div><div id="ownedClasses" class="class-cards"></div>
+ <h3>Connect two classes</h3><p>Both teachers confirm the connection. Choose the same study dates. This release saves the connection; comparison results come later.</p>
+ <form id="comparisonForm" class="class-form"><label for="comparisonCode">Teacher comparison invitation</label><div class="class-actions"><input id="comparisonCode" required maxlength="32" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX"><button class="btn" type="submit">Preview invitation</button></div></form>
+ <div id="comparisonPreview" class="class-card" hidden></div><div id="comparisons" class="class-cards"></div></div></div>
 </section>
 
 <!-- ══════ 04 · MORE HELP ══════ -->
@@ -731,7 +715,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <!-- ══════ PRINTED TRACKING SHEET ══════ -->
 <section class="sheet print-only" id="p-sheet">
   <div class="sheet-head">
-    <span class="label">The Sleep Lab · Two-week tracking sheet</span>
+    <span class="label">The Sleep Lab · Flexible tracking sheet</span>
     <h2>My sleep experiment</h2>
   </div>
   <div class="smeta">
@@ -757,7 +741,7 @@ input[type=range] { width:100%; accent-color:var(--accent); }
 <section class="print-only" id="personalReport" aria-label="Personal sleep record"></section>
 
 <dialog id="paperPreview" aria-labelledby="paperTitle">
-  <div class="paper-toolbar"><div><span class="label">On paper</span><h2 id="paperTitle">Your fourteen-day tracker</h2></div><button class="btn ghost" id="closePaper" type="button">Close</button></div>
+  <div class="paper-toolbar"><div><span class="label">On paper</span><h2 id="paperTitle">Your sleep tracker</h2></div><button class="btn ghost" id="closePaper" type="button">Close</button></div>
     <details class="print-options"><summary>Personalise my printed record</summary><div class="lf-grid">
       <div class="field"><label class="label" for="fName">Name (optional)</label><input type="text" id="fName"></div>
       <div class="field"><label class="label" for="fHouse">House / year (optional)</label><input type="text" id="fHouse"></div>
@@ -891,6 +875,7 @@ function loadAll(){
 /* ═════════ TABS ═════════ */
 var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
 function showTab(id){
+  if(id==='t-teacher' && $('t-teacher').hidden)return;
   tabs.forEach(function(t){
     var on=t.id===id;
     t.setAttribute('aria-selected', on?'true':'false');
@@ -901,7 +886,7 @@ function showTab(id){
   try { history.replaceState(null,'','#'+id.replace('t-','')); } catch(e){}
   if(id==='t-log') { renderAcct(); renderStage(); }
   if(id==='t-results') { renderLog(); renderLogChart(); }
-  if(id==='t-class') loadClass();
+  if(id==='t-class'||id==='t-teacher') loadClass();
   var active=document.querySelector('.panel.active'); if(active) armReveals(active);
   window.scrollTo({ top:0, behavior:'auto' });
 }
@@ -910,8 +895,9 @@ tabs.forEach(function(t,i){
   t.addEventListener('keydown', function(e){
     var d = e.key==='ArrowRight'?1 : e.key==='ArrowLeft'?-1 : 0;
     if(!d && e.key!=='Home' && e.key!=='End') return; e.preventDefault();
-    var index=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+d+tabs.length)%tabs.length;
-    var nx=tabs[index]; nx.focus(); showTab(nx.id);
+    var visible=tabs.filter(function(tab){return !tab.hidden;}),at=visible.indexOf(t);
+    var index=e.key==='Home'?0:e.key==='End'?visible.length-1:(at+d+visible.length)%visible.length;
+    var nx=visible[index]; nx.focus(); showTab(nx.id);
   });
 });
 
@@ -1809,7 +1795,7 @@ $('printResults').addEventListener('click', function(){
   }else out+='<p>The comparison is not ready yet. Keep this record of what you have logged so far.</p>';
   out+='<h2>Recorded nights</h2><table><thead><tr><th>Morning</th><th>Phase</th><th>Lights out</th><th>Out of bed</th><th>Estimated sleep</th><th>Day</th></tr></thead><tbody>';
   out+=entries.length?entries.map(function(e){return '<tr><td>'+esc(e.date)+'</td><td>'+esc(e.phase||'—')+'</td><td>'+esc(e.out)+'</td><td>'+esc(e.up)+'</td><td>'+Math.floor(e.asleep/60)+'h '+pad(e.asleep%60)+'m</td><td>'+e.energy+'/5</td></tr>';}).join(''):'<tr><td colspan="6">No nights recorded in this round.</td></tr>';
-  out+='</tbody></table><p class="report-note">'+esc(estimateDescription(entries))+' A difference between weeks does not establish what caused it.</p>';
+  out+='</tbody></table><p class="report-note">'+esc(estimateDescription(entries))+' A difference between phases does not establish what caused it.</p>';
   report.innerHTML=out; $('reportPreview').innerHTML=out; openPaper('results');
 });
 window.addEventListener('afterprint',function(){delete document.body.dataset.printMode;});
@@ -1835,7 +1821,7 @@ function openPaper(mode){
   var personal=mode==='results';
   $('trackerPreview').hidden=personal; $('reportPreview').hidden=!personal;
   $('downloadTracker').hidden=personal; $('printPersonal').hidden=!personal;
-  $('paperTitle').textContent=personal?'My sleep record':'Your fourteen-day tracker';
+  $('paperTitle').textContent=personal?'My sleep record':'Your sleep tracker';
   $('paperHint').textContent=personal?'Choose Save as PDF in your print settings to keep a digital copy.':'One page · A4 · Black and white';
   $('paperPreview').showModal();
 }
@@ -1976,92 +1962,54 @@ if($('signInBtn'))$('signInBtn').addEventListener('click',openSignIn);
 if($('syncBtn'))$('syncBtn').addEventListener('click',function(){if(Account.on && Object.keys(state.pending).length)flushQueue();else syncPull();});
 window.addEventListener('online',function(){if(Account.on)flushQueue();else syncPull();});
 
-/* ═════════ WHOLE-SCHOOL DASHBOARD ═════════
-   Reads the public deployment, which only ever returns counts. If it is not
-   configured, or too few people have logged anything for the numbers to be
-   anonymous, the panel says exactly that rather than inventing a picture. */
-var classLoaded=false;
-function bars(el, rows, klass){
-  if(!el) return;
-  var max=rows.reduce(function(m,r){ return Math.max(m, r[1]||0); }, 0) || 1;
-  el.innerHTML = rows.map(function(r){
-    var pct=Math.round((r[1]||0)/max*100);
-    return '<div class="bar-row"><span>'+esc(r[0])+'</span>'+
-           '<span class="bar-track"><span class="bar-fill'+(klass?' '+klass:'')+'" style="width:'+pct+'%"></span></span>'+
-           '<span class="bv">'+esc(r[2]!=null?r[2]:r[1])+'</span></div>';
-  }).join('') || '<p class="hint">Nothing here yet.</p>';
-}
-
-function classOffline(msg){
-  $('schoolData').hidden=true;
-  $('classStats').innerHTML='';
-  ['classHours','classWeek'].forEach(function(id){
-    var el=$(id); if(el) el.innerHTML='<div class="class-empty">'+esc(msg)+'</div>';
-  });
-  $('classPhase').innerHTML='';
-  $('classFoot').textContent='';
-}
-
-function renderClass(d){
-  if(!d || !d.ready){
-    classOffline(d && d.message ? d.message
-      : 'Not enough nights logged yet to show these anonymously.');
-    $('classNote').style.display='block';
-    $('classNote').textContent = d && d.message ? d.message
-      : 'The dashboard stays blank until enough people have logged nights that nobody can be identified from the totals.';
-    return;
+/* Class membership and teacher invitations. No shared sleep statistics in this release. */
+var classState=null,classBusy=false,joinPending=null,comparisonPending=null,createRequest='';
+function classMessage(text){$('classNote').textContent=text;$('teacherNote').textContent=text;}
+function classError(e){
+  var messages={'teacher-required':'Teacher access is not enabled for this account. Ask the toolkit owner to check the approved teacher list.', 'class-unavailable':'This class is no longer available to manage.', 'invalid-code':'That code is invalid, expired or closed. Ask the teacher for a current code.', 'membership-overlap':'You already belong to a class for these study dates. Leave that class before joining another.', 'period-mismatch':'Both classes need the same study start and end dates.', 'comparison-unavailable':'This comparison is unavailable. Each class can connect to one other class at a time.', 'try-later':'Please wait before trying more codes or creating more classes.', 'bad-date':'Check the study dates. The end must follow the start, within one year.', 'bad-value':'Check the fields and preview the code again.'};
+  classMessage(messages[e.message]||'Class setup could not be reached. Retry below, or ask the toolkit owner to check setupClasses. Your personal log still works.');
+  if(['teacher-required','session-expired','account-changed','approved-account-required'].includes(e.message)){
+    $('t-teacher').hidden=true;$('teacherWorkspace').hidden=true;$('ownedClasses').replaceChildren();$('comparisons').replaceChildren();$('classCodeOutput').hidden=true;
+    if($('p-teacher').classList.contains('active'))showTab('t-class');
   }
-  $('classNote').style.display='none';
-  $('schoolData').hidden=false;
-  $('classStats').innerHTML =
-    '<div class="stat"><span class="label">Students taking part</span><span class="sv">'+d.students+'</span></div>'+
-    '<div class="stat"><span class="label">Nights logged</span><span class="sv">'+d.nights+'</span></div>'+
-    '<div class="stat"><span class="label">Estimated sleep</span><span class="sv">'+d.avgHours.toFixed(1)+'h</span></div>'+
-    '<div class="stat"><span class="label">Getting 8h or more</span><span class="sv">'+d.pctEnough+'%</span></div>'+
-    '<div class="stat"><span class="label">Morning energy, avg</span><span class="sv">'+d.avgEnergy.toFixed(1)+'</span></div>';
-
-  var pct=function(n){ return d.nights? Math.round(n/d.nights*100)+'%' : '0%'; };
-  bars($('classHours'),  (d.hours||[]).map(function(r){ return [r.band, r.n, pct(r.n)]; }));
-  bars($('classWeek'),   (d.weekday||[]).map(function(r){ return [r.day, r.hours, r.hours.toFixed(1)+'h']; }), 'teal');
-
-  var ph=d.phases;
-  if(ph && ph.baseline && ph.intervention){
-    var rows=[
-      ['Hours asleep', ph.baseline.hours, ph.intervention.hours, 'h', 1, true],
-      ['Minutes to fall asleep', ph.baseline.lat, ph.intervention.lat, ' min', 0, false],
-      ['Asleep while in bed', ph.baseline.eff, ph.intervention.eff, '%', 0, true],
-      ['Morning energy', ph.baseline.energy, ph.intervention.energy, '/5', 1, true]
-    ];
-    $('classPhase').innerHTML='<table class="log-table"><tr><th>Measure</th><th>Baseline</th><th>Trying changes</th><th>Change</th></tr>'+
-      rows.map(function(r){
-        var diff=r[2]-r[1];
-        var col='var(--ink-soft)'; // A numerical change is not a clinical success/failure score.
-        return '<tr><td>'+r[0]+'</td><td>'+r[1].toFixed(r[4])+r[3]+'</td><td>'+r[2].toFixed(r[4])+r[3]+
-               '</td><td style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(r[4])+r[3]+'</td></tr>';
-      }).join('')+'</table>';
-  } else {
-    $('classPhase').innerHTML='<p class="hint">Appears once enough people have finished both weeks.</p>';
-  }
-  $('classFoot').textContent='Last updated '+(d.updated||'just now')+'. Counts only — no names, no email addresses, no single night shown on its own.';
 }
-
-function loadClass(force){
-  if(classLoaded && !force) return;
-  if(!Connected){
-    classLoaded=true;
-    $('classNote').style.display='block';
-    $('classNote').textContent='Group view is coming later. Signing in enables your personal record, but does not switch on class codes or group summaries.';
-    classOffline('Group view is not available in this release.');
-    return;
-  }
-  classLoaded=true;
-  Net.call(CONFIG.ENDPOINT, { route:'class' }, renderClass, function(){
-    $('classNote').style.display='block';
-    $('classNote').textContent='Could not reach the group view. Your own log is unaffected.';
-    classOffline('Dashboard unavailable.');
-    classLoaded=false;
+function classCall(route,data,done){
+  if(classBusy||!Connected||sessionEnded)return;
+  classBusy=true;document.querySelectorAll('#classWorkspace button,#teacherWorkspace button').forEach(function(b){b.disabled=true;});
+  Net.call('',Object.assign({route:'classes.'+route},data||{}),function(d){
+    classBusy=false;if(sessionEnded)return;
+    document.querySelectorAll('#classWorkspace button,#teacherWorkspace button').forEach(function(b){b.disabled=false;});done(d);
+  },function(e){classBusy=false;if(sessionEnded)return;document.querySelectorAll('#classWorkspace button,#teacherWorkspace button').forEach(function(b){b.disabled=false;});classError(e);});
+}
+function classSummary(c){return '<h3>'+esc(c.name)+'</h3><p>'+esc(c.teacher)+' · '+esc(c.start)+' to '+esc(c.end)+'</p>';}
+function classButton(label,fn){var b=document.createElement('button');b.type='button';b.className='btn ghost';b.textContent=label;b.addEventListener('click',fn);return b;}
+function classCard(c){var el=document.createElement('article');el.className='class-card';el.innerHTML=classSummary(c);return el;}
+function revealCode(code,label){var el=$('classCodeOutput');el.replaceChildren();el.hidden=!code;if(!code)return;var p=document.createElement('p');p.textContent=label+' · valid for seven days. Copy it now; use a new code if you lose it.';var strong=document.createElement('strong');strong.className='class-code';strong.textContent=code;el.append(p,strong);}
+function refreshClasses(message){loadClass(message||'Class updated.');}
+function loadClass(message){
+  if(!Connected){classMessage('Open the connected Sleep Lab with your school account to join a class.');$('classConnect').hidden=false;return;}
+  classCall('state',{},function(d){
+    classState=d;if(!d.teacher && $('p-teacher').classList.contains('active'))showTab('t-class');$('classWorkspace').hidden=false;$('t-teacher').hidden=!d.teacher;$('teacherWorkspace').hidden=!d.teacher;
+    document.querySelector('.tabs').classList.toggle('has-teacher',d.teacher);
+    classMessage(typeof message==='string'?message:'Class membership is available. Shared sleep summaries are not enabled yet.');
+    $('memberships').replaceChildren();d.memberships.forEach(function(c){var card=classCard(c);card.appendChild(classButton('Leave class',function(){if(window.confirm('Leave '+c.name+'? Your personal sleep log will be kept.'))classCall('leave',{classId:c.id},function(){refreshClasses('You have left the class.');});}));$('memberships').appendChild(card);});
+    if(!d.memberships.length)$('memberships').textContent='You have not joined a class yet.';
+    $('ownedClasses').replaceChildren();d.classes.forEach(function(c){var card=classCard(c),actions=document.createElement('div');actions.className='class-actions';
+      [['New join code','rotate'],['Close joining','close'],['Archive class','archive'],['Invite comparison','invite']].forEach(function(pair){actions.appendChild(classButton(pair[0],function(){
+        if(pair[1]!=='invite'&&!window.confirm(pair[0]+' for '+c.name+'? Existing join codes will stop working. Archiving also removes class memberships.'))return;
+        classCall(pair[1],{classId:c.id},function(r){revealCode(r.code,pair[1]==='invite'?'Teacher comparison invitation':'Student join code');refreshClasses(pair[0]+' completed.');});
+      }));});var status=document.createElement('p');status.textContent=c.open?'Joining open (codes expire after seven days).':'Joining closed.';card.append(status,actions);$('ownedClasses').appendChild(card);});
+    $('comparisons').replaceChildren();d.comparisons.filter(function(x){return x.status!=='revoked';}).forEach(function(x){var card=document.createElement('article');card.className='class-card';var p=document.createElement('p');p.textContent=(x.source?x.source.name:'Archived class')+' → '+(x.target?x.target.name:'Awaiting another teacher')+' · '+x.status;card.appendChild(p);card.appendChild(classButton('Revoke connection',function(){if(window.confirm('Revoke this comparison invitation or connection?'))classCall('revoke',{comparisonId:x.id},function(){revealCode(null,'');refreshClasses('Connection revoked.');});}));$('comparisons').appendChild(card);});
   });
 }
+$('classConnect').addEventListener('click',openSignIn);
+$('classNote').after(classButton('Refresh class access',function(){loadClass();}));
+$('joinCode').addEventListener('input',function(){joinPending=null;$('joinPreview').hidden=true;});
+$('joinForm').addEventListener('submit',function(e){e.preventDefault();var code=$('joinCode').value;classCall('preview',{code:code},function(d){if($('joinCode').value!==code)return;joinPending={code:code,classId:d.classInfo.id};var el=$('joinPreview');el.innerHTML=classSummary(d.classInfo);el.hidden=false;el.appendChild(classButton('Confirm join',function(){if(!joinPending)return;classCall('join',Object.assign({confirm:true},joinPending),function(){joinPending=null;el.hidden=true;$('joinCode').value='';refreshClasses('You have joined the class. Your sleep diary stays private.');});}));});});
+$('createClass').addEventListener('input',function(){createRequest='';});
+$('createClass').addEventListener('submit',function(e){e.preventDefault();if(!createRequest)createRequest='create-'+Date.now()+'-'+Math.random().toString(36).slice(2);classCall('create',{name:$('className').value,start:$('classStart').value,end:$('classEnd').value,requestId:createRequest},function(d){createRequest='';$('createClass').reset();revealCode(d.code,'Student join code');refreshClasses(d.code?'Class created. Share the student join code.':'Class already created. Use New join code to get another code.');});});
+$('comparisonCode').addEventListener('input',function(){comparisonPending=null;$('comparisonPreview').hidden=true;});
+$('comparisonForm').addEventListener('submit',function(e){e.preventDefault();var code=$('comparisonCode').value;classCall('previewComparison',{code:code},function(d){if($('comparisonCode').value!==code)return;comparisonPending={code:code,sourceId:d.source.id};var el=$('comparisonPreview');el.innerHTML=classSummary(d.source);el.hidden=false;var label=document.createElement('label');label.textContent='Connect your class';var select=document.createElement('select');select.id='comparisonTarget';(classState.classes||[]).filter(function(c){return c.start===d.source.start&&c.end===d.source.end;}).forEach(function(c){var option=document.createElement('option');option.value=c.id;option.textContent=c.name;select.appendChild(option);});label.appendChild(select);el.appendChild(label);if(!select.options.length){var note=document.createElement('p');note.textContent='Create a class with these same study dates first.';el.appendChild(note);return;}el.appendChild(classButton('Confirm class connection',function(){if(!comparisonPending)return;classCall('accept',Object.assign({classId:select.value,confirm:true},comparisonPending),function(){comparisonPending=null;el.hidden=true;$('comparisonCode').value='';refreshClasses('Classes connected. Shared results will be added in a later release.');});}));});});
 
 /* ═════════ INIT ═════════ */
 function todayLocal(){
@@ -2083,6 +2031,7 @@ if(!Store.ok){
 renderTools(); renderChecks(); renderLog(); renderStage();
 armReveals(document.querySelector('.panel.active'));
 renderAcct(); syncPull();
+if(Connected)loadClass();
 drawPressure(); buildSheet();
 var initialTab=location.hash.slice(1);
 if(!['learn','log','results','class','resources','help'].includes(initialTab)) initialTab=state.log.length?'log':'learn';
